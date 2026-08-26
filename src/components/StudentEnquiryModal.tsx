@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Sparkles, Send, CheckCircle2, AlertCircle, ArrowRight, Check } from "lucide-react";
 import { usePresentation } from "@/context/PresentationContext";
+import { submitLead } from "@/lib/api";
 import {
   validateName,
   validatePhone,
@@ -223,26 +224,20 @@ export const StudentEnquiryModal: React.FC = () => {
     setErrorMessage("");
 
     try {
-      const response = await fetch("/api/leads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name.trim(),
-          phone: formData.phone.trim(),
-          email: formData.email.trim(),
-          education: formData.education,
-          interestedProgram: formData.interestedProgram,
-          purpose: formData.purpose,
-          message: formData.message.trim(),
-          botcheck: formData.botcheck,
-          source: "timed-popup",
-          page: typeof window !== "undefined" ? window.location.pathname : "/",
-        }),
+      const data = await submitLead({
+        name: formData.name.trim(),
+        phone: formData.phone.trim(),
+        email: formData.email.trim(),
+        education: formData.education,
+        interestedProgram: formData.interestedProgram,
+        purpose: formData.purpose,
+        message: formData.message.trim(),
+        botcheck: formData.botcheck,
+        source: "timed-popup",
+        page: typeof window !== "undefined" ? window.location.pathname : "/",
       });
 
-      const data = await response.json();
-
-      if (response.ok && data.success) {
+      if (data.success) {
         setStatus("success");
         setLastSubmitTime(now);
       } else {

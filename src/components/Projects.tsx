@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
@@ -258,13 +257,10 @@ export const Projects: React.FC = () => {
                     transition={{ duration: 0.7, ease: cubicEase }}
                     className="w-full h-full relative"
                   >
-                    <Image
+                    <img
                       src={currentProject.image}
                       alt={currentProject.title}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 720px"
-                      className="object-cover opacity-80 group-hover:scale-105 transition-transform duration-500"
-                      priority
+                      className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0B1028] via-[#0B1028]/35 to-transparent" />
                   </motion.div>
@@ -472,11 +468,10 @@ export const Projects: React.FC = () => {
 
               {/* Project Image */}
               <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden mb-6 border border-white/15">
-                <Image
+                <img
                   src={selectedModalProject.image}
                   alt={selectedModalProject.title}
-                  fill
-                  className="object-cover"
+                  className="w-full h-full object-cover"
                 />
               </div>
 

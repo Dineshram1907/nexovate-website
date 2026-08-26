@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight, Compass, Target, Sparkles } from "lucide-react";
 import { usePresentation } from "@/context/PresentationContext";
@@ -63,12 +62,10 @@ export const About: React.FC = () => {
           {/* RIGHT 40% — Authentic Maker Studio Visual */}
           <div className="lg:col-span-5 flex justify-center">
             <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-xl border border-[#101536]/10 bg-[#101536]">
-              <Image
+              <img
                 src="/brand-creator.jpg"
                 alt="Nexovate Innovation Studio"
-                fill
-                sizes="(max-width: 1024px) 100vw, 450px"
-                className="object-cover"
+                className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#101536]/80 via-transparent to-transparent" />
               <div className="absolute bottom-3 left-3 right-3 text-white font-mono text-[10px]">

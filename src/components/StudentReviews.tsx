@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight, ArrowRight, CheckCircle2 } from "lucide-react";
 import { usePresentation } from "@/context/PresentationContext";
@@ -235,13 +234,10 @@ export const StudentReviews: React.FC = () => {
                     transition={{ duration: 0.6, ease: cubicEase }}
                     className="w-full h-full relative"
                   >
-                    <Image
+                    <img
                       src={current.image}
                       alt={current.name}
-                      fill
-                      sizes="(max-width: 1024px) 240px, 320px"
-                      className="object-cover"
-                      priority
+                      className="w-full h-full object-cover"
                     />
                     <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full bg-[#101536]/80 backdrop-blur-sm text-[8px] font-mono text-white flex items-center gap-1">
                       <CheckCircle2 className="w-2.5 h-2.5 text-[#119E9D]" />
@@ -327,12 +323,10 @@ export const StudentReviews: React.FC = () => {
                   }`}
                   aria-label={`View review by ${item.name}`}
                 >
-                  <Image
+                  <img
                     src={item.image}
                     alt={item.name}
-                    fill
-                    sizes="48px"
-                    className="object-cover"
+                    className="w-full h-full object-cover"
                   />
                 </button>
               );

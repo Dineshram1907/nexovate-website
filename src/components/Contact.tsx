@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Send, CheckCircle2, AlertCircle, Phone, Mail, MapPin, Check } from "lucide-react";
 import { usePresentation } from "@/context/PresentationContext";
+import { submitLead } from "@/lib/api";
 import {
   validateName,
   validatePhone,
@@ -135,24 +136,18 @@ export const Contact: React.FC = () => {
     setErrorMessage("");
 
     try {
-      const response = await fetch("/api/leads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name.trim(),
-          email: formData.email.trim(),
-          phone: formData.phone.trim(),
-          interestedProgram: formData.program,
-          message: formData.message.trim(),
-          botcheck: formData.botcheck,
-          source: inquiryType === "Institution Partnership" ? "institutions" : "contact-form",
-          page: typeof window !== "undefined" ? window.location.pathname : "/",
-        }),
+      const data = await submitLead({
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim(),
+        interestedProgram: formData.program,
+        message: formData.message.trim(),
+        botcheck: formData.botcheck,
+        source: inquiryType === "Institution Partnership" ? "institutions" : "contact-form",
+        page: typeof window !== "undefined" ? window.location.pathname : "/",
       });
 
-      const data = await response.json();
-
-      if (response.ok && data.success) {
+      if (data.success) {
         setStatus("success");
         setLastSubmitTime(now);
       } else {

@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ChevronLeft, ChevronRight, Clock, Award, Sparkles, CheckCircle2 } from "lucide-react";
 import { usePresentation } from "@/context/PresentationContext";
@@ -280,13 +279,10 @@ export const Programs: React.FC = () => {
                     transition={{ duration: 0.7, ease: cubicEase }}
                     className="w-full h-full relative"
                   >
-                    <Image
+                    <img
                       src={currentProgram.image}
                       alt={currentProgram.title}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 650px"
-                      className="object-cover group-hover:scale-105 transition-transform duration-700 opacity-90"
-                      priority
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#101536]/90 via-[#101536]/30 to-transparent" />
                   </motion.div>

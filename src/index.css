@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-jakarta: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --navy-primary: #101536;
+    --navy-deep: #0B1028;
+    --teal-brand: #119E9D;
+    --gold-warm: #EFAF32;
+    --gold-soft: #F5C45A;
+    --bg-main: #FAFBFC;
+    --bg-secondary: #F2F5F6;
+    --text-main: #101536;
+    --text-muted: #5E6675;
+    --white: #FFFFFF;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: none;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #FAFBFC;
+    color: #101536;
+    font-family: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Desktop presentation fixed container */
+  @media (min-width: 1024px) {
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+  }
+
+  /* Mobile/Tablet native momentum scrolling */
+  @media (max-width: 1023px) {
+    html, body {
+      min-height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+}
+
+/* Selection Highlight */
+::selection {
+  background-color: rgba(17, 158, 157, 0.15);
+  color: #101536;
+}
+
+/* Custom Soft Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #FAFBFC;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(16, 21, 54, 0.15);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #119E9D;
+}
+
+/* Typography Utility Classes */
+.heading-editorial {
+  letter-spacing: -0.025em;
+  font-weight: 700;
+  color: #101536;
+}
+
+.subheading-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #119E9D;
+}
+
+/* Accessible reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

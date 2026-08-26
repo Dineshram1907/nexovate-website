@@ -1,7 +1,4 @@
-"use client";
-
 import React from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 
 export const HeroIllustration: React.FC = () => {
@@ -22,13 +19,10 @@ export const HeroIllustration: React.FC = () => {
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
           className="w-full h-full relative flex items-center justify-center"
         >
-          <Image
+          <img
             src="/hero-cinematic-portal.png"
             alt="Nexovate — Student Walking Through Architectural Technology Portal"
-            fill
-            sizes="(max-width: 1024px) 100vw, 700px"
-            className="object-contain mix-blend-multiply"
-            priority
+            className="w-full h-full object-contain mix-blend-multiply"
           />
         </motion.div>
       </motion.div>

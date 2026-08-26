@@ -1,7 +1,4 @@
-"use client";
-
 import React from "react";
-import Image from "next/image";
 
 interface NexovateLogoProps {
   className?: string;
@@ -27,14 +24,11 @@ export const NexovateLogo: React.FC<NexovateLogoProps> = ({
   if (isBadge) {
     return (
       <div className={`inline-flex items-center gap-3 px-3.5 py-1.5 rounded-2xl bg-white/95 backdrop-blur-md border border-white/20 shadow-md select-none ${className}`}>
-        <Image
+        <img
           src="/nexovate-symbol.png"
           alt="Nexovate"
-          width={size * 2}
-          height={size * 2}
           className="h-auto object-contain"
           style={{ height: `${size}px`, width: "auto" }}
-          priority
         />
         {showText && (
           <div className="flex flex-col justify-center">
@@ -56,14 +50,11 @@ export const NexovateLogo: React.FC<NexovateLogoProps> = ({
     <div className={`inline-flex items-center gap-3 select-none ${className}`}>
       {/* Exact Uploaded Calligraphic N Emblem PNG */}
       <div className="relative shrink-0 flex items-center justify-center">
-        <Image
+        <img
           src="/nexovate-symbol.png"
           alt="Nexovate Emblem"
-          width={size * 2}
-          height={size * 2}
           className="h-auto object-contain transition-transform duration-200 hover:scale-[1.03]"
           style={{ height: `${size}px`, width: "auto" }}
-          priority
         />
       </div>
 
