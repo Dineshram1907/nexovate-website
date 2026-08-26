@@ -1,86 +1,95 @@
-"use client";
-
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Play, ArrowDown } from "lucide-react";
+import { ArrowRight, Play, Star, Lightbulb, ArrowDown } from "lucide-react";
 import { HeroIllustration } from "./HeroIllustration";
 import { usePresentation } from "@/context/PresentationContext";
 
 export const Hero: React.FC = () => {
-  const { goToSection, setActiveProgramIndex, nextSection } = usePresentation();
+  const { goToSection } = usePresentation();
 
   const handleExplorePrograms = () => {
-    setActiveProgramIndex(0);
-    goToSection(2); // Slide 03 Programs
+    goToSection(2); // Programs
   };
 
   const handleSeeHowItWorks = () => {
-    goToSection(3); // Slide 04 Experience
+    goToSection(3); // How It Works
   };
 
   const cubicEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
   return (
-    <div className="relative w-full min-h-[100svh] lg:h-full flex flex-col justify-between pt-24 sm:pt-28 pb-10 sm:pb-12 px-4 sm:px-6 lg:px-12 overflow-hidden bg-[#FAFBFC] select-none">
-      <div className="max-w-7xl mx-auto w-full my-auto z-10">
+    <div className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-12 bg-notebook-grid select-none overflow-x-clip border-b border-[#101536]/06">
+      {/* Background Soft Pastel Gradient Blurs */}
+      <div className="absolute top-10 left-8 w-80 h-80 bg-[#E0E7FF]/60 rounded-full blur-3xl -z-10" />
+      <div className="absolute bottom-10 right-8 w-96 h-96 bg-[#FEF3C7]/60 rounded-full blur-3xl -z-10" />
+
+      <div className="max-w-7xl mx-auto w-full relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center">
-          {/* LEFT 55% — Headline, Eyebrow, Supporting Text & CTAs */}
+          {/* LEFT 55% — Eyebrow Pill, 4-Color Headline, Copy & CTAs */}
           <div className="lg:col-span-7 flex flex-col items-start text-left">
-            {/* Eyebrow */}
+            {/* Handwritten Label Badge */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2, ease: cubicEase }}
-              className="inline-flex items-center gap-2.5 px-3 py-1 rounded-full bg-[#F2F5F6] border border-[#101536]/08 mb-4 sm:mb-6"
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FEF3C7] border border-[#F59E0B]/30 mb-4 shadow-xs"
             >
-              <span className="w-3.5 h-0.5 rounded-full bg-[#119E9D]" />
-              <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-[0.2em] text-[#119E9D] uppercase">
-                FUTURE-READY LEARNING
+              <span className="text-xs font-mono font-extrabold text-[#101536] tracking-tight">
+                YOUR NEXT IDEA STARTS HERE.
               </span>
+              <Star className="w-3.5 h-3.5 text-[#F59E0B] fill-current" />
             </motion.div>
 
-            {/* Main Headline Sequence */}
-            <h1 className="text-3xl sm:text-5xl lg:text-[70px] xl:text-[76px] font-extrabold tracking-tight text-[#101536] leading-[1.05] mb-4 sm:mb-6">
+            {/* 4-Word Headline in Multi-Colors (as in input_file_0.png) */}
+            <h1 className="text-4xl sm:text-6xl lg:text-[72px] xl:text-[78px] font-black tracking-tight leading-[1.02] mb-4 font-jakarta">
               <motion.span
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.3, ease: cubicEase }}
+                transition={{ duration: 0.6, delay: 0.3, ease: cubicEase }}
                 className="block text-[#101536]"
               >
-                YOUR NEXT SKILL
+                DISCOVER.
               </motion.span>
 
               <motion.span
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.45, ease: cubicEase }}
-                className="block text-[#101536]"
+                transition={{ duration: 0.6, delay: 0.4, ease: cubicEase }}
+                className="block text-[#6366F1]"
               >
-                CAN CHANGE
+                LEARN.
               </motion.span>
 
               <motion.span
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.6, ease: cubicEase }}
-                className="block text-[#119E9D] relative"
+                transition={{ duration: 0.6, delay: 0.5, ease: cubicEase }}
+                className="block text-[#F97316]"
               >
-                EVERYTHING
-                <span className="text-[#EFAF32] ml-0.5">.</span>
+                CREATE.
+              </motion.span>
+
+              <motion.span
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6, ease: cubicEase }}
+                className="block text-[#119E9D]"
+              >
+                GROW.
               </motion.span>
             </h1>
 
-            {/* Supporting Copy */}
+            {/* Student-Focused Copy */}
             <motion.p
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.75, ease: cubicEase }}
-              className="text-sm sm:text-base lg:text-lg text-[#5E6675] max-w-xl font-normal leading-relaxed mb-6 sm:mb-8"
+              className="text-sm sm:text-base lg:text-lg text-[#5E6675] max-w-lg font-medium leading-relaxed mb-6 sm:mb-8"
             >
-              Nexovate helps students learn future-ready skills, build real projects and move toward what's next.
+              Nexovate helps students explore what they love, build real skills, and create a future they're excited about.
             </motion.p>
 
-            {/* Responsive Touch-Friendly CTAs */}
+            {/* Action Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
@@ -89,53 +98,37 @@ export const Hero: React.FC = () => {
             >
               <button
                 onClick={handleExplorePrograms}
-                className="min-h-[48px] inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-full bg-[#101536] text-white font-bold text-xs uppercase tracking-widest hover:bg-[#119E9D] hover:-translate-y-0.5 transition-all duration-200 shadow-sm group focus:outline-none focus:ring-2 focus:ring-[#119E9D]"
+                className="min-h-[48px] inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-[#6366F1] text-white font-bold text-xs uppercase tracking-wider hover:bg-[#4F46E5] transition-all duration-200 shadow-md group focus:outline-none focus:ring-2 focus:ring-[#6366F1]"
               >
-                <span>EXPLORE PROGRAMS</span>
-                <ArrowRight className="w-4 h-4 text-[#EFAF32] group-hover:translate-x-1 transition-transform duration-200" />
+                <span>Explore Programs</span>
+                <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform duration-200" />
               </button>
 
               <button
                 onClick={handleSeeHowItWorks}
-                className="min-h-[48px] inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-full bg-white border border-[#101536]/15 text-[#101536] font-bold text-xs uppercase tracking-widest hover:bg-[#F2F5F6] hover:border-[#119E9D] transition-colors duration-200 group focus:outline-none focus:ring-2 focus:ring-[#119E9D]"
+                className="min-h-[48px] inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white border border-[#101536]/15 text-[#101536] font-bold text-xs uppercase tracking-wider hover:bg-[#F6F8F9] hover:border-[#6366F1] transition-colors duration-200 group focus:outline-none focus:ring-2 focus:ring-[#6366F1]"
               >
-                <div className="w-5 h-5 rounded-full bg-[#119E9D]/10 flex items-center justify-center text-[#119E9D] group-hover:bg-[#119E9D] group-hover:text-white transition-colors">
+                <div className="w-5 h-5 rounded-full bg-[#6366F1]/10 flex items-center justify-center text-[#6366F1] group-hover:bg-[#6366F1] group-hover:text-white transition-colors">
                   <Play className="w-2.5 h-2.5 fill-current ml-0.5" />
                 </div>
-                <span>SEE HOW IT WORKS</span>
+                <span>See How It Works</span>
               </button>
             </motion.div>
           </div>
 
-          {/* RIGHT 45% — Cinematic Portal Visual */}
-          <div className="lg:col-span-5 flex justify-center lg:justify-end mt-4 lg:mt-0">
+          {/* RIGHT 45% — Real Photography Photo Frame */}
+          <div className="lg:col-span-5 flex justify-center lg:justify-end mt-6 lg:mt-0">
             <HeroIllustration />
           </div>
         </div>
-      </div>
 
-      {/* Bottom Scroll Hook */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.1, duration: 0.6 }}
-        className="max-w-7xl mx-auto w-full flex items-center justify-start z-10 pt-4"
-      >
-        <button
-          onClick={nextSection}
-          className="inline-flex items-center gap-2.5 text-[10px] font-bold tracking-[0.2em] text-[#5E6675] hover:text-[#119E9D] uppercase transition-colors group focus:outline-none focus:ring-1 focus:ring-[#119E9D] rounded-full p-1"
-        >
-          <div className="w-4 h-6 rounded-full border border-[#101536]/20 flex items-start justify-center p-1 group-hover:border-[#119E9D] transition-colors">
-            <motion.div
-              animate={{ y: [0, 6, 0] }}
-              transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-              className="w-1 h-1 bg-[#119E9D] rounded-full"
-            />
-          </div>
-          <span>DISCOVER WHAT'S NEXT</span>
-          <ArrowDown className="w-3 h-3 text-[#119E9D] group-hover:translate-y-0.5 transition-transform" />
-        </button>
-      </motion.div>
+        {/* Hand-Drawn Dotted Curved Arrow Transition (Hero -> Interests) */}
+        <div className="hidden md:flex justify-end pr-12 -mb-8 mt-4 pointer-events-none">
+          <svg className="w-32 h-16" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 10 C 50 5, 90 25, 100 50 M 90 42 L 100 50 L 106 38" stroke="#6366F1" strokeWidth="2.5" strokeDasharray="5 4" strokeLinecap="round" />
+          </svg>
+        </div>
+      </div>
     </div>
   );
 };

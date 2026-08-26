@@ -4,11 +4,16 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ChevronLeft, ChevronRight, Clock, Award, Sparkles, CheckCircle2 } from "lucide-react";
 import { usePresentation } from "@/context/PresentationContext";
-import { useHorizontalSwipe } from "@/hooks/useHorizontalSwipe";
+import {
+  aiMlImage,
+  dataScienceImage,
+  fullStackImage,
+  cloudDevopsImage,
+} from "@/assets";
 
 // DEMO PROGRAM DATA — Replace with verified Nexovate data before production.
 
-interface ProgramItem {
+export interface ProgramItem {
   id: string;
   category: string;
   title: string;
@@ -18,7 +23,7 @@ interface ProgramItem {
   mode: string;
   level: string;
   fees: string;
-  image: string;
+  image: any;
   skills: string[];
   accent: "teal" | "gold";
 }
@@ -27,91 +32,91 @@ export const PROGRAMS_DATA: ProgramItem[] = [
   {
     id: "01",
     category: "ARTIFICIAL INTELLIGENCE",
-    title: "Artificial Intelligence & Machine Learning",
-    headline: "Build intelligent systems and neural architectures.",
+    title: "Artificial Intelligence & Neural Systems",
+    headline: "Build intelligent algorithms and neural architectures.",
     description:
-      "Master deep learning, computer vision, and transformer models through hands-on Python repositories and real-world datasets.",
+      "Explore deep learning, computer vision, and AI models through hands-on Python labs and practical project repositories.",
     duration: "12 WEEKS",
     mode: "HYBRID",
     level: "BEGINNER → INTERMEDIATE",
     fees: "₹24,999",
-    image: "/programs/ai-ml.jpg",
-    skills: ["Python", "PyTorch", "Computer Vision", "Neural Networks"],
+    image: aiMlImage,
+    skills: ["Python", "Neural Networks", "Computer Vision", "AI Applications"],
     accent: "teal",
   },
   {
     id: "02",
-    category: "SOFTWARE ENGINEERING",
+    category: "SOFTWARE & WEB ARCHITECTURE",
     title: "Full Stack Web Engineering",
-    headline: "Architect scalable, production-grade applications.",
+    headline: "Architect modern, production-grade applications.",
     description:
-      "Design and deploy modern full-stack web platforms using Next.js, Node.js, TypeScript, PostgreSQL, and scalable cloud backends.",
+      "Design and deploy web platforms using Next.js, Node.js, TypeScript, PostgreSQL, and scalable cloud backends.",
     duration: "16 WEEKS",
     mode: "HYBRID",
     level: "BEGINNER → INTERMEDIATE",
     fees: "₹29,999",
-    image: "/programs/fullstack.jpg",
-    skills: ["React & Next.js", "TypeScript", "Node.js", "PostgreSQL"],
+    image: fullStackImage,
+    skills: ["React & Web", "TypeScript", "Node.js API", "Databases"],
     accent: "gold",
   },
   {
     id: "03",
-    category: "DATA SCIENCE",
-    title: "Data Science & Analytics",
-    headline: "Extract predictive intelligence from complex data.",
+    category: "DATA & ANALYTICS",
+    title: "Data Science & Predictive Analytics",
+    headline: "Extract actionable intelligence from complex data.",
     description:
-      "Transform raw data into strategic insights with statistical modeling, predictive algorithms, automated pipelines, and visualization.",
+      "Transform raw data into strategic insights with statistical modeling, predictive algorithms, automated pipelines, and dashboards.",
     duration: "14 WEEKS",
     mode: "ONLINE",
     level: "BEGINNER → INTERMEDIATE",
     fees: "₹27,999",
-    image: "/programs/data-science.jpg",
-    skills: ["Python Data Stack", "SQL", "Predictive Analytics", "Tableau"],
+    image: dataScienceImage,
+    skills: ["Python Data Stack", "SQL", "Predictive Analytics", "Data Visualization"],
     accent: "teal",
   },
   {
     id: "04",
     category: "CLOUD INFRASTRUCTURE",
-    title: "Cloud Computing & DevOps",
-    headline: "Deploy and manage resilient distributed architectures.",
+    title: "Cloud Computing & DevOps Workflows",
+    headline: "Deploy and manage resilient distributed systems.",
     description:
-      "Learn cloud architecture, container orchestration with Kubernetes, Docker, automated CI/CD pipelines, and infrastructure-as-code.",
+      "Learn cloud architecture, container orchestration with Kubernetes, Docker, automated CI/CD pipelines, and infrastructure principles.",
     duration: "12 WEEKS",
     mode: "ONLINE",
     level: "INTERMEDIATE",
     fees: "₹24,999",
-    image: "/programs/cloud-devops.jpg",
-    skills: ["AWS Cloud", "Docker", "Kubernetes", "CI/CD Workflows"],
+    image: cloudDevopsImage,
+    skills: ["Cloud Architecture", "Docker & Containers", "CI/CD Automation", "Linux"],
     accent: "gold",
   },
   {
     id: "05",
-    category: "CYBERSECURITY",
-    title: "Cybersecurity Foundations",
-    headline: "Defend systems against modern threat vectors.",
+    category: "CREATIVE & DESIGN TECH",
+    title: "UI/UX & Creative Technology",
+    headline: "Design intuitive digital products and experiences.",
     description:
-      "Understand enterprise security principles, ethical hacking methodologies, network defense protocols, and vulnerability analysis.",
+      "Master user research, interactive wireframing, design systems, and creative prototyping to craft human-centered digital experiences.",
     duration: "10 WEEKS",
-    mode: "ONLINE",
-    level: "BEGINNER",
-    fees: "₹21,999",
-    image: "/programs/fullstack.jpg",
-    skills: ["Network Security", "Ethical Hacking", "Threat Modeling", "Linux"],
+    mode: "HYBRID",
+    level: "BEGINNER → INTERMEDIATE",
+    fees: "₹22,999",
+    image: fullStackImage,
+    skills: ["UI/UX Design", "Figma Systems", "Design Systems", "Prototyping"],
     accent: "teal",
   },
   {
     id: "06",
-    category: "FUTURE HORIZONS",
-    title: "Emerging Technologies",
-    headline: "Explore robotics, IoT, and edge intelligence.",
+    category: "PRODUCT & TECH BUSINESS",
+    title: "Tech Business & Product Strategy",
+    headline: "Transform creative ideas into scalable products.",
     description:
-      "Cross-disciplinary immersion covering embedded systems, Edge AI, IoT sensors, and autonomous computing for tomorrow's engineers.",
+      "Explore product management frameworks, technology market strategy, user growth loops, and tech entrepreneurship basics.",
     duration: "8 WEEKS",
-    mode: "IN-PERSON LAB",
+    mode: "ONLINE",
     level: "ALL LEVELS",
-    fees: "₹18,999",
-    image: "/programs/cloud-devops.jpg",
-    skills: ["Edge Computing", "IoT Hardware", "Embedded C++", "Robotics"],
+    fees: "₹19,999",
+    image: cloudDevopsImage,
+    skills: ["Product Strategy", "Tech Markets", "Agile Management", "Growth Metrics"],
     accent: "gold",
   },
 ];
@@ -126,30 +131,20 @@ export const Programs: React.FC = () => {
   const resumeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const nextProgram = useCallback(() => {
-    setActiveProgramIndex((prev) => (prev + 1) % PROGRAMS_DATA.length);
+    setActiveProgramIndex((activeProgramIndex + 1) % PROGRAMS_DATA.length);
     setProgress(0);
-  }, [setActiveProgramIndex]);
+  }, [activeProgramIndex, setActiveProgramIndex]);
 
   const prevProgram = useCallback(() => {
-    setActiveProgramIndex((prev) => (prev - 1 + PROGRAMS_DATA.length) % PROGRAMS_DATA.length);
+    setActiveProgramIndex((activeProgramIndex - 1 + PROGRAMS_DATA.length) % PROGRAMS_DATA.length);
     setProgress(0);
-  }, [setActiveProgramIndex]);
+  }, [activeProgramIndex, setActiveProgramIndex]);
 
   const handleInteraction = useCallback(() => {
     setIsPaused(true);
     if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
     resumeTimeoutRef.current = setTimeout(() => setIsPaused(false), 4500);
   }, []);
-
-  // Responsive Horizontal Swipe Hook (Low distance threshold + velocity support)
-  const { containerRef, dragOffset, handlers } = useHorizontalSwipe({
-    onNext: nextProgram,
-    onPrev: prevProgram,
-    onInteraction: handleInteraction,
-    dragDistanceThreshold: 30,
-    velocityThreshold: 0.2,
-    trackpadThreshold: 35,
-  });
 
   // Autoplay progression timer
   useEffect(() => {
@@ -191,41 +186,25 @@ export const Programs: React.FC = () => {
   const cubicEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
   return (
-    <div
-      ref={containerRef}
-      data-horizontal-carousel="true"
-      tabIndex={0}
-      {...handlers}
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => {
-        if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
-        resumeTimeoutRef.current = setTimeout(() => setIsPaused(false), 3000);
-      }}
-      onFocus={() => setIsPaused(true)}
-      onBlur={() => setIsPaused(false)}
-      className="relative w-full min-h-[100svh] lg:h-full flex flex-col justify-center py-12 sm:py-16 px-4 sm:px-6 lg:px-12 overflow-hidden bg-[#FAFBFC] border-b border-[#101536]/06 select-none focus:outline-none cursor-grab active:cursor-grabbing touch-pan-y"
-    >
+    <div className="relative w-full py-14 sm:py-20 px-4 sm:px-6 lg:px-12 bg-[#FAFBFC] border-b border-[#101536]/06 select-none overflow-x-clip">
       {/* Background Soft Glow */}
       <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-96 h-96 bg-[#119E9D]/05 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto w-full z-10">
-        {/* Top Header Bar & Progress Line */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 pb-3 border-b border-[#101536]/08 gap-3">
-          <div className="flex items-center gap-3">
-            <span className="subheading-label">FIND YOUR NEXT SKILL</span>
-            <span className="text-[#101536]/20">•</span>
-            <span className="text-xs font-mono font-bold text-[#101536]">
-              {currentProgram.id} <span className="text-[#5E6675]/50">/</span> 06
+        {/* Section Header (matching input_file_0.png) */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 pb-3 border-b border-[#101536]/08 gap-3">
+          <div>
+            <span className="text-[10px] font-mono font-bold tracking-[0.25em] text-[#6366F1] uppercase block mb-1">
+              PROGRAM CATALOG
             </span>
+            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-[#101536] leading-tight font-jakarta">
+              PROGRAMS FOR EVERY KIND OF LEARNER<span className="text-[#F97316]">.</span>
+            </h2>
           </div>
-
-          {/* Autoplay Animated Progress Bar */}
           <div className="flex items-center gap-4">
-            <div className="w-28 sm:w-44 h-1 bg-[#101536]/08 rounded-full overflow-hidden">
-              <motion.div
-                style={{ width: `${progress}%` }}
-                className="h-full bg-gradient-to-r from-[#119E9D] to-[#EFAF32] rounded-full"
-              />
+            <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#119E9D] bg-[#CCFBF1] border border-[#119E9D]/30 px-3 py-1.5 rounded-full shadow-xs">
+              <span>Learn practical skills that open doors</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </div>
 
             {/* Carousel Arrow Controls */}
@@ -254,13 +233,8 @@ export const Programs: React.FC = () => {
           </div>
         </div>
 
-        {/* Featured Course Full-Screen Split Experience with Live Drag Feedback */}
-        <div
-          style={{
-            transform: dragOffset ? `translateX(${dragOffset}px)` : "none",
-            transition: dragOffset ? "none" : "transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)",
-          }}
-        >
+        {/* Featured Course Full-Screen Split Experience */}
+        <div>
           <AnimatePresence mode="wait">
             <motion.div
               key={currentProgram.id}
@@ -283,6 +257,7 @@ export const Programs: React.FC = () => {
                       src={currentProgram.image}
                       alt={currentProgram.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90"
+                      loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#101536]/90 via-[#101536]/30 to-transparent" />
                   </motion.div>

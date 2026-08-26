@@ -26,7 +26,7 @@ export const BrandStory: React.FC = () => {
   const cubicEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
   return (
-    <div className="relative w-full min-h-[100svh] lg:h-full flex flex-col justify-center py-16 sm:py-20 px-6 sm:px-12 lg:px-20 overflow-hidden bg-[#F1F2EF] text-[#101536] select-none border-b border-[#101536]/08">
+    <div className="relative w-full py-14 sm:py-20 px-4 sm:px-6 lg:px-12 bg-[#FAFBFC] text-[#101536] select-none border-b border-[#101536]/06 overflow-x-clip">
       {/* Oversized Background Editorial Typography */}
       <div className="absolute -right-8 top-1/2 -translate-y-1/2 pointer-events-none select-none opacity-[0.04] font-serif font-black text-[220px] sm:text-[320px] lg:text-[420px] leading-none text-[#101536]">
         WHY
@@ -36,7 +36,7 @@ export const BrandStory: React.FC = () => {
         {/* Editorial Subheading */}
         <div className="flex items-center gap-3 mb-4">
           <span className="text-[10px] font-mono font-bold tracking-[0.25em] text-[#119E9D] uppercase">
-            SLIDE 02 // THE NEXOVATE MANIFESTO
+            OUR PHILOSOPHY
           </span>
           <span className="h-[1px] w-12 bg-[#119E9D]/40" />
         </div>

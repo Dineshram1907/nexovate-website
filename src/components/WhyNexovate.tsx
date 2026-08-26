@@ -1,101 +1,128 @@
-"use client";
-
 import React from "react";
 import { motion } from "framer-motion";
+import { Compass, Hammer, Users, Rocket, Sparkles } from "lucide-react";
 
 interface Pillar {
   number: string;
   title: string;
   subtitle: string;
   detail: string;
+  icon: React.ElementType;
+  badgeBg: string;
+  badgeColor: string;
 }
 
 export const WhyNexovate: React.FC = () => {
   const pillars: Pillar[] = [
     {
       number: "01",
-      title: "PRACTICAL",
-      subtitle: "Learn by building.",
+      title: "EXPLORE & DISCOVER",
+      subtitle: "Find what interests you before committing.",
       detail:
-        "Knowledge becomes capability through action. Students gain experience through practical projects and hands-on application.",
+        "Whether you're curious about AI, UI/UX design, data science, web engineering, or tech business, Nexovate gives you the freedom to explore multiple disciplines.",
+      icon: Compass,
+      badgeBg: "bg-[#E0F2FE]",
+      badgeColor: "text-[#0284C7]",
     },
     {
       number: "02",
-      title: "INDUSTRY-ALIGNED",
-      subtitle: "Learn skills relevant to the real world.",
+      title: "PRACTICAL BUILDING",
+      subtitle: "Learn by doing, not just watching.",
       detail:
-        "Our curriculum focuses on modern tools, frameworks, and workflows actively utilized in technology industries today.",
+        "Knowledge becomes capability when you build. Students turn concepts into real-world applications, working software, and creative portfolios.",
+      icon: Hammer,
+      badgeBg: "bg-[#FFEDD5]",
+      badgeColor: "text-[#F97316]",
     },
     {
       number: "03",
-      title: "MENTOR-LED",
-      subtitle: "Learn from people who understand the field.",
+      title: "EXPERT MENTORSHIP",
+      subtitle: "Guidance from experienced practitioners.",
       detail:
-        "Guidance from experienced engineers and tech practitioners who provide real-world insights and constructive feedback.",
+        "Direct mentorship from engineers, designers, and industry builders who offer practical feedback, career advice, and structured support.",
+      icon: Users,
+      badgeBg: "bg-[#D1FAE5]",
+      badgeColor: "text-[#10B981]",
     },
     {
       number: "04",
       title: "FUTURE-READY",
       subtitle: "Prepare for what comes next.",
       detail:
-        "Cultivate adaptable skills, critical engineering principles, and continuous learning habits for long-term growth.",
+        "Develop adaptable problem-solving skills, critical thinking habits, and technological literacy that prepare you for college, internships, and beyond.",
+      icon: Rocket,
+      badgeBg: "bg-[#FEF3C7]",
+      badgeColor: "text-[#D97706]",
     },
   ];
 
   return (
-    <section id="why-nexovate" className="py-24 md:py-32 bg-[#FAFBFC]">
+    <section id="why-nexovate" className="py-20 md:py-28 bg-[#FAFBFC] select-none">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="mb-16 md:mb-20">
-          <span className="subheading-label mb-3 block">SECTION 04 — WHY NEXOVATE</span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#101536]">
-            MORE THAN A COURSE.
+        <div className="mb-14 md:mb-16 text-left">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F6F8F9] border border-[#101536]/10 mb-3">
+            <Sparkles className="w-3.5 h-3.5 text-[#119E9D]" />
+            <span className="text-[10px] font-mono font-bold tracking-[0.2em] text-[#119E9D] uppercase">
+              SLIDE 02 // WHY NEXOVATE
+            </span>
+          </div>
+
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#101536]">
+            MORE THAN A COURSE.<br />
+            <span className="text-[#119E9D] italic font-serif">A PLACE TO DISCOVER YOUR POTENTIAL.</span>
           </h2>
         </div>
 
-        {/* 4 Typography-Driven Principles */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-          {pillars.map((pillar, idx) => (
-            <motion.div
-              key={pillar.number}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{
-                duration: 0.6,
-                delay: idx * 0.1,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="bg-white rounded-2xl border border-[#101536]/08 p-8 md:p-10 flex flex-col justify-between hover:border-[#119E9D]/30 transition-all duration-300"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-6">
-                  <span className="subheading-label text-[#119E9D]">
-                    PRINCIPLE {pillar.number}
+        {/* 4 Friendly EdTech Principle Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+          {pillars.map((pillar, idx) => {
+            const Icon = pillar.icon;
+            return (
+              <motion.div
+                key={pillar.number}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{
+                  duration: 0.6,
+                  delay: idx * 0.1,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="bg-white rounded-3xl border border-[#101536]/08 p-7 md:p-9 flex flex-col justify-between hover:border-[#119E9D]/30 hover:shadow-lg transition-all duration-300 group"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className={`w-12 h-12 rounded-2xl ${pillar.badgeBg} flex items-center justify-center shrink-0`}>
+                      <Icon className={`w-6 h-6 ${pillar.badgeColor}`} />
+                    </div>
+                    <span className="text-xs font-mono font-bold text-[#5E6675]/70">
+                      PILLAR {pillar.number}
+                    </span>
+                  </div>
+
+                  <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#101536] mb-2 group-hover:text-[#119E9D] transition-colors">
+                    {pillar.title}
+                  </h3>
+
+                  <p className="text-sm font-semibold text-[#119E9D] mb-3">
+                    {pillar.subtitle}
+                  </p>
+
+                  <p className="text-sm sm:text-base text-[#5E6675] leading-relaxed font-normal">
+                    {pillar.detail}
+                  </p>
+                </div>
+
+                <div className="mt-8 pt-4 border-t border-[#101536]/06 flex items-center justify-between">
+                  <span className="text-[10px] font-mono font-bold text-[#5E6675]/60 uppercase tracking-widest">
+                    NEXOVATE EDTECH PILLAR // {pillar.number}
                   </span>
                   <div className="w-2 h-2 rounded-full bg-[#EFAF32]" />
                 </div>
-
-                <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#101536] mb-2">
-                  {pillar.title}
-                </h3>
-
-                <p className="text-lg font-semibold text-[#119E9D] mb-4">
-                  {pillar.subtitle}
-                </p>
-
-                <p className="text-base text-[#5E6675] leading-relaxed">
-                  {pillar.detail}
-                </p>
-              </div>
-
-              <div className="mt-8 pt-4 border-t border-[#101536]/06 text-right">
-                <span className="text-xs font-mono text-[#5E6675]/60">
-                  NEXOVATE PRINCIPLE // {pillar.number}
-                </span>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -7,16 +7,16 @@ import { StudentEnquiryModal } from "@/components/StudentEnquiryModal";
 export default function App() {
   return (
     <PresentationProvider>
-      <div className="relative w-full min-h-screen lg:h-[100svh] lg:overflow-hidden bg-[#FAFBFC] text-[#101536] selection:bg-[#119E9D]/20 selection:text-[#101536]">
-        {/* Sticky Presentation Header Navigation with Interactive Active Indicator & Progress Bar */}
+      <div className="relative w-full min-h-screen bg-[#FAFBFC] text-[#101536] selection:bg-[#6366F1]/20 selection:text-[#101536] overflow-x-clip">
+        {/* Sticky Header Navigation */}
         <Navbar />
 
-        {/* Presentation Viewport: Native continuous scroll on mobile, sliding presentation stack on desktop */}
-        <main className="w-full min-h-screen lg:h-full">
+        {/* Main Document Flow for One Continuous Vertical Scroll */}
+        <main className="w-full relative pt-16 sm:pt-18">
           <PresentationViewport />
         </main>
 
-        {/* Intelligent Timed Student Enquiry Popup */}
+        {/* Intelligent Timed Student Enquiry Popup (7-second timer, X button close) */}
         <StudentEnquiryModal />
       </div>
     </PresentationProvider>

@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { Send, CheckCircle2, AlertCircle, Phone, Mail, MapPin, Check } from "lucide-react";
 import { usePresentation } from "@/context/PresentationContext";
 import { submitLead } from "@/lib/api";
@@ -12,8 +11,6 @@ import {
   validateMessage,
   ValidationErrors,
 } from "@/lib/validation";
-
-// DEMO CONTACT DATA — Replace before production launch.
 
 export const Contact: React.FC = () => {
   const { selectedProgram, setSelectedProgram, inquiryType } = usePresentation();
@@ -42,93 +39,87 @@ export const Contact: React.FC = () => {
     }
   }, [selectedProgram]);
 
-  const validateField = (name: string, value: string) => {
-    let error: string | null = null;
-    switch (name) {
-      case "name":
-        error = validateName(value);
-        break;
-      case "phone":
-        error = validatePhone(value);
-        break;
-      case "email":
-        error = validateEmail(value);
-        break;
-      case "message":
-        error = validateMessage(value);
-        break;
-      default:
-        break;
-    }
-
-    setFieldErrors((prev) => ({
-      ...prev,
-      [name]: error || undefined,
-    }));
-    return error;
-  };
-
-  const handleBlur = (field: string) => {
-    setTouched((prev) => ({ ...prev, [field]: true }));
-    validateField(field, (formData as any)[field]);
-  };
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (name === "program") {
-      setSelectedProgram(value);
+    if (name === "phone") {
+      const sanitized = value.replace(/[^\d\s\-\+\(\)]/g, "");
+      setFormData((prev) => ({ ...prev, [name]: sanitized }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
     }
+
     if (touched[name]) {
-      validateField(name, value);
+      let err = "";
+      if (name === "name") err = validateName(value) || "";
+      if (name === "email") err = validateEmail(value) || "";
+      if (name === "phone") err = validatePhone(value) || "";
+      if (name === "message") err = validateMessage(value) || "";
+
+      setFieldErrors((prev) => ({
+        ...prev,
+        [name]: err,
+      }));
     }
   };
 
-  const validateAll = (): boolean => {
-    const nameErr = validateName(formData.name);
-    const phoneErr = validatePhone(formData.phone);
-    const emailErr = validateEmail(formData.email);
-    const msgErr = validateMessage(formData.message);
+  const handleBlur = (field: string) => {
+    setTouched((prev) => ({ ...prev, [field]: true }));
+    let err = "";
+    if (field === "name") err = validateName(formData.name) || "";
+    if (field === "email") err = validateEmail(formData.email) || "";
+    if (field === "phone") err = validatePhone(formData.phone) || "";
+    if (field === "message") err = validateMessage(formData.message) || "";
 
+    setFieldErrors((prev) => ({
+      ...prev,
+      [field]: err,
+    }));
+  };
+
+  const validateAll = (): boolean => {
     const errors: ValidationErrors = {};
+
+    const nameErr = validateName(formData.name);
     if (nameErr) errors.name = nameErr;
-    if (phoneErr) errors.phone = phoneErr;
+
+    const emailErr = validateEmail(formData.email);
     if (emailErr) errors.email = emailErr;
-    if (msgErr) errors.message = msgErr;
+
+    const phoneErr = validatePhone(formData.phone);
+    if (phoneErr) errors.phone = phoneErr;
+
+    const messageErr = validateMessage(formData.message);
+    if (messageErr) errors.message = messageErr;
 
     setFieldErrors(errors);
     setTouched({
       name: true,
-      phone: true,
       email: true,
+      phone: true,
+      program: true,
       message: true,
     });
 
     return Object.keys(errors).length === 0;
   };
 
-  const isFormValid =
-    !validateName(formData.name) &&
-    !validatePhone(formData.phone) &&
-    !validateEmail(formData.email) &&
-    !validateMessage(formData.message);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const now = Date.now();
-    if (now - lastSubmitTime < 15000) {
-      setStatus("error");
-      setErrorMessage("Please wait a few moments before submitting another message.");
+    if (formData.botcheck) {
+      setStatus("success");
       return;
     }
 
     const isValid = validateAll();
-    if (!isValid) {
+    if (!isValid) return;
+
+    const now = Date.now();
+    if (now - lastSubmitTime < 60000 && lastSubmitTime !== 0) {
       setStatus("error");
-      setErrorMessage("Please correct the highlighted fields before sending.");
+      setErrorMessage("Please wait 1 minute before submitting another enquiry.");
       return;
     }
 
@@ -137,11 +128,11 @@ export const Contact: React.FC = () => {
 
     try {
       const data = await submitLead({
-        name: formData.name.trim(),
-        email: formData.email.trim(),
-        phone: formData.phone.trim(),
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
         interestedProgram: formData.program,
-        message: formData.message.trim(),
+        message: formData.message,
         botcheck: formData.botcheck,
         source: inquiryType === "Institution Partnership" ? "institutions" : "contact-form",
         page: typeof window !== "undefined" ? window.location.pathname : "/",
@@ -161,78 +152,78 @@ export const Contact: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full min-h-[100svh] lg:h-full flex flex-col justify-center py-16 sm:py-20 px-6 sm:px-12 lg:px-20 overflow-hidden bg-[#080C1E] text-white select-none border-b border-white/08">
+    <div className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-12 bg-notebook-grid text-[#101536] select-none border-b border-[#101536]/06 overflow-x-clip">
       <div className="max-w-7xl mx-auto w-full z-10">
         {/* Subtle Section Label */}
-        <div className="flex items-center gap-3 mb-6 pb-3 border-b border-white/10">
-          <span className="text-[10px] font-mono font-bold tracking-[0.25em] text-[#119E9D] uppercase">
-            SLIDE 09 // DIRECT CONVERSATION
+        <div className="flex items-center gap-3 mb-8 pb-3 border-b border-[#101536]/10">
+          <span className="text-xs font-mono font-bold tracking-[0.25em] text-[#6366F1] uppercase">
+            DIRECT CONVERSATION
           </span>
-          <span className="h-[1px] w-12 bg-[#119E9D]/40" />
+          <span className="h-[1px] w-12 bg-[#6366F1]/40" />
         </div>
 
-        {/* Quiet Luxury 2-Column Minimalist Composition */}
+        {/* High-Contrast 2-Column Composition */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
           {/* LEFT 50% — Monumental Typography & Direct Contacts */}
-          <div className="lg:col-span-6 flex flex-col items-start">
-            <h2 className="text-3xl sm:text-5xl lg:text-[64px] font-extrabold tracking-tight text-white leading-[1.05] mb-4">
+          <div className="lg:col-span-6 flex flex-col items-start text-left">
+            <h2 className="text-3xl sm:text-5xl lg:text-[56px] font-black tracking-tight text-[#101536] leading-[1.05] mb-4 font-jakarta">
               LET'S BUILD <br />
-              <span className="text-[#119E9D]">WHAT'S NEXT</span>
-              <span className="text-[#EFAF32]">.</span>
+              <span className="text-[#6366F1]">WHAT'S NEXT</span>
+              <span className="text-[#F97316]">.</span>
             </h2>
 
-            <p className="text-sm sm:text-base text-white/70 leading-relaxed mb-6 font-light max-w-md">
+            <p className="text-sm sm:text-base text-[#5E6675] leading-relaxed mb-6 font-medium max-w-md">
               Speak directly with an academic mentor regarding curriculum roadmaps, technical tracks, or institutional partnerships.
             </p>
 
             {/* Direct Coordinates */}
-            <div className="space-y-2.5 pt-4 border-t border-white/10 w-full font-mono text-xs text-white/80">
+            <div className="space-y-3 pt-6 border-t border-[#101536]/10 w-full font-mono text-xs text-[#101536]">
               <div className="flex items-center gap-3">
-                <span className="text-[#119E9D] w-16 uppercase text-[10px]">PHONE</span>
-                <span className="text-white font-semibold">+91 98765 43210</span>
+                <span className="text-[#6366F1] font-bold w-16 uppercase text-[10px]">PHONE</span>
+                <span className="text-[#101536] font-bold">+91 98765 43210</span>
               </div>
               <div className="flex items-center gap-3">
-                <span className="text-[#119E9D] w-16 uppercase text-[10px]">EMAIL</span>
-                <span className="text-white font-semibold">hello@nexovate.in</span>
+                <span className="text-[#6366F1] font-bold w-16 uppercase text-[10px]">EMAIL</span>
+                <span className="text-[#101536] font-bold">hello@nexovate.in</span>
               </div>
               <div className="flex items-center gap-3">
-                <span className="text-[#119E9D] w-16 uppercase text-[10px]">OFFICE</span>
-                <span className="text-white/80">Anna Nagar, Chennai, Tamil Nadu 600040</span>
+                <span className="text-[#6366F1] font-bold w-16 uppercase text-[10px]">OFFICE</span>
+                <span className="text-[#5E6675] font-medium">Anna Nagar, Chennai, Tamil Nadu 600040</span>
               </div>
             </div>
           </div>
 
-          {/* RIGHT 50% — Ultra-Clean Quiet Luxury Form */}
-          <div className="lg:col-span-6 bg-white/03 border border-white/10 p-6 sm:p-8 backdrop-blur-xs rounded-2xl">
+          {/* RIGHT 50% — High Contrast White Paper Form Card */}
+          <div className="lg:col-span-6 bg-white border border-[#101536]/12 p-6 sm:p-8 rounded-3xl shadow-xl">
             {/* Selected Track Callout */}
-            <div className="mb-4 pb-3 border-b border-white/10 flex items-center justify-between text-[11px] font-mono">
-              <span className="text-white/60">SELECTED DISCIPLINE:</span>
-              <span className="text-[#119E9D] font-bold uppercase">{formData.program}</span>
+            <div className="mb-6 pb-3 border-b border-[#101536]/10 flex items-center justify-between text-xs font-mono">
+              <span className="text-[#5E6675]">SELECTED DISCIPLINE:</span>
+              <span className="text-[#6366F1] font-bold uppercase">{formData.program}</span>
             </div>
 
             {status === "success" ? (
               <div className="py-8 flex flex-col items-center text-center">
-                <div className="w-14 h-14 rounded-full bg-[#119E9D]/20 text-[#119E9D] flex items-center justify-center mb-3">
-                  <CheckCircle2 className="w-7 h-7" />
+                <div className="w-14 h-14 rounded-full bg-[#10B981]/15 text-[#10B981] flex items-center justify-center mb-3">
+                  <CheckCircle2 className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-extrabold text-white mb-2">
+                <h3 className="text-2xl font-extrabold text-[#101536] mb-2 font-jakarta">
                   THANK YOU.
                 </h3>
-                <p className="text-sm text-white/80 max-w-sm leading-relaxed mb-1 font-medium">
+                <p className="text-sm text-[#5E6675] max-w-sm leading-relaxed mb-1 font-medium">
                   We've received your enquiry.
                 </p>
-                <p className="text-xs text-white/60 max-w-sm leading-relaxed mb-6">
+                <p className="text-xs text-[#5E6675]/80 max-w-sm leading-relaxed mb-6">
                   We'll be in touch soon. An academic mentor will reach out within 24 hours.
                 </p>
                 <button
                   onClick={() => setStatus("idle")}
-                  className="min-h-[44px] px-6 py-2.5 bg-white/10 hover:bg-white/20 text-white font-mono text-xs uppercase tracking-wider transition-colors rounded-full"
+                  className="min-h-[44px] px-6 py-2.5 bg-[#101536] hover:bg-[#6366F1] text-white font-mono text-xs uppercase tracking-wider transition-colors rounded-xl font-bold"
                 >
                   Send Another Message
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
+              <form onSubmit={handleSubmit} className="flex flex-col gap-4 text-left">
                 {/* Honeypot */}
                 <input
                   type="text"
@@ -245,21 +236,21 @@ export const Contact: React.FC = () => {
                 />
 
                 {status === "error" && (
-                  <div className="p-2.5 bg-red-950/60 border border-red-500/50 text-red-300 text-xs rounded-xl flex items-center gap-2">
-                    <AlertCircle className="w-4 h-4 shrink-0" />
+                  <div className="p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
                     <span>{errorMessage}</span>
                   </div>
                 )}
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <div className="flex items-center justify-between mb-1">
-                      <label className="text-[10px] font-mono font-bold text-white/70 uppercase">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="text-xs font-mono font-bold text-[#101536] uppercase">
                         Your Name *
                       </label>
                       {touched.name && !fieldErrors.name && (
-                        <span className="text-[9px] font-mono text-[#119E9D] flex items-center gap-0.5">
-                          <Check className="w-2.5 h-2.5" /> Valid
+                        <span className="text-[10px] font-mono text-[#10B981] flex items-center gap-0.5 font-bold">
+                          <Check className="w-3 h-3" /> Valid
                         </span>
                       )}
                     </div>
@@ -273,27 +264,27 @@ export const Contact: React.FC = () => {
                       onBlur={() => handleBlur("name")}
                       placeholder="Your full name"
                       required
-                      className={`w-full px-3.5 py-2.5 bg-white/05 border rounded-xl text-xs text-white placeholder:text-white/30 focus:outline-none transition-colors ${
+                      className={`w-full px-4 py-3 bg-[#FAFBFC] border rounded-xl text-xs text-[#101536] placeholder:text-[#5E6675]/50 focus:outline-none transition-colors ${
                         touched.name && fieldErrors.name
                           ? "border-red-400 focus:ring-1 focus:ring-red-400"
-                          : "border-white/15 focus:border-[#119E9D] focus:ring-1 focus:ring-[#119E9D]"
+                          : "border-[#101536]/15 focus:border-[#6366F1] focus:ring-1 focus:ring-[#6366F1]"
                       }`}
                     />
                     {touched.name && fieldErrors.name && (
-                      <p className="text-[10px] text-red-400 mt-1 font-mono">
+                      <p className="text-[10px] text-red-500 mt-1 font-mono">
                         {fieldErrors.name}
                       </p>
                     )}
                   </div>
 
                   <div>
-                    <div className="flex items-center justify-between mb-1">
-                      <label className="text-[10px] font-mono font-bold text-white/70 uppercase">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="text-xs font-mono font-bold text-[#101536] uppercase">
                         Email Address *
                       </label>
                       {touched.email && !fieldErrors.email && (
-                        <span className="text-[9px] font-mono text-[#119E9D] flex items-center gap-0.5">
-                          <Check className="w-2.5 h-2.5" /> Valid
+                        <span className="text-[10px] font-mono text-[#10B981] flex items-center gap-0.5 font-bold">
+                          <Check className="w-3 h-3" /> Valid
                         </span>
                       )}
                     </div>
@@ -307,29 +298,29 @@ export const Contact: React.FC = () => {
                       onBlur={() => handleBlur("email")}
                       placeholder="you@example.com"
                       required
-                      className={`w-full px-3.5 py-2.5 bg-white/05 border rounded-xl text-xs text-white placeholder:text-white/30 focus:outline-none transition-colors ${
+                      className={`w-full px-4 py-3 bg-[#FAFBFC] border rounded-xl text-xs text-[#101536] placeholder:text-[#5E6675]/50 focus:outline-none transition-colors ${
                         touched.email && fieldErrors.email
                           ? "border-red-400 focus:ring-1 focus:ring-red-400"
-                          : "border-white/15 focus:border-[#119E9D] focus:ring-1 focus:ring-[#119E9D]"
+                          : "border-[#101536]/15 focus:border-[#6366F1] focus:ring-1 focus:ring-[#6366F1]"
                       }`}
                     />
                     {touched.email && fieldErrors.email && (
-                      <p className="text-[10px] text-red-400 mt-1 font-mono">
+                      <p className="text-[10px] text-red-500 mt-1 font-mono">
                         {fieldErrors.email}
                       </p>
                     )}
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <div className="flex items-center justify-between mb-1">
-                      <label className="text-[10px] font-mono font-bold text-white/70 uppercase">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="text-xs font-mono font-bold text-[#101536] uppercase">
                         Phone Number *
                       </label>
                       {touched.phone && !fieldErrors.phone && (
-                        <span className="text-[9px] font-mono text-[#119E9D] flex items-center gap-0.5">
-                          <Check className="w-2.5 h-2.5" /> Valid
+                        <span className="text-[10px] font-mono text-[#10B981] flex items-center gap-0.5 font-bold">
+                          <Check className="w-3 h-3" /> Valid
                         </span>
                       )}
                     </div>
@@ -343,65 +334,78 @@ export const Contact: React.FC = () => {
                       onBlur={() => handleBlur("phone")}
                       placeholder="98765 43210"
                       required
-                      className={`w-full px-3.5 py-2.5 bg-white/05 border rounded-xl text-xs text-white placeholder:text-white/30 focus:outline-none transition-colors ${
+                      className={`w-full px-4 py-3 bg-[#FAFBFC] border rounded-xl text-xs text-[#101536] placeholder:text-[#5E6675]/50 focus:outline-none transition-colors ${
                         touched.phone && fieldErrors.phone
                           ? "border-red-400 focus:ring-1 focus:ring-red-400"
-                          : "border-white/15 focus:border-[#119E9D] focus:ring-1 focus:ring-[#119E9D]"
+                          : "border-[#101536]/15 focus:border-[#6366F1] focus:ring-1 focus:ring-[#6366F1]"
                       }`}
                     />
                     {touched.phone && fieldErrors.phone && (
-                      <p className="text-[10px] text-red-400 mt-1 font-mono">
+                      <p className="text-[10px] text-red-500 mt-1 font-mono">
                         {fieldErrors.phone}
                       </p>
                     )}
                   </div>
 
                   <div>
-                    <label className="text-[10px] font-mono font-bold text-white/70 uppercase block mb-1">
-                      Program Track
+                    <label className="text-xs font-mono font-bold text-[#101536] uppercase block mb-1.5">
+                      Program / Track
                     </label>
                     <select
                       name="program"
                       value={formData.program}
                       onChange={handleChange}
-                      className="w-full px-3.5 py-2.5 bg-[#080C1E] border border-white/15 rounded-xl text-xs text-white focus:outline-none focus:border-[#119E9D] transition-colors"
+                      className="w-full px-4 py-3 bg-[#FAFBFC] border border-[#101536]/15 rounded-xl text-xs text-[#101536] focus:outline-none focus:border-[#6366F1] focus:ring-1 focus:ring-[#6366F1] transition-colors cursor-pointer"
                     >
-                      <option value="Artificial Intelligence & Machine Learning">Artificial Intelligence & Machine Learning</option>
-                      <option value="Full Stack Web Development">Full Stack Web Development</option>
-                      <option value="Data Science & Analytics">Data Science & Analytics</option>
-                      <option value="Cloud Computing & DevOps">Cloud Computing & DevOps</option>
-                      <option value="Cybersecurity Foundations">Cybersecurity Foundations</option>
-                      <option value="Emerging Technologies">Emerging Technologies</option>
-                      <option value="Institutional Partnership">Institutional Partnership</option>
+                      <option value="Artificial Intelligence & Machine Learning">
+                        AI & Machine Learning
+                      </option>
+                      <option value="Full Stack Web Engineering">
+                        Full Stack Web Engineering
+                      </option>
+                      <option value="Data Science & Predictive Analytics">
+                        Data Science & Analytics
+                      </option>
+                      <option value="Cloud Computing & DevOps Workflows">
+                        Cloud & DevOps Workflows
+                      </option>
+                      <option value="Institutional Partnership">
+                        Institutional Partnership
+                      </option>
+                      <option value="Other General Enquiry">
+                        Other General Enquiry
+                      </option>
                     </select>
                   </div>
                 </div>
 
                 <div>
-                  <div className="flex items-center justify-between mb-1">
-                    <label className="text-[10px] font-mono font-bold text-white/70 uppercase">
-                      Learning Intent / Goals <span className="text-white/40 font-normal lowercase">(optional)</span>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="text-xs font-mono font-bold text-[#101536] uppercase">
+                      Message or Inquiry *
                     </label>
-                    <span className="text-[9px] font-mono text-white/40">
-                      {formData.message.length}/500
-                    </span>
+                    {touched.message && !fieldErrors.message && (
+                      <span className="text-[10px] font-mono text-[#10B981] flex items-center gap-0.5 font-bold">
+                        <Check className="w-3 h-3" /> Valid
+                      </span>
+                    )}
                   </div>
                   <textarea
                     name="message"
-                    rows={2}
-                    maxLength={500}
+                    rows={4}
                     value={formData.message}
                     onChange={handleChange}
                     onBlur={() => handleBlur("message")}
-                    placeholder="Tell us what you'd like to achieve..."
-                    className={`w-full px-3.5 py-2 bg-white/05 border rounded-xl text-xs text-white placeholder:text-white/30 focus:outline-none transition-colors resize-none ${
+                    placeholder="Tell us about your learning goals or questions..."
+                    required
+                    className={`w-full px-4 py-3 bg-[#FAFBFC] border rounded-xl text-xs text-[#101536] placeholder:text-[#5E6675]/50 focus:outline-none transition-colors ${
                       touched.message && fieldErrors.message
                         ? "border-red-400 focus:ring-1 focus:ring-red-400"
-                        : "border-white/15 focus:border-[#119E9D] focus:ring-1 focus:ring-[#119E9D]"
+                        : "border-[#101536]/15 focus:border-[#6366F1] focus:ring-1 focus:ring-[#6366F1]"
                     }`}
                   />
                   {touched.message && fieldErrors.message && (
-                    <p className="text-[10px] text-red-400 mt-1 font-mono">
+                    <p className="text-[10px] text-red-500 mt-1 font-mono">
                       {fieldErrors.message}
                     </p>
                   )}
@@ -409,19 +413,18 @@ export const Contact: React.FC = () => {
 
                 <button
                   type="submit"
-                  disabled={status === "loading" || !isFormValid}
-                  className={`w-full min-h-[46px] rounded-full font-mono font-bold text-xs uppercase tracking-widest transition-all duration-200 flex items-center justify-center gap-2 ${
-                    status === "loading" || !isFormValid
-                      ? "bg-white/10 text-white/40 cursor-not-allowed"
-                      : "bg-[#119E9D] hover:bg-[#15b5b4] text-white cursor-pointer shadow-md"
-                  }`}
+                  disabled={status === "loading"}
+                  className="min-h-[48px] w-full mt-2 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#6366F1] text-white font-bold text-xs uppercase tracking-wider hover:bg-[#4F46E5] transition-all duration-200 shadow-md disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-[#6366F1]"
                 >
                   {status === "loading" ? (
-                    <span>TRANSMITTING...</span>
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      <span>Submitting...</span>
+                    </div>
                   ) : (
                     <>
-                      <span>TRANSMIT ENQUIRY</span>
-                      <Send className="w-3.5 h-3.5 text-[#EFAF32]" />
+                      <span>Submit Enquiry</span>
+                      <Send className="w-4 h-4" />
                     </>
                   )}
                 </button>

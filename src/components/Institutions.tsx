@@ -2,77 +2,60 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, GraduationCap, Building2, Briefcase, Check } from "lucide-react";
+import { Building2, GraduationCap, Users2, ArrowRight, Check } from "lucide-react";
 import { usePresentation } from "@/context/PresentationContext";
 
 export const Institutions: React.FC = () => {
   const { enquireInstitution } = usePresentation();
+  const cubicEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
   const tracks = [
     {
-      icon: GraduationCap,
-      category: "COLLEGES & INSTITUTES",
       title: "Undergraduate Curriculum Labs",
-      specs: "Integrated semester-long emerging tech modules with hands-on lab work.",
+      category: "COLLEGES & INSTITUTES",
+      icon: GraduationCap,
+      specs: "Integrated 14-week applied emerging tech tracks with hands-on lab work.",
       outcomes: ["Hands-on Project Lab", "Practitioner Mentorship", "Capstone Verification"],
     },
     {
-      icon: Building2,
-      category: "UNIVERSITIES",
       title: "Centers of Excellence",
-      specs: "Campus-wide technology innovation hubs, advanced AI bootcamps, and faculty upskilling.",
+      category: "UNIVERSITIES",
+      icon: Building2,
+      specs: "Campus-wide emerging innovation labs, advanced AI sandboxes, and faculty upskilling.",
       outcomes: ["Campus AI Sandbox", "Faculty Enablement", "Global Certification"],
     },
     {
-      icon: Briefcase,
-      category: "INDUSTRY ECOSYSTEM",
       title: "Hiring & Talent Pipelines",
-      specs: "Directly align engineering curriculum with modern production standards and hiring stacks.",
+      category: "INDUSTRY ECOSYSTEM",
+      icon: Users2,
+      specs: "Direct high-order hiring pipelines with industry production simulation and capstone evaluation.",
       outcomes: ["Sponsored Capstones", "Direct Candidate Review", "Portfolio Evaluation"],
     },
   ];
 
-  const cubicEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
-
   return (
-    <div className="relative w-full min-h-[100svh] lg:h-full flex flex-col justify-center py-16 sm:py-20 px-6 sm:px-12 lg:px-20 overflow-hidden bg-[#101536] text-white select-none border-b border-white/08">
-      {/* Background Architectural Blueprint Grid */}
-      <div className="absolute inset-0 pointer-events-none opacity-10">
-        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="arch-grid" width="80" height="80" patternUnits="userSpaceOnUse">
-              <path d="M 80 0 L 0 0 0 80" fill="none" stroke="#FFFFFF" strokeWidth="0.5" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#arch-grid)" />
-        </svg>
-      </div>
-
+    <div className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-12 bg-notebook-grid text-[#101536] select-none border-b border-[#101536]/06 overflow-x-clip">
       <div className="max-w-7xl mx-auto w-full z-10">
-        {/* Top Architectural Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-8 pb-4 border-b border-white/15 gap-4">
+        {/* Top Header */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-10 pb-4 border-b border-[#101536]/10 gap-4">
           <div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="w-2 h-2 bg-[#EFAF32]" />
-              <span className="text-[10px] font-mono font-bold tracking-[0.25em] text-[#EFAF32] uppercase">
-                SLIDE 07 // INSTITUTIONAL PARTNERSHIPS
-              </span>
-            </div>
-            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
-              BRING THE FUTURE TO YOUR CAMPUS<span className="text-[#EFAF32]">.</span>
+            <span className="text-xs font-mono font-bold tracking-[0.25em] text-[#6366F1] uppercase block mb-1">
+              FOR INSTITUTIONS
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-[#101536] leading-tight font-jakarta">
+              PARTNERING WITH INSTITUTIONS<span className="text-[#F97316]">.</span>
             </h2>
           </div>
-
           <button
-            onClick={enquireInstitution}
-            className="self-start lg:self-auto inline-flex items-center gap-2 px-6 py-3 rounded-none border border-[#EFAF32] bg-[#EFAF32] text-[#101536] font-bold text-xs font-mono uppercase tracking-widest hover:bg-transparent hover:text-[#EFAF32] transition-colors"
+            onClick={() => enquireInstitution()}
+            className="min-h-[44px] inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#6366F1] text-white font-bold text-xs uppercase tracking-wider hover:bg-[#4F46E5] transition-all shadow-md focus:outline-none focus:ring-2 focus:ring-[#6366F1]"
           >
-            <span>PARTNER WITH US</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <span>Partner With Us</span>
+            <ArrowRight className="w-4 h-4 text-white" />
           </button>
         </div>
 
-        {/* 3 Structured Architectural Columns (Sharp Corners, Serious Discipline) */}
+        {/* 3 High Contrast White Paper Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {tracks.map((track, idx) => {
             const Icon = track.icon;
@@ -83,30 +66,32 @@ export const Institutions: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.1, ease: cubicEase }}
-                className="p-5 sm:p-6 bg-white/04 border border-white/10 flex flex-col justify-between"
+                className="p-6 sm:p-8 bg-white border border-[#101536]/12 rounded-3xl shadow-lg flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-[9px] font-mono font-bold tracking-widest text-[#EFAF32] uppercase">
+                    <span className="text-[10px] font-mono font-bold tracking-wider text-[#F97316] uppercase">
                       {track.category}
                     </span>
-                    <Icon className="w-4 h-4 text-white/50" />
+                    <div className="w-10 h-10 rounded-xl bg-[#6366F1]/10 text-[#6366F1] flex items-center justify-center">
+                      <Icon className="w-5 h-5" />
+                    </div>
                   </div>
 
-                  <h3 className="text-lg font-bold text-white mb-2">
+                  <h3 className="text-xl font-bold text-[#101536] mb-3 font-jakarta">
                     {track.title}
                   </h3>
 
-                  <p className="text-xs text-white/70 leading-relaxed mb-4 font-light">
+                  <p className="text-xs sm:text-sm text-[#5E6675] leading-relaxed mb-6 font-medium">
                     {track.specs}
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-white/10 space-y-1.5 font-mono text-[11px] text-white/80">
+                <div className="pt-4 border-t border-[#101536]/10 space-y-2 font-mono text-xs text-[#101536]">
                   {track.outcomes.map((item) => (
                     <div key={item} className="flex items-center gap-2">
-                      <Check className="w-3 h-3 text-[#119E9D]" />
-                      <span>{item}</span>
+                      <Check className="w-4 h-4 text-[#10B981] shrink-0 font-bold" />
+                      <span className="font-semibold">{item}</span>
                     </div>
                   ))}
                 </div>

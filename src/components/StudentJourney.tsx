@@ -1,172 +1,104 @@
-"use client";
-
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Compass, BookOpen, Wrench, Sparkles, TrendingUp } from "lucide-react";
-
-interface Milestone {
-  number: string;
-  name: string;
-  category: string;
-  headline: string;
-  action: string;
-  detail: string;
-}
+import React from "react";
+import { motion } from "framer-motion";
+import { Compass, Search, BookOpen, Puzzle, Send } from "lucide-react";
 
 export const StudentJourney: React.FC = () => {
-  const milestones: Milestone[] = [
+  const steps = [
     {
-      number: "01",
-      name: "DISCOVER",
-      category: "ASSESSMENT & MAPPING",
-      headline: "Deconstruct your technology direction",
-      action: "Skill Gap Analysis • Track Exploration • Mentor Diagnostic",
-      detail: "Identify high-leverage domains (AI, Web, Data, Cloud) that match your natural aptitude and career intent.",
+      num: "1",
+      title: "DISCOVER",
+      desc: "Explore your interests",
+      color: "bg-[#6366F1] text-white",
+      icon: <Compass className="w-5 h-5 text-[#6366F1]" />,
     },
     {
-      number: "02",
-      name: "LEARN",
-      category: "CONCEPTUAL RIGOR",
-      headline: "Master core engineering theory",
-      action: "First-Principles Theory • Live Socratic Workshops • Deep Dives",
-      detail: "Build rigorous foundational models with guidance from experienced engineers who practice what they teach.",
+      num: "2",
+      title: "EXPLORE",
+      desc: "Find the right path for you",
+      color: "bg-[#F97316] text-white",
+      icon: <Search className="w-5 h-5 text-[#F97316]" />,
     },
     {
-      number: "03",
-      name: "BUILD",
-      category: "HANDS-ON REPOSITORIES",
-      headline: "Create production-grade repositories",
-      action: "Git Workflows • Automated CI/CD • Clean Code Standards",
-      detail: "Transform conceptual knowledge into real software repositories, neural architectures, and data pipelines.",
+      num: "3",
+      title: "LEARN",
+      desc: "Build skills with experts",
+      color: "bg-[#119E9D] text-white",
+      icon: <BookOpen className="w-5 h-5 text-[#119E9D]" />,
     },
     {
-      number: "04",
-      name: "INNOVATE",
-      category: "OPEN-ENDED PROBLEM SOLVING",
-      headline: "Tackle real-world industry capstones",
-      action: "Architectural Design • Peer Code Review • Performance Tuning",
-      detail: "Solve unscripted technical challenges, build portfolio-grade artifacts, and present your work to mentors.",
+      num: "4",
+      title: "BUILD",
+      desc: "Work on real projects",
+      color: "bg-[#F59E0B] text-white",
+      icon: <Puzzle className="w-5 h-5 text-[#F59E0B]" />,
     },
     {
-      number: "05",
-      name: "GROW",
-      category: "CAREER CONFIDENCE",
-      headline: "Step into global engineering roles",
-      action: "Verified Proof of Work • Portfolio Presentation • Lifelong Agency",
-      detail: "Graduate with verified engineering capability, authentic repositories, and the confidence to lead tomorrow.",
+      num: "5",
+      title: "GROW",
+      desc: "Get ready for what's next",
+      color: "bg-[#8B5CF6] text-white",
+      icon: <Send className="w-5 h-5 text-[#8B5CF6]" />,
     },
   ];
 
-  const [activeStep, setActiveStep] = useState(2); // Default on BUILD
-  const current = milestones[activeStep];
-  const cubicEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
-
   return (
-    <div className="relative w-full min-h-[100svh] lg:h-full flex flex-col justify-center py-16 sm:py-20 px-4 sm:px-8 lg:px-16 overflow-hidden bg-[#FAFBFC] text-[#101536] select-none border-b border-[#101536]/08">
-      {/* Background Schematic Lines */}
-      <div className="absolute inset-0 pointer-events-none opacity-20">
-        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          <line x1="10%" y1="50%" x2="90%" y2="50%" stroke="#101536" strokeWidth="1" strokeDasharray="3 3" />
-        </svg>
-      </div>
-
-      <div className="max-w-7xl mx-auto w-full z-10">
-        {/* Section Eyebrow */}
-        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-8 pb-3 border-b border-[#101536]/10 gap-2">
-          <div>
-            <span className="text-[10px] font-mono font-bold tracking-[0.25em] text-[#119E9D] uppercase block mb-1">
-              SLIDE 04 // THE CAPABILITY BLUEPRINT
+    <div className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-12 bg-notebook-grid border-b border-[#101536]/06 select-none overflow-x-clip">
+      <div className="max-w-7xl mx-auto w-full relative z-10 text-center">
+        {/* Title */}
+        <div className="inline-block relative mb-12 sm:mb-16">
+          <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-[#101536] font-jakarta">
+            THE NEXOVATE <span className="relative inline-block text-[#6366F1]">
+              JOURNEY
+              <svg className="absolute -bottom-2 left-0 w-full h-3" viewBox="0 0 100 20" preserveAspectRatio="none" fill="none">
+                <path d="M 0 10 Q 50 18 100 8" stroke="#6366F1" strokeWidth="3" strokeLinecap="round" />
+                <path d="M 0 16 Q 50 24 100 14" stroke="#F97316" strokeWidth="2" strokeLinecap="round" />
+              </svg>
             </span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-[#101536]">
-              INTERACTIVE PROGRESSION MAP<span className="text-[#EFAF32]">.</span>
-            </h2>
-          </div>
-          <span className="text-xs font-mono text-[#5E6675]">
-            5 MILESTONES // CLICK ANY PHASE
-          </span>
+          </h2>
         </div>
 
-        {/* PROGRESSIVE HORIZONTAL LINE WITH 5 MILESTONES */}
-        <div className="relative my-6 sm:my-10">
-          {/* Base Track */}
-          <div className="absolute top-1/2 left-0 right-0 h-1 bg-[#101536]/10 -translate-y-1/2" />
+        {/* 5 Journey Steps Connected horizontally on Desktop & vertically on Mobile */}
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-6 relative">
+          {steps.map((step, idx) => (
+            <div key={step.num} className="flex flex-col items-center relative text-center group">
+              {/* Icon Circle */}
+              <div className="w-12 h-12 rounded-full bg-white border border-[#101536]/10 shadow-xs flex items-center justify-center mb-3">
+                {step.icon}
+              </div>
 
-          {/* Active Animated Fill Line */}
-          <motion.div
-            animate={{ width: `${(activeStep / (milestones.length - 1)) * 100}%` }}
-            transition={{ duration: 0.5, ease: cubicEase }}
-            className="absolute top-1/2 left-0 h-1 bg-gradient-to-r from-[#119E9D] via-[#119E9D] to-[#EFAF32] -translate-y-1/2"
-          />
+              {/* Number Badge & Title */}
+              <div className="flex items-center gap-2 mb-1">
+                <span className={`w-6 h-6 rounded-full font-bold text-xs flex items-center justify-center ${step.color}`}>
+                  {step.num}
+                </span>
+                <span className="font-extrabold text-sm text-[#101536] font-jakarta">
+                  {step.title}
+                </span>
+              </div>
 
-          {/* 5 Milestone Nodes */}
-          <div className="relative flex justify-between items-center z-10">
-            {milestones.map((m, idx) => {
-              const isActive = activeStep === idx;
-              const isPast = activeStep >= idx;
+              {/* Description */}
+              <p className="text-xs text-[#5E6675] font-medium max-w-[140px]">
+                {step.desc}
+              </p>
 
-              return (
-                <button
-                  key={m.number}
-                  onClick={() => setActiveStep(idx)}
-                  className="flex flex-col items-center group focus:outline-none"
-                >
-                  <div
-                    className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-mono font-bold text-xs sm:text-sm transition-all duration-300 ${
-                      isActive
-                        ? "bg-[#101536] text-white ring-4 ring-[#119E9D]/30 scale-110 shadow-md"
-                        : isPast
-                        ? "bg-[#119E9D] text-white"
-                        : "bg-white border-2 border-[#101536]/20 text-[#5E6675] hover:border-[#101536]"
-                    }`}
-                  >
-                    {m.number}
-                  </div>
-
-                  <span
-                    className={`mt-2 text-[10px] sm:text-xs font-mono font-bold uppercase tracking-wider transition-colors ${
-                      isActive ? "text-[#101536]" : "text-[#5E6675] group-hover:text-[#101536]"
-                    }`}
-                  >
-                    {m.name}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+              {/* Desktop Dotted Connection Arrow */}
+              {idx < steps.length - 1 && (
+                <div className="hidden md:block absolute top-6 -right-6 w-12 h-6 pointer-events-none z-10">
+                  <svg className="w-full h-full" viewBox="0 0 50 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 10 C 20 2, 35 18, 45 10 M 38 6 L 46 10 L 40 16" stroke="#5E6675" strokeWidth="2" strokeDasharray="3 3" strokeLinecap="round" />
+                  </svg>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
 
-        {/* ACTIVE MILESTONE SCHEMATIC DISPLAY (Architectural & Clean, Zero Generic Cards) */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={current.number}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.45, ease: cubicEase }}
-            className="mt-6 pt-6 border-t border-[#101536]/10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center"
-          >
-            <div className="lg:col-span-8">
-              <span className="text-[10px] font-mono font-bold text-[#119E9D] uppercase tracking-widest block mb-1">
-                PHASE {current.number} // {current.category}
-              </span>
-              <h3 className="text-xl sm:text-3xl font-extrabold text-[#101536] tracking-tight mb-2">
-                {current.headline}
-              </h3>
-              <p className="text-xs sm:text-sm text-[#5E6675] leading-relaxed max-w-2xl">
-                {current.detail}
-              </p>
-            </div>
-
-            <div className="lg:col-span-4 p-4 bg-[#F1F2EF] border border-[#101536]/10 rounded-xl font-mono text-xs text-[#101536]">
-              <span className="text-[9px] font-bold uppercase text-[#119E9D] block mb-1">
-                DELIVERABLE WORKFLOW
-              </span>
-              <p className="text-[11px] leading-relaxed font-semibold">
-                {current.action}
-              </p>
-            </div>
-          </motion.div>
-        </AnimatePresence>
+        {/* Hand-Drawn Dotted Curved Arrow Transition (Journey -> Programs) */}
+        <div className="hidden md:flex justify-end pr-12 -mb-8 mt-8 pointer-events-none">
+          <svg className="w-32 h-16" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 10 C 50 5, 90 25, 100 50 M 90 42 L 100 50 L 106 38" stroke="#119E9D" strokeWidth="2.5" strokeDasharray="5 4" strokeLinecap="round" />
+          </svg>
+        </div>
       </div>
     </div>
   );

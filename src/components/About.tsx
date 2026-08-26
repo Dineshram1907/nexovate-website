@@ -4,18 +4,19 @@ import React from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Compass, Target, Sparkles } from "lucide-react";
 import { usePresentation } from "@/context/PresentationContext";
+import { brandCreatorImage } from "@/assets";
 
 export const About: React.FC = () => {
   const { goToSection } = usePresentation();
   const cubicEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
   return (
-    <div className="relative w-full min-h-[100svh] lg:h-full flex flex-col justify-center py-16 sm:py-20 px-6 sm:px-12 lg:px-20 overflow-hidden bg-[#F5F4F0] text-[#101536] select-none border-b border-[#101536]/08">
+    <div className="relative w-full py-14 sm:py-20 px-4 sm:px-6 lg:px-12 bg-[#FAFBFC] text-[#101536] select-none border-b border-[#101536]/06 overflow-x-clip">
       <div className="max-w-7xl mx-auto w-full z-10">
         {/* Editorial Subheading */}
         <div className="flex items-center gap-3 mb-6 pb-3 border-b border-[#101536]/10">
           <span className="text-[10px] font-mono font-bold tracking-[0.25em] text-[#119E9D] uppercase">
-            SLIDE 08 // PURPOSE & PEOPLE
+            OUR MISSION
           </span>
           <span className="h-[1px] w-12 bg-[#119E9D]/40" />
         </div>
@@ -30,13 +31,13 @@ export const About: React.FC = () => {
             </h2>
 
             <p className="text-sm sm:text-base text-[#333B4E] leading-relaxed mb-4 font-light">
-              We started Nexovate with a simple conviction: the greatest barrier for aspiring engineers is not access to information, but the lack of guided environments to build meaningful software.
+              We started Nexovate with a simple conviction: every student has potential. What they need is not just isolated lectures, but a place to explore their interests, experiment, learn practical skills, and build their future across technology, design, and innovation.
             </p>
 
             {/* Founder Quote Card */}
             <div className="p-4 sm:p-5 bg-white border-l-4 border-[#119E9D] shadow-xs mb-6 w-full">
               <p className="text-xs sm:text-sm font-serif italic text-[#101536] leading-relaxed">
-                "Our measure of success isn't how many videos a student watches, but what they are capable of building independently when they graduate."
+                "Our measure of success isn't how many lectures a student sits through, but what they are capable of discovering, building, and creating independently when they graduate."
               </p>
               <span className="text-[10px] font-mono font-bold text-[#5E6675] uppercase block mt-2">
                 — NEXOVATE ACADEMIC BOARD
@@ -63,9 +64,10 @@ export const About: React.FC = () => {
           <div className="lg:col-span-5 flex justify-center">
             <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-xl border border-[#101536]/10 bg-[#101536]">
               <img
-                src="/brand-creator.jpg"
+                src={brandCreatorImage}
                 alt="Nexovate Innovation Studio"
                 className="w-full h-full object-cover"
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#101536]/80 via-transparent to-transparent" />
               <div className="absolute bottom-3 left-3 right-3 text-white font-mono text-[10px]">

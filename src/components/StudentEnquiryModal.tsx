@@ -20,9 +20,14 @@ import {
 } from "@/lib/validation";
 
 export const StudentEnquiryModal: React.FC = () => {
-  const { selectedProgram } = usePresentation();
-  const [isOpen, setIsOpen] = useState(false);
-  const [hasInteracted, setHasInteracted] = useState(false);
+  const {
+    selectedProgram,
+    isEnquiryModalOpen,
+    openEnquiryModal,
+    closeEnquiryModal,
+  } = usePresentation();
+  const [internalIsOpen, setInternalIsOpen] = useState(false);
+  const isOpen = isEnquiryModalOpen || internalIsOpen;
 
   const [formData, setFormData] = useState({
     name: "",
@@ -41,8 +46,8 @@ export const StudentEnquiryModal: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [lastSubmitTime, setLastSubmitTime] = useState<number>(0);
 
-  const inactivityTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const initialTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const hasTriggeredRef = useRef<boolean>(false);
 
   // Sync selectedProgram if updated externally
   useEffect(() => {
@@ -51,55 +56,48 @@ export const StudentEnquiryModal: React.FC = () => {
     }
   }, [selectedProgram]);
 
-  // Step 1: Trigger popup on entering or refreshing the website (1.5s after load)
+  // Wait 7 seconds after page load before opening automatically
   useEffect(() => {
-    initialTimerRef.current = setTimeout(() => {
-      setIsOpen(true);
-    }, 1500);
+    if (!hasTriggeredRef.current && !isOpen) {
+      timerRef.current = setTimeout(() => {
+        hasTriggeredRef.current = true;
+        setInternalIsOpen(true);
+        openEnquiryModal();
+      }, 7000);
+    }
 
     return () => {
-      if (initialTimerRef.current) clearTimeout(initialTimerRef.current);
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
     };
   }, []);
 
-  // Step 2: 8-second inactivity auto-dismiss (dissolves if no action is performed)
-  const startInactivityTimer = useCallback(() => {
-    if (hasInteracted) return;
-
-    if (inactivityTimerRef.current) clearTimeout(inactivityTimerRef.current);
-    inactivityTimerRef.current = setTimeout(() => {
-      setIsOpen(false);
-    }, 8000);
-  }, [hasInteracted]);
-
-  useEffect(() => {
-    if (isOpen && !hasInteracted) {
-      startInactivityTimer();
+  const handleClose = useCallback(() => {
+    hasTriggeredRef.current = true;
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
     }
-    return () => {
-      if (inactivityTimerRef.current) clearTimeout(inactivityTimerRef.current);
-    };
-  }, [isOpen, hasInteracted, startInactivityTimer]);
+    setInternalIsOpen(false);
+    closeEnquiryModal();
+  }, [closeEnquiryModal]);
 
-  // Pause & cancel inactivity timer whenever user interacts with the form
   const handleUserInteraction = () => {
-    setHasInteracted(true);
-    if (inactivityTimerRef.current) {
-      clearTimeout(inactivityTimerRef.current);
-      inactivityTimerRef.current = null;
-    }
+    // Kept as no-op for form interaction tracking if needed
   };
 
   // Keyboard accessibility: Escape key closes modal
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isOpen) {
-        setIsOpen(false);
+        handleClose();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen]);
+  }, [isOpen, handleClose]);
 
   // Validate single field on blur or change
   const validateField = (name: string, value: string) => {
@@ -152,10 +150,6 @@ export const StudentEnquiryModal: React.FC = () => {
     if (touched[name]) {
       validateField(name, value);
     }
-  };
-
-  const handleClose = () => {
-    setIsOpen(false);
   };
 
   // Validate all fields
@@ -274,17 +268,18 @@ export const StudentEnquiryModal: React.FC = () => {
             className="relative w-full max-w-lg bg-[#FAFBFC] rounded-3xl shadow-2xl border border-[#101536]/10 overflow-hidden z-10 my-auto text-[#101536]"
           >
             {/* Top Brand Header Bar */}
-            <div className="bg-[#101536] text-white px-6 py-5 flex items-center justify-between">
+            <div className="bg-[#101536] text-white px-6 py-5 flex items-center justify-between relative">
+              <div className="absolute -top-2 left-6 w-12 h-3.5 bg-[#F97316]/50 rotate-3 rounded-xs" />
               <div className="flex items-center gap-2.5">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#119E9D] animate-pulse" />
+                <div className="w-2.5 h-2.5 rounded-full bg-[#6366F1] animate-pulse" />
                 <span className="text-xs font-mono font-bold tracking-[0.18em] text-[#EFAF32] uppercase">
-                  ADMISSIONS & LEARNING ENQUIRY
+                  DISCOVER & LEARN ENQUIRY
                 </span>
               </div>
               <button
                 onClick={handleClose}
                 aria-label="Close enquiry popup"
-                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#119E9D]"
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#6366F1]"
               >
                 <X className="w-4 h-4" />
               </button>

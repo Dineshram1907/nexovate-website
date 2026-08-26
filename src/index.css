@@ -8,8 +8,11 @@
     --teal-brand: #119E9D;
     --gold-warm: #EFAF32;
     --gold-soft: #F5C45A;
+    --purple-brand: #6366F1;
+    --orange-brand: #F97316;
     --bg-main: #FAFBFC;
-    --bg-secondary: #F2F5F6;
+    --bg-paper: #FFFDF9;
+    --bg-secondary: #F6F8F9;
     --text-main: #101536;
     --text-muted: #5E6675;
     --white: #FFFFFF;
@@ -18,72 +21,121 @@
   html {
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior-y: none;
   }
 
   html, body {
     margin: 0;
     padding: 0;
+    width: 100%;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
     background-color: #FAFBFC;
     color: #101536;
     font-family: var(--font-jakarta), system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-
-  /* Desktop presentation fixed container */
-  @media (min-width: 1024px) {
-    html, body {
-      height: 100%;
-      overflow: hidden;
-    }
-  }
-
-  /* Mobile/Tablet native momentum scrolling */
-  @media (max-width: 1023px) {
-    html, body {
-      min-height: 100%;
-      overflow-x: hidden;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-  }
 }
 
 /* Selection Highlight */
 ::selection {
-  background-color: rgba(17, 158, 157, 0.15);
+  background-color: rgba(99, 102, 241, 0.2);
   color: #101536;
 }
 
 /* Custom Soft Scrollbar */
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 5px;
 }
 ::-webkit-scrollbar-track {
   background: #FAFBFC;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(16, 21, 54, 0.15);
+  background: rgba(16, 21, 54, 0.18);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #119E9D;
+  background: #6366F1;
 }
 
-/* Typography Utility Classes */
-.heading-editorial {
-  letter-spacing: -0.025em;
-  font-weight: 700;
-  color: #101536;
+/* Notebook Paper Grid Background Pattern */
+.bg-notebook-grid {
+  background-color: #FFFDF9;
+  background-image: 
+    linear-gradient(rgba(16, 21, 54, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 21, 54, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-.subheading-label {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: #119E9D;
+/* Notebook Line Paper Background Pattern */
+.bg-notebook-lines {
+  background-color: #FFFDF9;
+  background-image: linear-gradient(rgba(17, 158, 157, 0.07) 1px, transparent 1px);
+  background-size: 100% 28px;
+}
+
+/* Taped Sticky Note Utility */
+.note-taped {
+  position: relative;
+  background-color: #FEF3C7;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 15px -2px rgba(16, 21, 54, 0.08);
+}
+
+.note-taped::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  right: 20px;
+  width: 42px;
+  height: 16px;
+  background-color: rgba(249, 115, 22, 0.45);
+  transform: rotate(4deg);
+  border-radius: 2px;
+  backdrop-filter: blur(1px);
+}
+
+/* Sticker Badge Utility */
+.sticker-badge {
+  background-color: #FFFFFF;
+  border: 2px dashed rgba(16, 21, 54, 0.15);
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(16, 21, 54, 0.06);
+}
+
+/* Educational Card Styles */
+.card-edtech {
+  background-color: #FFFFFF;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(16, 21, 54, 0.08);
+  box-shadow: 0 4px 20px -2px rgba(16, 21, 54, 0.04);
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card-edtech:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 32px -4px rgba(16, 21, 54, 0.1);
+  border-color: rgba(99, 102, 241, 0.35);
+}
+
+/* Floating Animations */
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-7px) rotate(1.5deg); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+.animate-float-slow {
+  animation: floatSlow 5s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
 }
 
 /* Accessible reduced motion */
@@ -93,5 +145,8 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+  .animate-float-slow, .animate-pulse-glow {
+    animation: none !important;
   }
 }

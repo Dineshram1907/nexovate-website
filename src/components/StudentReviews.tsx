@@ -4,11 +4,15 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight, ArrowRight, CheckCircle2 } from "lucide-react";
 import { usePresentation } from "@/context/PresentationContext";
-import { useHorizontalSwipe } from "@/hooks/useHorizontalSwipe";
+import {
+  arjunAvatar,
+  priyaAvatar,
+  rahulAvatar,
+  hariniAvatar,
+  vishalAvatar,
+} from "@/assets";
 
-// DEMO TESTIMONIALS — Replace with verified student reviews and approved photos before launch.
-
-interface ReviewItem {
+export interface ReviewItem {
   id: string;
   number: string;
   quote: string;
@@ -31,7 +35,7 @@ export const REVIEWS_DATA: ReviewItem[] = [
     programIndex: 0,
     role: "Engineering Graduate",
     location: "Chennai",
-    image: "/reviews/arjun.jpg",
+    image: arjunAvatar,
   },
   {
     id: "02",
@@ -43,7 +47,7 @@ export const REVIEWS_DATA: ReviewItem[] = [
     programIndex: 2,
     role: "Computer Science Student",
     location: "Coimbatore",
-    image: "/reviews/priya.jpg",
+    image: priyaAvatar,
   },
   {
     id: "03",
@@ -55,7 +59,7 @@ export const REVIEWS_DATA: ReviewItem[] = [
     programIndex: 1,
     role: "Software Developer",
     location: "Chennai",
-    image: "/reviews/rahul.jpg",
+    image: rahulAvatar,
   },
   {
     id: "04",
@@ -67,7 +71,7 @@ export const REVIEWS_DATA: ReviewItem[] = [
     programIndex: 5,
     role: "Technology Student",
     location: "Tamil Nadu",
-    image: "/reviews/harini.jpg",
+    image: hariniAvatar,
   },
   {
     id: "05",
@@ -79,7 +83,7 @@ export const REVIEWS_DATA: ReviewItem[] = [
     programIndex: 3,
     role: "Systems Engineer",
     location: "Chennai",
-    image: "/reviews/vishal.jpg",
+    image: vishalAvatar,
   },
 ];
 
@@ -110,16 +114,6 @@ export const StudentReviews: React.FC = () => {
       setIsPaused(false);
     }, 5000);
   }, []);
-
-  // Responsive Horizontal Swipe Hook (Low distance threshold + velocity support)
-  const { containerRef, dragOffset, handlers } = useHorizontalSwipe({
-    onNext: nextReview,
-    onPrev: prevReview,
-    onInteraction: handleInteraction,
-    dragDistanceThreshold: 30,
-    velocityThreshold: 0.2,
-    trackpadThreshold: 35,
-  });
 
   // Autoplay progression timer
   useEffect(() => {
@@ -165,7 +159,8 @@ export const StudentReviews: React.FC = () => {
 
   const handleExploreTrack = (index: number) => {
     setActiveProgramIndex(index);
-    goToSection(2); // Slide 03 Programs
+    const element = document.getElementById("programs");
+    if (element) element.scrollIntoView({ behavior: "smooth" });
   };
 
   const current = REVIEWS_DATA[activeReviewIndex];
@@ -174,18 +169,7 @@ export const StudentReviews: React.FC = () => {
   return (
     <section
       id="reviews"
-      ref={containerRef}
-      data-horizontal-carousel="true"
-      tabIndex={0}
-      {...handlers}
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => {
-        if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
-        resumeTimeoutRef.current = setTimeout(() => setIsPaused(false), 3000);
-      }}
-      onFocus={() => setIsPaused(true)}
-      onBlur={() => setIsPaused(false)}
-      className="relative w-full min-h-[100svh] lg:h-full flex flex-col justify-center py-10 sm:py-14 px-4 sm:px-8 lg:px-16 overflow-hidden bg-[#FAFBFC] text-[#101536] select-none border-b border-[#101536]/08 focus:outline-none cursor-grab active:cursor-grabbing touch-pan-y"
+      className="relative w-full py-14 sm:py-20 px-4 sm:px-6 lg:px-12 bg-notebook-grid text-[#101536] select-none border-b border-[#101536]/06 overflow-x-clip"
     >
       {/* Background Faint Watermark Quote & Curve */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-[0.03] select-none text-[320px] font-serif leading-none text-[#101536]">
@@ -197,25 +181,20 @@ export const StudentReviews: React.FC = () => {
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-4 sm:mb-6 pb-2.5 border-b border-[#101536]/08 gap-2">
           <div>
-            <span className="text-[10px] font-mono font-bold tracking-[0.25em] text-[#119E9D] uppercase block mb-1">
-              SLIDE 06 // STUDENT STORIES
+            <span className="text-[10px] font-mono font-bold tracking-[0.25em] text-[#6366F1] uppercase block mb-1">
+              STUDENT STORIES
             </span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-[#101536] leading-tight">
-              THE PEOPLE BEHIND THE PROGRESS<span className="text-[#EFAF32]">.</span>
+            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-[#101536] leading-tight font-jakarta">
+              WHAT STUDENTS ARE CREATING<span className="text-[#F97316]">.</span>
             </h2>
           </div>
-          <p className="text-xs sm:text-sm text-[#5E6675] font-light">
-            Real learning should leave a real impact.
+          <p className="text-xs sm:text-sm text-[#5E6675] font-medium">
+            Real students exploring interests, building projects, and shaping what comes next.
           </p>
         </div>
 
-        {/* FEATURED TESTIMONIAL DISPLAY WITH LIVE DRAG FEEDBACK */}
-        <div
-          style={{
-            transform: dragOffset ? `translateX(${dragOffset}px)` : "none",
-            transition: dragOffset ? "none" : "transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)",
-          }}
-        >
+        {/* FEATURED TESTIMONIAL DISPLAY */}
+        <div>
           <AnimatePresence mode="wait">
             <motion.div
               key={current.id}
@@ -238,6 +217,7 @@ export const StudentReviews: React.FC = () => {
                       src={current.image}
                       alt={current.name}
                       className="w-full h-full object-cover"
+                      loading="lazy"
                     />
                     <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full bg-[#101536]/80 backdrop-blur-sm text-[8px] font-mono text-white flex items-center gap-1">
                       <CheckCircle2 className="w-2.5 h-2.5 text-[#119E9D]" />
@@ -327,6 +307,7 @@ export const StudentReviews: React.FC = () => {
                     src={item.image}
                     alt={item.name}
                     className="w-full h-full object-cover"
+                    loading="lazy"
                   />
                 </button>
               );

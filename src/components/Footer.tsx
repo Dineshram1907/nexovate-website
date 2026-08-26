@@ -10,12 +10,12 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-white/10">
           {/* Brand Info */}
           <div className="md:col-span-5 flex flex-col items-start">
-            <NexovateLogo size={36} variant="dark" className="mb-4" />
-            <p className="text-xs font-semibold tracking-widest text-[#119E9D] uppercase mb-4">
-              NEXT • LEARN • INNOVATE
+            <NexovateLogo size={34} variant="dark" showTagline={true} className="mb-4" />
+            <p className="text-sm text-[#9AA8BA] max-w-sm font-normal leading-relaxed mb-3">
+              Nexovate is an applied EdTech learning platform helping students discover interests, master practical skills, and build a future they're excited about.
             </p>
-            <p className="text-sm text-[#9AA8BA] max-w-sm font-normal leading-relaxed">
-              Nexovate is a technology-focused education company helping students build practical skills, explore emerging technologies, and prepare for what comes next.
+            <p className="text-xs font-mono font-bold text-[#EFAF32] italic">
+              "Keep learning. Keep building. Keep growing."
             </p>
           </div>
 

@@ -1,4 +1,5 @@
 import React from "react";
+import { nexovateSymbol } from "@/assets";
 
 interface NexovateLogoProps {
   className?: string;
@@ -25,7 +26,7 @@ export const NexovateLogo: React.FC<NexovateLogoProps> = ({
     return (
       <div className={`inline-flex items-center gap-3 px-3.5 py-1.5 rounded-2xl bg-white/95 backdrop-blur-md border border-white/20 shadow-md select-none ${className}`}>
         <img
-          src="/nexovate-symbol.png"
+          src={nexovateSymbol}
           alt="Nexovate"
           className="h-auto object-contain"
           style={{ height: `${size}px`, width: "auto" }}
@@ -51,7 +52,7 @@ export const NexovateLogo: React.FC<NexovateLogoProps> = ({
       {/* Exact Uploaded Calligraphic N Emblem PNG */}
       <div className="relative shrink-0 flex items-center justify-center">
         <img
-          src="/nexovate-symbol.png"
+          src={nexovateSymbol}
           alt="Nexovate Emblem"
           className="h-auto object-contain transition-transform duration-200 hover:scale-[1.03]"
           style={{ height: `${size}px`, width: "auto" }}
@@ -71,10 +72,10 @@ export const NexovateLogo: React.FC<NexovateLogoProps> = ({
 
           {showTagline && (
             <span
-              className="text-[9px] sm:text-[10px] font-sans font-semibold tracking-[0.2em] uppercase mt-1"
+              className="text-[8px] sm:text-[9px] font-mono font-bold tracking-[0.2em] uppercase mt-0.5"
               style={{ color: accentTeal }}
             >
-              NEXT • LEARN • INNOVATE
+              LEARN. BUILD. SHAPE TOMORROW.
             </span>
           )}
         </div>
