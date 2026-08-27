@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, ChevronLeft, ChevronRight, Clock, Award, Sparkles, CheckCircle2 } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { usePresentation } from "@/context/PresentationContext";
 import {
   aiMlImage,
@@ -11,10 +11,9 @@ import {
   cloudDevopsImage,
 } from "@/assets";
 
-// DEMO PROGRAM DATA — Replace with verified Nexovate data before production.
-
 export interface ProgramItem {
   id: string;
+  selectorLabel: string;
   category: string;
   title: string;
   headline: string;
@@ -23,199 +22,224 @@ export interface ProgramItem {
   mode: string;
   level: string;
   fees: string;
-  image: any;
+  image: string;
   skills: string[];
-  accent: "teal" | "gold";
+  accentColor: string;
+  accentBg: string;
 }
 
 export const PROGRAMS_DATA: ProgramItem[] = [
   {
     id: "01",
-    category: "ARTIFICIAL INTELLIGENCE",
-    title: "Artificial Intelligence & Neural Systems",
-    headline: "Build intelligent algorithms and neural architectures.",
+    selectorLabel: "Technology",
+    category: "SOFTWARE & WEB ARCHITECTURE",
+    title: "Full Stack Web Engineering",
+    headline: "Architect modern, production-grade web platforms.",
     description:
-      "Explore deep learning, computer vision, and AI models through hands-on Python labs and practical project repositories.",
-    duration: "12 WEEKS",
-    mode: "HYBRID",
-    level: "BEGINNER → INTERMEDIATE",
+      "Design and deploy responsive web applications using React, TypeScript, Node.js APIs, relational databases, and scalable cloud workflows.",
+    duration: "14 Weeks",
+    mode: "Online & Labs",
+    level: "Beginner → Intermediate",
     fees: "₹24,999",
-    image: aiMlImage,
-    skills: ["Python", "Neural Networks", "Computer Vision", "AI Applications"],
-    accent: "teal",
+    image: fullStackImage,
+    skills: ["React & Next.js", "TypeScript", "Node.js API", "PostgreSQL", "Tailwind CSS"],
+    accentColor: "#6366F1",
+    accentBg: "bg-[#EEF2FF]",
   },
   {
     id: "02",
-    category: "SOFTWARE & WEB ARCHITECTURE",
-    title: "Full Stack Web Engineering",
-    headline: "Architect modern, production-grade applications.",
+    selectorLabel: "Design",
+    category: "CREATIVE & PRODUCT DESIGN",
+    title: "UI/UX & Interactive Product Design",
+    headline: "Craft intuitive, human-centered digital experiences.",
     description:
-      "Design and deploy web platforms using Next.js, Node.js, TypeScript, PostgreSQL, and scalable cloud backends.",
-    duration: "16 WEEKS",
-    mode: "HYBRID",
-    level: "BEGINNER → INTERMEDIATE",
-    fees: "₹29,999",
+      "Master user research, interactive wireframing, Figma design systems, and rapid prototyping to build interfaces people love to use.",
+    duration: "10 Weeks",
+    mode: "Hybrid",
+    level: "All Levels",
+    fees: "₹21,999",
     image: fullStackImage,
-    skills: ["React & Web", "TypeScript", "Node.js API", "Databases"],
-    accent: "gold",
+    skills: ["UI/UX Design", "Figma Systems", "User Research", "Prototyping", "Design Systems"],
+    accentColor: "#EC4899",
+    accentBg: "bg-[#FCE7F3]",
   },
   {
     id: "03",
-    category: "DATA & ANALYTICS",
-    title: "Data Science & Predictive Analytics",
-    headline: "Extract actionable intelligence from complex data.",
+    selectorLabel: "Business",
+    category: "PRODUCT & TECH BUSINESS",
+    title: "Tech Business & Product Strategy",
+    headline: "Turn creative concepts into scalable digital products.",
     description:
-      "Transform raw data into strategic insights with statistical modeling, predictive algorithms, automated pipelines, and dashboards.",
-    duration: "14 WEEKS",
-    mode: "ONLINE",
-    level: "BEGINNER → INTERMEDIATE",
-    fees: "₹27,999",
-    image: dataScienceImage,
-    skills: ["Python Data Stack", "SQL", "Predictive Analytics", "Data Visualization"],
-    accent: "teal",
+      "Learn product management essentials, customer discovery, market strategy, agile sprints, and growth analytics for emerging tech ventures.",
+    duration: "8 Weeks",
+    mode: "Online",
+    level: "All Levels",
+    fees: "₹19,999",
+    image: cloudDevopsImage,
+    skills: ["Product Strategy", "Market Analysis", "Agile Sprints", "Growth Metrics"],
+    accentColor: "#F97316",
+    accentBg: "bg-[#FFEDD5]",
   },
   {
     id: "04",
-    category: "CLOUD INFRASTRUCTURE",
-    title: "Cloud Computing & DevOps Workflows",
-    headline: "Deploy and manage resilient distributed systems.",
+    selectorLabel: "Data & AI",
+    category: "ARTIFICIAL INTELLIGENCE & DATA",
+    title: "AI, Machine Learning & Analytics",
+    headline: "Build predictive models and intelligent neural systems.",
     description:
-      "Learn cloud architecture, container orchestration with Kubernetes, Docker, automated CI/CD pipelines, and infrastructure principles.",
-    duration: "12 WEEKS",
-    mode: "ONLINE",
-    level: "INTERMEDIATE",
-    fees: "₹24,999",
-    image: cloudDevopsImage,
-    skills: ["Cloud Architecture", "Docker & Containers", "CI/CD Automation", "Linux"],
-    accent: "gold",
+      "Explore deep learning, computer vision, data visualization pipelines, and real-time inference models through practical Python repos.",
+    duration: "14 Weeks",
+    mode: "Online & Labs",
+    level: "Beginner → Intermediate",
+    fees: "₹27,999",
+    image: aiMlImage,
+    skills: ["Python", "PyTorch / ML", "Computer Vision", "Predictive Analytics", "FastAPI"],
+    accentColor: "#119E9D",
+    accentBg: "bg-[#CCFBF1]",
   },
   {
     id: "05",
-    category: "CREATIVE & DESIGN TECH",
-    title: "UI/UX & Creative Technology",
-    headline: "Design intuitive digital products and experiences.",
+    selectorLabel: "Science",
+    category: "APPLIED COMPUTING & SCIENCE",
+    title: "Data Science & Computational Analysis",
+    headline: "Extract actionable intelligence from complex datasets.",
     description:
-      "Master user research, interactive wireframing, design systems, and creative prototyping to craft human-centered digital experiences.",
-    duration: "10 WEEKS",
-    mode: "HYBRID",
-    level: "BEGINNER → INTERMEDIATE",
-    fees: "₹22,999",
-    image: fullStackImage,
-    skills: ["UI/UX Design", "Figma Systems", "Design Systems", "Prototyping"],
-    accent: "teal",
+      "Transform real-world data into insight with statistical algorithms, geospatial mapping, automated pipelines, and interactive dashboards.",
+    duration: "12 Weeks",
+    mode: "Online",
+    level: "Beginner → Intermediate",
+    fees: "₹24,999",
+    image: dataScienceImage,
+    skills: ["Python Data Stack", "Pandas", "SQL", "Plotly", "Statistical Modeling"],
+    accentColor: "#F59E0B",
+    accentBg: "bg-[#FEF3C7]",
   },
   {
     id: "06",
-    category: "PRODUCT & TECH BUSINESS",
-    title: "Tech Business & Product Strategy",
-    headline: "Transform creative ideas into scalable products.",
+    selectorLabel: "Career",
+    category: "CLOUD & DEVOPS INFRASTRUCTURE",
+    title: "Cloud Architecture & DevOps Systems",
+    headline: "Deploy and orchestrate resilient distributed systems.",
     description:
-      "Explore product management frameworks, technology market strategy, user growth loops, and tech entrepreneurship basics.",
-    duration: "8 WEEKS",
-    mode: "ONLINE",
-    level: "ALL LEVELS",
-    fees: "₹19,999",
+      "Master container orchestration with Docker & Kubernetes, CI/CD automated deployment pipelines, and modern cloud infrastructure on GCP.",
+    duration: "12 Weeks",
+    mode: "Online & Mentorship",
+    level: "Intermediate",
+    fees: "₹24,999",
     image: cloudDevopsImage,
-    skills: ["Product Strategy", "Tech Markets", "Agile Management", "Growth Metrics"],
-    accent: "gold",
+    skills: ["Cloud Architecture", "Docker", "Kubernetes", "CI/CD Pipelines", "Linux"],
+    accentColor: "#8B5CF6",
+    accentBg: "bg-[#EDE9FE]",
   },
 ];
 
 export const Programs: React.FC = () => {
   const { activeProgramIndex, setActiveProgramIndex, enquireProgram } = usePresentation();
+  const [currentIndex, setCurrentIndex] = useState(activeProgramIndex || 0);
   const [isPaused, setIsPaused] = useState(false);
-  const [progress, setProgress] = useState(0);
-
-  const AUTOPLAY_DURATION = 5000; // 5 seconds per course
-  const PROGRESS_INTERVAL = 50; // ms
   const resumeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const nextProgram = useCallback(() => {
-    setActiveProgramIndex((activeProgramIndex + 1) % PROGRAMS_DATA.length);
-    setProgress(0);
-  }, [activeProgramIndex, setActiveProgramIndex]);
-
-  const prevProgram = useCallback(() => {
-    setActiveProgramIndex((activeProgramIndex - 1 + PROGRAMS_DATA.length) % PROGRAMS_DATA.length);
-    setProgress(0);
-  }, [activeProgramIndex, setActiveProgramIndex]);
+  useEffect(() => {
+    if (typeof activeProgramIndex === "number" && activeProgramIndex !== currentIndex) {
+      setCurrentIndex(activeProgramIndex);
+    }
+  }, [activeProgramIndex]);
 
   const handleInteraction = useCallback(() => {
     setIsPaused(true);
     if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
-    resumeTimeoutRef.current = setTimeout(() => setIsPaused(false), 4500);
+    resumeTimeoutRef.current = setTimeout(() => {
+      setIsPaused(false);
+    }, 6000);
   }, []);
 
-  // Autoplay progression timer
+  const handleSelectProgram = (idx: number) => {
+    setCurrentIndex(idx);
+    setActiveProgramIndex(idx);
+    handleInteraction();
+  };
+
+  const nextProgram = useCallback(() => {
+    setCurrentIndex((prev) => {
+      const nextIdx = (prev + 1) % PROGRAMS_DATA.length;
+      setActiveProgramIndex(nextIdx);
+      return nextIdx;
+    });
+  }, [setActiveProgramIndex]);
+
+  const prevProgram = useCallback(() => {
+    setCurrentIndex((prev) => {
+      const prevIdx = (prev - 1 + PROGRAMS_DATA.length) % PROGRAMS_DATA.length;
+      setActiveProgramIndex(prevIdx);
+      return prevIdx;
+    });
+  }, [setActiveProgramIndex]);
+
+  // Autoplay progression (5 seconds)
   useEffect(() => {
     if (isPaused) return;
-
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        const nextVal = prev + (PROGRESS_INTERVAL / AUTOPLAY_DURATION) * 100;
-        return nextVal >= 100 ? 100 : nextVal;
-      });
-    }, PROGRESS_INTERVAL);
-
-    return () => clearInterval(interval);
-  }, [isPaused]);
-
-  // When progress reaches 100%, switch to next course
-  useEffect(() => {
-    if (progress >= 100) {
-      setProgress(0);
+    const timer = setInterval(() => {
       nextProgram();
-    }
-  }, [progress, nextProgram]);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [isPaused, nextProgram]);
 
-  // Visibility change handling
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.hidden) {
-        setIsPaused(true);
+  // Touch handlers for mobile
+  const touchStartXRef = useRef(0);
+  const touchStartYRef = useRef(0);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartXRef.current = e.touches[0].clientX;
+    touchStartYRef.current = e.touches[0].clientY;
+    handleInteraction();
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const deltaX = e.changedTouches[0].clientX - touchStartXRef.current;
+    const deltaY = e.changedTouches[0].clientY - touchStartYRef.current;
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 30) {
+      if (deltaX < 0) {
+        nextProgram();
       } else {
-        setIsPaused(false);
+        prevProgram();
       }
-    };
+    }
+  };
 
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
-  }, []);
-
-  const currentProgram = PROGRAMS_DATA[activeProgramIndex] || PROGRAMS_DATA[0];
+  const current = PROGRAMS_DATA[currentIndex];
   const cubicEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
   return (
-    <div className="relative w-full py-14 sm:py-20 px-4 sm:px-6 lg:px-12 bg-[#FAFBFC] border-b border-[#101536]/06 select-none overflow-x-clip">
-      {/* Background Soft Glow */}
-      <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-96 h-96 bg-[#119E9D]/05 rounded-full blur-3xl pointer-events-none" />
-
+    <div
+      id="programs"
+      className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-12 bg-[#FAFBFC] border-b border-[#101536]/06 select-none overflow-x-clip font-sans scroll-mt-20"
+      onMouseEnter={handleInteraction}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
       <div className="max-w-7xl mx-auto w-full z-10">
-        {/* Section Header (matching input_file_0.png) */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 pb-3 border-b border-[#101536]/08 gap-3">
-          <div>
-            <span className="text-[10px] font-mono font-bold tracking-[0.25em] text-[#6366F1] uppercase block mb-1">
-              PROGRAM CATALOG
+        {/* Section Header */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 pb-4 border-b border-[#101536]/08 gap-3">
+          <div className="text-left">
+            <span className="text-xs font-bold tracking-[0.2em] text-[#6366F1] uppercase block mb-1">
+              CURATED LEARNING PATHWAYS
             </span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-[#101536] leading-tight font-jakarta">
-              PROGRAMS FOR EVERY KIND OF LEARNER<span className="text-[#F97316]">.</span>
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#101536] leading-tight font-jakarta">
+              FEATURED PROGRAMS<span className="text-[#F97316]">.</span>
             </h2>
           </div>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#119E9D] bg-[#CCFBF1] border border-[#119E9D]/30 px-3 py-1.5 rounded-full shadow-xs">
-              <span>Learn practical skills that open doors</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </div>
-
-            {/* Carousel Arrow Controls */}
-            <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-3">
+            <p className="text-xs sm:text-sm text-[#5E6675] font-medium max-w-sm text-left sm:text-right hidden sm:block">
+              Practitioner-led tracks designed to take you from fundamentals to deploying real capstones.
+            </p>
+            <div className="flex items-center gap-1.5 shrink-0">
               <button
                 onClick={() => {
                   prevProgram();
                   handleInteraction();
                 }}
-                aria-label="Previous course"
-                className="w-8 h-8 rounded-full bg-white border border-[#101536]/10 flex items-center justify-center text-[#101536] hover:bg-[#101536] hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#119E9D]"
+                aria-label="Previous program"
+                className="w-9 h-9 rounded-xl bg-white border border-[#101536]/10 flex items-center justify-center text-[#101536] hover:bg-[#101536] hover:text-white transition-colors cursor-pointer shadow-xs"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
@@ -224,8 +248,8 @@ export const Programs: React.FC = () => {
                   nextProgram();
                   handleInteraction();
                 }}
-                aria-label="Next course"
-                className="w-8 h-8 rounded-full bg-white border border-[#101536]/10 flex items-center justify-center text-[#101536] hover:bg-[#101536] hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#119E9D]"
+                aria-label="Next program"
+                className="w-9 h-9 rounded-xl bg-white border border-[#101536]/10 flex items-center justify-center text-[#101536] hover:bg-[#101536] hover:text-white transition-colors cursor-pointer shadow-xs"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
@@ -233,164 +257,138 @@ export const Programs: React.FC = () => {
           </div>
         </div>
 
-        {/* Featured Course Full-Screen Split Experience */}
-        <div>
+        {/* SINGLE FEATURED PROGRAM CARD CONTAINER */}
+        <div className="bg-white border border-[#101536]/10 rounded-3xl p-6 sm:p-10 shadow-lg mb-8">
           <AnimatePresence mode="wait">
             <motion.div
-              key={currentProgram.id}
-              initial={{ opacity: 0, y: 15 }}
+              key={current.id}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.55, ease: cubicEase }}
-              className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center"
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.45, ease: cubicEase }}
+              className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
             >
-              {/* LEFT 52% — Large High-Resolution Course Editorial Visual */}
-              <div className="lg:col-span-6 flex justify-center">
-                <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] rounded-3xl overflow-hidden border border-[#101536]/10 shadow-xl bg-[#101536] group">
-                  <motion.div
-                    initial={{ scale: 0.98, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.7, ease: cubicEase }}
-                    className="w-full h-full relative"
-                  >
-                    <img
-                      src={currentProgram.image}
-                      alt={currentProgram.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#101536]/90 via-[#101536]/30 to-transparent" />
-                  </motion.div>
+              {/* LEFT 52% — One Large Realistic Photograph */}
+              <div className="lg:col-span-6 relative">
+                <div className="relative aspect-[16/11] w-full rounded-2xl overflow-hidden shadow-md bg-[#0B1028] border border-[#101536]/10">
+                  <img
+                    src={current.image}
+                    alt={current.title}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B1028]/80 via-transparent to-transparent" />
 
-                  {/* Overlaid Badges */}
-                  <div className="absolute top-4 left-4 flex items-center gap-2">
-                    <span className="px-3 py-1 rounded-full bg-[#101536]/80 backdrop-blur-md border border-white/20 text-white font-mono text-[10px] font-bold tracking-widest uppercase">
-                      {currentProgram.category}
-                    </span>
+                  {/* Micro Category Overlay Badge */}
+                  <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-white text-[11px] font-bold uppercase tracking-wider">
+                    {current.category}
                   </div>
 
-                  <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
-                    <div className="text-white">
-                      <span className="text-[10px] font-mono font-bold text-[#EFAF32] uppercase tracking-wider block">
-                        CURRICULUM HIGHLIGHT
-                      </span>
-                      <p className="text-xs sm:text-sm font-semibold text-white/95 truncate">
-                        {currentProgram.headline}
-                      </p>
-                    </div>
-
-                    <div className="px-3 py-1.5 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-white font-mono text-xs font-bold shrink-0">
-                      {currentProgram.fees}
-                    </div>
+                  {/* Bottom Image Caption */}
+                  <div className="absolute bottom-3 left-3 right-3 text-white text-xs">
+                    <p className="font-semibold">{current.headline}</p>
                   </div>
                 </div>
               </div>
 
-              {/* RIGHT 48% — Course Information, Metadata & Actions */}
-              <div className="lg:col-span-6 flex flex-col justify-between items-start text-left">
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs font-mono font-bold text-[#119E9D]">
-                      {currentProgram.id} / 06
-                    </span>
-                    <span className="text-[#101536]/20">•</span>
-                    <span className="text-xs font-mono font-semibold text-[#5E6675] uppercase">
-                      {currentProgram.level}
-                    </span>
+              {/* RIGHT 48% — Clean Program Information & Action */}
+              <div className="lg:col-span-6 flex flex-col items-start text-left">
+                {/* Discipline Tag */}
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs font-bold text-[#F97316]">
+                    0{currentIndex + 1} / 0{PROGRAMS_DATA.length}
+                  </span>
+                  <span className="text-[#101536]/30">•</span>
+                  <span className="px-2.5 py-0.5 rounded-md bg-[#6366F1]/10 text-[#6366F1] text-xs font-bold uppercase tracking-wider">
+                    {current.selectorLabel}
+                  </span>
+                </div>
+
+                {/* Title */}
+                <h3 className="text-2xl sm:text-3xl font-black text-[#101536] mb-3 leading-snug font-jakarta">
+                  {current.title}
+                </h3>
+
+                {/* Description */}
+                <p className="text-xs sm:text-sm text-[#5E6675] leading-relaxed mb-6 font-medium">
+                  {current.description}
+                </p>
+
+                {/* Specs Matrix: Duration, Mode, Level, Tuition */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full p-4 rounded-2xl bg-[#FAFBFC] border border-[#101536]/08 mb-6 text-xs">
+                  <div>
+                    <span className="text-[10px] text-[#5E6675] uppercase block font-semibold">DURATION</span>
+                    <span className="font-bold text-[#101536]">{current.duration}</span>
                   </div>
-
-                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#101536] tracking-tight mb-3 leading-tight">
-                    {currentProgram.title}
-                  </h3>
-
-                  <p className="text-xs sm:text-sm text-[#5E6675] leading-relaxed mb-6 font-normal">
-                    {currentProgram.description}
-                  </p>
-
-                  {/* Course Specs Pills */}
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 mb-6 w-full">
-                    <div className="p-2.5 rounded-xl bg-[#F2F5F6] border border-[#101536]/06">
-                      <div className="flex items-center gap-1.5 text-[#5E6675] text-[10px] font-mono uppercase mb-0.5">
-                        <Clock className="w-3 h-3 text-[#119E9D]" />
-                        <span>DURATION</span>
-                      </div>
-                      <span className="text-xs font-bold text-[#101536] font-mono">{currentProgram.duration}</span>
-                    </div>
-
-                    <div className="p-2.5 rounded-xl bg-[#F2F5F6] border border-[#101536]/06">
-                      <div className="flex items-center gap-1.5 text-[#5E6675] text-[10px] font-mono uppercase mb-0.5">
-                        <Award className="w-3 h-3 text-[#EFAF32]" />
-                        <span>FORMAT</span>
-                      </div>
-                      <span className="text-xs font-bold text-[#101536] font-mono">{currentProgram.mode}</span>
-                    </div>
-
-                    <div className="p-2.5 rounded-xl bg-[#F2F5F6] border border-[#101536]/06 col-span-2 sm:col-span-1">
-                      <div className="flex items-center gap-1.5 text-[#5E6675] text-[10px] font-mono uppercase mb-0.5">
-                        <Sparkles className="w-3 h-3 text-[#119E9D]" />
-                        <span>TUITION</span>
-                      </div>
-                      <span className="text-xs font-bold text-[#101536] font-mono">{currentProgram.fees}</span>
-                    </div>
+                  <div>
+                    <span className="text-[10px] text-[#5E6675] uppercase block font-semibold">MODE</span>
+                    <span className="font-bold text-[#101536]">{current.mode}</span>
                   </div>
-
-                  {/* Skills Grid */}
-                  <div className="mb-6">
-                    <span className="text-[10px] font-mono font-bold text-[#5E6675] uppercase tracking-wider block mb-2">
-                      CORE COMPETENCIES COVERED
-                    </span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {currentProgram.skills.map((skill) => (
-                        <span
-                          key={skill}
-                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-[#101536]/04 text-[#101536] text-xs font-mono font-medium"
-                        >
-                          <CheckCircle2 className="w-3 h-3 text-[#119E9D]" />
-                          <span>{skill}</span>
-                        </span>
-                      ))}
-                    </div>
+                  <div>
+                    <span className="text-[10px] text-[#5E6675] uppercase block font-semibold">LEVEL</span>
+                    <span className="font-bold text-[#101536]">{current.level}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-[#5E6675] uppercase block font-semibold">TUITION</span>
+                    <span className="font-bold text-[#6366F1]">{current.fees}</span>
                   </div>
                 </div>
 
-                {/* Primary Action Button */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full pt-4 border-t border-[#101536]/08">
+                {/* Skills Learned */}
+                <div className="mb-6 w-full">
+                  <span className="text-[11px] font-bold text-[#101536] uppercase tracking-wider block mb-2">
+                    CORE SKILLS YOU'LL BUILD
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {current.skills.map((skill) => (
+                      <span
+                        key={skill}
+                        className="px-2.5 py-1 rounded-lg bg-white border border-[#101536]/12 text-[#101536] text-[11px] font-semibold shadow-xs"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Primary Enquiry CTA */}
+                <div className="flex items-center gap-4 pt-4 border-t border-[#101536]/10 w-full">
                   <button
-                    onClick={() => enquireProgram(currentProgram.title, activeProgramIndex)}
-                    className="min-h-[44px] inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#101536] text-white font-bold text-xs uppercase tracking-widest hover:bg-[#119E9D] transition-colors duration-200 shadow-sm group focus:outline-none focus:ring-2 focus:ring-[#119E9D]"
+                    onClick={() => enquireProgram(current.title, currentIndex)}
+                    className="min-h-[46px] inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#6366F1] text-white font-bold text-xs uppercase tracking-wider hover:bg-[#4F46E5] transition-all shadow-md cursor-pointer"
                   >
-                    <span>ENQUIRE FOR THIS TRACK</span>
-                    <ArrowRight className="w-4 h-4 text-[#EFAF32] group-hover:translate-x-1 transition-transform" />
+                    <span>Enquire for Track</span>
+                    <ArrowRight className="w-4 h-4 text-white" />
                   </button>
 
-                  <span className="text-[11px] font-mono text-[#5E6675] text-center sm:text-left">
-                    Cohort starts soon • Limited seats
-                  </span>
+                  <a
+                    href="#contact"
+                    className="text-xs font-bold text-[#5E6675] hover:text-[#101536] transition-colors"
+                  >
+                    Ask a Question →
+                  </a>
                 </div>
               </div>
             </motion.div>
           </AnimatePresence>
         </div>
 
-        {/* Bottom Horizontal Quick Track Selector Pills */}
-        <div className="mt-8 pt-4 border-t border-[#101536]/08 flex items-center justify-start sm:justify-center gap-1.5 overflow-x-auto pb-2 scrollbar-none">
+        {/* HORIZONTAL PROGRAM SELECTOR (01 Tech, 02 Design, 03 Business, 04 Data & AI, 05 Science, 06 Career) */}
+        <div className="flex items-center justify-start sm:justify-center gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-none">
           {PROGRAMS_DATA.map((prog, idx) => {
-            const isActive = activeProgramIndex === idx;
+            const isActive = currentIndex === idx;
             return (
               <button
                 key={prog.id}
-                onClick={() => {
-                  setActiveProgramIndex(idx);
-                  setProgress(0);
-                  handleInteraction();
-                }}
-                className={`px-3.5 py-1.5 rounded-full text-[11px] font-mono font-bold transition-all duration-200 shrink-0 focus:outline-none ${
+                onClick={() => handleSelectProgram(idx)}
+                className={`min-h-[42px] px-4 py-2 rounded-xl text-xs font-bold uppercase transition-all duration-200 shrink-0 cursor-pointer ${
                   isActive
-                    ? "bg-[#101536] text-white shadow-xs"
-                    : "bg-[#F2F5F6] text-[#5E6675] hover:bg-[#101536]/10 hover:text-[#101536]"
+                    ? "bg-[#101536] text-white shadow-md ring-2 ring-[#6366F1]"
+                    : "bg-white text-[#5E6675] border border-[#101536]/10 hover:text-[#101536] hover:bg-[#F6F8F9]"
                 }`}
               >
-                0{idx + 1} {prog.category.split(" ")[0]}
+                <span className="text-[#F97316] mr-1.5">{prog.id}</span>
+                <span>{prog.selectorLabel}</span>
               </button>
             );
           })}

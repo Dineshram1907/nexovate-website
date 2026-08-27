@@ -72,7 +72,7 @@ export const NexovateLogo: React.FC<NexovateLogoProps> = ({
 
           {showTagline && (
             <span
-              className="text-[8px] sm:text-[9px] font-mono font-bold tracking-[0.2em] uppercase mt-0.5"
+              className="text-[8px] sm:text-[9px] font-sans font-bold tracking-[0.2em] uppercase mt-0.5"
               style={{ color: accentTeal }}
             >
               LEARN. BUILD. SHAPE TOMORROW.

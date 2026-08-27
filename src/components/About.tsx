@@ -11,11 +11,11 @@ export const About: React.FC = () => {
   const cubicEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
   return (
-    <div className="relative w-full py-14 sm:py-20 px-4 sm:px-6 lg:px-12 bg-[#FAFBFC] text-[#101536] select-none border-b border-[#101536]/06 overflow-x-clip">
+    <div id="about" className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-12 bg-notebook-grid text-[#101536] select-none border-b border-[#101536]/06 overflow-x-clip font-sans scroll-mt-20">
       <div className="max-w-7xl mx-auto w-full z-10">
         {/* Editorial Subheading */}
         <div className="flex items-center gap-3 mb-6 pb-3 border-b border-[#101536]/10">
-          <span className="text-[10px] font-mono font-bold tracking-[0.25em] text-[#119E9D] uppercase">
+          <span className="text-xs font-bold tracking-[0.2em] text-[#119E9D] uppercase">
             OUR MISSION
           </span>
           <span className="h-[1px] w-12 bg-[#119E9D]/40" />
@@ -39,22 +39,22 @@ export const About: React.FC = () => {
               <p className="text-xs sm:text-sm font-serif italic text-[#101536] leading-relaxed">
                 "Our measure of success isn't how many lectures a student sits through, but what they are capable of discovering, building, and creating independently when they graduate."
               </p>
-              <span className="text-[10px] font-mono font-bold text-[#5E6675] uppercase block mt-2">
+              <span className="text-xs font-bold text-[#5E6675] uppercase block mt-2">
                 — NEXOVATE ACADEMIC BOARD
               </span>
             </div>
 
-            <div className="grid grid-cols-3 gap-4 w-full pt-4 border-t border-[#101536]/10 font-mono text-xs">
+            <div className="grid grid-cols-3 gap-4 w-full pt-4 border-t border-[#101536]/10 text-xs">
               <div>
-                <span className="text-[9px] text-[#5E6675] uppercase block">FOUNDED</span>
+                <span className="text-[10px] text-[#5E6675] uppercase block font-semibold">FOUNDED</span>
                 <span className="font-bold text-[#101536]">CHENNAI, INDIA</span>
               </div>
               <div>
-                <span className="text-[9px] text-[#5E6675] uppercase block">FOCUS</span>
+                <span className="text-[10px] text-[#5E6675] uppercase block font-semibold">FOCUS</span>
                 <span className="font-bold text-[#101536]">APPLIED EDTECH</span>
               </div>
               <div>
-                <span className="text-[9px] text-[#5E6675] uppercase block">STANDARDS</span>
+                <span className="text-[10px] text-[#5E6675] uppercase block font-semibold">STANDARDS</span>
                 <span className="font-bold text-[#101536]">INDUSTRY-GRADE</span>
               </div>
             </div>
@@ -70,9 +70,9 @@ export const About: React.FC = () => {
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#101536]/80 via-transparent to-transparent" />
-              <div className="absolute bottom-3 left-3 right-3 text-white font-mono text-[10px]">
+              <div className="absolute bottom-3 left-3 right-3 text-white text-xs">
                 <span className="text-[#EFAF32] font-bold block">INNOVATION LAB</span>
-                <span>Students collaborating on open-source repositories</span>
+                <span className="text-[11px] text-white/90">Students collaborating on open-source repositories</span>
               </div>
             </div>
           </div>

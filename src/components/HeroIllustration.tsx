@@ -35,7 +35,7 @@ export const HeroIllustration: React.FC = () => {
             initial={{ opacity: 0, x: 20, rotate: 4 }}
             animate={{ opacity: 1, x: 0, rotate: 4 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="absolute top-4 right-4 bg-[#FEF3C7] border border-[#F59E0B]/30 rounded-2xl p-3 shadow-lg font-mono text-[11px] text-[#101536] text-left select-none"
+            className="absolute top-4 right-4 bg-[#FEF3C7] border border-[#F59E0B]/30 rounded-2xl p-3 shadow-lg font-sans text-[11px] text-[#101536] text-left select-none"
           >
             <div className="space-y-1 font-bold">
               <div className="flex items-center gap-1.5 text-[#101536]">

@@ -10,16 +10,15 @@ export interface SectionMetadata {
 }
 
 export const SECTIONS: SectionMetadata[] = [
-  { id: "hero", number: "01", title: "HERO", shortTitle: "Hero" },
-  { id: "explore", number: "02", title: "INTERESTS", shortTitle: "Interests" },
-  { id: "why-nexovate", number: "03", title: "WHY NEXOVATE", shortTitle: "Why" },
-  { id: "programs", number: "04", title: "PROGRAMS", shortTitle: "Programs" },
-  { id: "experience", number: "05", title: "JOURNEY", shortTitle: "Journey" },
-  { id: "projects", number: "06", title: "PROJECTS", shortTitle: "Projects" },
-  { id: "reviews", number: "07", title: "STORIES", shortTitle: "Stories" },
-  { id: "institutions", number: "08", title: "INSTITUTIONS", shortTitle: "Institutions" },
-  { id: "about", number: "09", title: "ABOUT", shortTitle: "About" },
-  { id: "contact", number: "10", title: "CONTACT", shortTitle: "Contact" },
+  { id: "hero", number: "00", title: "HERO", shortTitle: "Hero" },
+  { id: "why-nexovate", number: "01", title: "WHY NEXOVATE", shortTitle: "Why Nexovate" },
+  { id: "programs", number: "02", title: "PROGRAMS", shortTitle: "Programs" },
+  { id: "experience", number: "03", title: "EXPERIENCE", shortTitle: "Experience" },
+  { id: "projects", number: "04", title: "PROJECTS", shortTitle: "Projects" },
+  { id: "student-reviews", number: "05", title: "STUDENT REVIEWS", shortTitle: "Student Reviews" },
+  { id: "institutions", number: "06", title: "INSTITUTIONS", shortTitle: "Institutions" },
+  { id: "about", number: "07", title: "ABOUT", shortTitle: "About" },
+  { id: "contact", number: "08", title: "CONTACT", shortTitle: "Contact" },
 ];
 
 interface PresentationContextType {

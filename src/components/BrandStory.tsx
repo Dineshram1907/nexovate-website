@@ -35,7 +35,7 @@ export const BrandStory: React.FC = () => {
       <div className="max-w-7xl mx-auto w-full z-10">
         {/* Editorial Subheading */}
         <div className="flex items-center gap-3 mb-4">
-          <span className="text-[10px] font-mono font-bold tracking-[0.25em] text-[#119E9D] uppercase">
+          <span className="text-xs font-bold tracking-[0.2em] text-[#119E9D] uppercase">
             OUR PHILOSOPHY
           </span>
           <span className="h-[1px] w-12 bg-[#119E9D]/40" />
@@ -75,10 +75,10 @@ export const BrandStory: React.FC = () => {
               className="flex flex-col"
             >
               <div className="flex items-baseline gap-2 mb-1.5">
-                <span className="text-xs font-mono font-bold text-[#119E9D]">
+                <span className="text-xs font-bold text-[#119E9D]">
                   {item.number}
                 </span>
-                <h3 className="text-xs font-bold font-mono tracking-wider text-[#101536] uppercase">
+                <h3 className="text-xs font-bold tracking-wider text-[#101536] uppercase font-sans">
                   {item.title}
                 </h3>
               </div>

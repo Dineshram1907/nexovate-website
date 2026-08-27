@@ -28,7 +28,7 @@ export const StickyNote: React.FC<StickyNoteProps> = ({
   };
 
   return (
-    <div className={`relative p-5 rounded-2xl border ${bgColors[color]} shadow-md backdrop-blur-xs font-mono select-none ${className}`}>
+    <div className={`relative p-5 rounded-2xl border ${bgColors[color]} shadow-md backdrop-blur-xs font-sans select-none ${className}`}>
       <div className={`absolute w-10 h-4 bg-[#F97316]/35 rounded-xs shadow-xs pointer-events-none backdrop-blur-xs ${tapePositions[tapePosition]}`} />
       {children}
     </div>

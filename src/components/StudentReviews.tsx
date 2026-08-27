@@ -32,7 +32,7 @@ export const REVIEWS_DATA: ReviewItem[] = [
       "Learning became much more practical once I started working on real projects. Nexovate helped me understand how technology is actually applied beyond the classroom.",
     name: "Arjun Kumar",
     program: "AI & Machine Learning",
-    programIndex: 0,
+    programIndex: 3,
     role: "Engineering Graduate",
     location: "Chennai",
     image: arjunAvatar,
@@ -41,10 +41,10 @@ export const REVIEWS_DATA: ReviewItem[] = [
     id: "02",
     number: "02",
     quote:
-      "Nexovate helped me connect the things I was learning with projects I could actually build. That made me much more confident.",
+      "Nexovate helped me connect the things I was learning with projects I could actually build. That made me much more confident in interviews.",
     name: "Priya S",
     program: "Data Science & Analytics",
-    programIndex: 2,
+    programIndex: 4,
     role: "Computer Science Student",
     location: "Coimbatore",
     image: priyaAvatar,
@@ -53,10 +53,10 @@ export const REVIEWS_DATA: ReviewItem[] = [
     id: "03",
     number: "03",
     quote:
-      "I liked that the focus was on doing, not just watching. Building projects made the concepts much easier to understand.",
+      "I liked that the focus was on doing, not just watching. Building projects made complex full-stack concepts much easier to understand.",
     name: "Rahul M",
-    program: "Full Stack Development",
-    programIndex: 1,
+    program: "Full Stack Web Engineering",
+    programIndex: 0,
     role: "Software Developer",
     location: "Chennai",
     image: rahulAvatar,
@@ -65,9 +65,9 @@ export const REVIEWS_DATA: ReviewItem[] = [
     id: "04",
     number: "04",
     quote:
-      "The learning experience felt much closer to what I want to do professionally. The practical approach made a real difference.",
+      "The learning experience felt much closer to what I want to do professionally. The practitioner mentorship made a huge difference.",
     name: "Harini R",
-    program: "Emerging Technologies",
+    program: "Cloud & DevOps Architecture",
     programIndex: 5,
     role: "Technology Student",
     location: "Tamil Nadu",
@@ -77,18 +77,18 @@ export const REVIEWS_DATA: ReviewItem[] = [
     id: "05",
     number: "05",
     quote:
-      "I came in wanting to learn a technology and left with a clearer direction for what I wanted to build next.",
+      "I came in wanting to explore UI/UX and left with a portfolio of live interactive design prototypes I'm genuinely proud of.",
     name: "Vishal K",
-    program: "Cloud Computing & DevOps",
-    programIndex: 3,
-    role: "Systems Engineer",
+    program: "UI/UX & Product Design",
+    programIndex: 1,
+    role: "Product Design Fellow",
     location: "Chennai",
     image: vishalAvatar,
   },
 ];
 
 export const StudentReviews: React.FC = () => {
-  const { goToSection, setActiveProgramIndex } = usePresentation();
+  const { setActiveProgramIndex } = usePresentation();
   const [activeReviewIndex, setActiveReviewIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -163,13 +163,39 @@ export const StudentReviews: React.FC = () => {
     if (element) element.scrollIntoView({ behavior: "smooth" });
   };
 
+  // Touch Swipe Handlers
+  const touchStartXRef = useRef(0);
+  const touchStartYRef = useRef(0);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartXRef.current = e.touches[0].clientX;
+    touchStartYRef.current = e.touches[0].clientY;
+    handleInteraction();
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const deltaX = e.changedTouches[0].clientX - touchStartXRef.current;
+    const deltaY = e.changedTouches[0].clientY - touchStartYRef.current;
+
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 30) {
+      if (deltaX < 0) {
+        nextReview();
+      } else {
+        prevReview();
+      }
+    }
+  };
+
   const current = REVIEWS_DATA[activeReviewIndex];
   const cubicEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
   return (
     <section
-      id="reviews"
-      className="relative w-full py-14 sm:py-20 px-4 sm:px-6 lg:px-12 bg-notebook-grid text-[#101536] select-none border-b border-[#101536]/06 overflow-x-clip"
+      id="student-reviews"
+      className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-12 bg-notebook-grid text-[#101536] select-none border-b border-[#101536]/06 overflow-x-clip scroll-mt-20 font-sans"
+      onMouseEnter={handleInteraction}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       {/* Background Faint Watermark Quote & Curve */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-[0.03] select-none text-[320px] font-serif leading-none text-[#101536]">
@@ -179,51 +205,69 @@ export const StudentReviews: React.FC = () => {
 
       <div className="max-w-7xl mx-auto w-full z-10">
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-4 sm:mb-6 pb-2.5 border-b border-[#101536]/08 gap-2">
-          <div>
-            <span className="text-[10px] font-mono font-bold tracking-[0.25em] text-[#6366F1] uppercase block mb-1">
-              STUDENT STORIES
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 sm:mb-10 pb-4 border-b border-[#101536]/08 gap-2">
+          <div className="text-left">
+            <span className="text-xs font-bold tracking-[0.2em] text-[#6366F1] uppercase block mb-1">
+              STUDENT STORIES & OUTCOMES
             </span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-[#101536] leading-tight font-jakarta">
-              WHAT STUDENTS ARE CREATING<span className="text-[#F97316]">.</span>
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#101536] leading-tight font-jakarta">
+              STUDENT REVIEWS<span className="text-[#F97316]">.</span>
             </h2>
           </div>
-          <p className="text-xs sm:text-sm text-[#5E6675] font-medium">
-            Real students exploring interests, building projects, and shaping what comes next.
-          </p>
+          <div className="flex items-center gap-3">
+            <p className="text-xs sm:text-sm text-[#5E6675] font-medium hidden sm:block">
+              Verified feedback from learners who built and shipped real capstones with Nexovate.
+            </p>
+            {/* Arrows */}
+            <div className="flex items-center gap-1.5 shrink-0">
+              <button
+                onClick={() => {
+                  prevReview();
+                  handleInteraction();
+                }}
+                aria-label="Previous testimonial"
+                className="w-9 h-9 rounded-xl bg-white border border-[#101536]/10 flex items-center justify-center text-[#101536] hover:bg-[#101536] hover:text-white transition-colors cursor-pointer shadow-xs"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => {
+                  nextReview();
+                  handleInteraction();
+                }}
+                aria-label="Next testimonial"
+                className="w-9 h-9 rounded-xl bg-white border border-[#101536]/10 flex items-center justify-center text-[#101536] hover:bg-[#101536] hover:text-white transition-colors cursor-pointer shadow-xs"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* FEATURED TESTIMONIAL DISPLAY */}
-        <div>
+        <div className="bg-white border border-[#101536]/10 rounded-3xl p-6 sm:p-10 shadow-lg mb-8">
           <AnimatePresence mode="wait">
             <motion.div
               key={current.id}
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.55, ease: cubicEase }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.45, ease: cubicEase }}
               className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center"
             >
               {/* LEFT 40% — Large Student Portrait */}
               <div className="lg:col-span-5 flex justify-center">
-                <div className="relative w-40 h-40 sm:w-56 sm:h-56 lg:w-64 lg:h-64 rounded-3xl overflow-hidden shadow-xl border-2 border-[#101536]/08 bg-[#F1F2EF]">
-                  <motion.div
-                    initial={{ scale: 0.96, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.6, ease: cubicEase }}
-                    className="w-full h-full relative"
-                  >
-                    <img
-                      src={current.image}
-                      alt={current.name}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                    <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full bg-[#101536]/80 backdrop-blur-sm text-[8px] font-mono text-white flex items-center gap-1">
-                      <CheckCircle2 className="w-2.5 h-2.5 text-[#119E9D]" />
-                      <span>VERIFIED</span>
-                    </div>
-                  </motion.div>
+                <div className="relative w-44 h-44 sm:w-56 sm:h-56 lg:w-64 lg:h-64 rounded-3xl overflow-hidden shadow-xl border-2 border-[#101536]/08 bg-[#0B1028]">
+                  <img
+                    src={current.image}
+                    alt={current.name}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                  <div className="absolute top-2.5 right-2.5 px-2.5 py-1 rounded-full bg-[#101536]/80 backdrop-blur-sm text-[10px] font-bold text-white flex items-center gap-1">
+                    <CheckCircle2 className="w-3 h-3 text-[#119E9D]" />
+                    <span>VERIFIED LEARNER</span>
+                  </div>
                 </div>
               </div>
 
@@ -236,51 +280,28 @@ export const StudentReviews: React.FC = () => {
                     ))}
                   </div>
 
-                  <blockquote className="text-base sm:text-xl lg:text-2xl font-serif font-medium text-[#101536] leading-relaxed mb-4">
+                  <blockquote className="text-base sm:text-xl lg:text-2xl font-serif font-medium text-[#101536] leading-relaxed mb-6 italic">
                     "{current.quote}"
                   </blockquote>
                 </div>
 
-                <div className="pt-3 border-t border-[#101536]/08 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="pt-4 border-t border-[#101536]/08 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div>
-                    <h3 className="text-base sm:text-lg font-bold text-[#101536]">
+                    <h3 className="text-lg font-bold text-[#101536] font-jakarta">
                       {current.name}
                     </h3>
-                    <button
-                      onClick={() => handleExploreTrack(current.programIndex)}
-                      className="inline-flex items-center gap-1 text-xs font-semibold text-[#119E9D] hover:underline mt-0.5 text-left"
-                    >
-                      <span>{current.program}</span>
-                      <ArrowRight className="w-3 h-3 text-[#EFAF32]" />
-                    </button>
-                    <p className="text-[11px] text-[#5E6675]">
+                    <p className="text-xs text-[#5E6675]">
                       {current.role} • {current.location}
                     </p>
                   </div>
 
-                  {/* Subtle Navigation Arrows */}
-                  <div className="flex items-center gap-1.5">
-                    <button
-                      onClick={() => {
-                        prevReview();
-                        handleInteraction();
-                      }}
-                      aria-label="Previous testimonial"
-                      className="w-8 h-8 rounded-full bg-white border border-[#101536]/10 flex items-center justify-center text-[#101536] hover:bg-[#101536] hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#119E9D]"
-                    >
-                      <ChevronLeft className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={() => {
-                        nextReview();
-                        handleInteraction();
-                      }}
-                      aria-label="Next testimonial"
-                      className="w-8 h-8 rounded-full bg-white border border-[#101536]/10 flex items-center justify-center text-[#101536] hover:bg-[#101536] hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#119E9D]"
-                    >
-                      <ChevronRight className="w-4 h-4" />
-                    </button>
-                  </div>
+                  <button
+                    onClick={() => handleExploreTrack(current.programIndex)}
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#6366F1]/10 text-[#6366F1] hover:bg-[#6366F1] hover:text-white transition-all text-xs font-bold uppercase tracking-wider cursor-pointer"
+                  >
+                    <span>Track: {current.program}</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
                 </div>
               </div>
             </motion.div>
@@ -288,7 +309,7 @@ export const StudentReviews: React.FC = () => {
         </div>
 
         {/* BOTTOM: 5-Avatar Selector & Progress Line */}
-        <div className="mt-6 pt-4 border-t border-[#101536]/08 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             {REVIEWS_DATA.map((item, idx) => {
               const isActive = activeReviewIndex === idx;
@@ -296,9 +317,9 @@ export const StudentReviews: React.FC = () => {
                 <button
                   key={item.id}
                   onClick={() => handleSelectReview(idx)}
-                  className={`relative rounded-full overflow-hidden transition-all duration-300 focus:outline-none ${
+                  className={`relative rounded-full overflow-hidden transition-all duration-300 focus:outline-none cursor-pointer ${
                     isActive
-                      ? "w-11 h-11 sm:w-12 sm:h-12 ring-2 ring-[#119E9D] ring-offset-2 scale-110 shadow-sm"
+                      ? "w-11 h-11 sm:w-12 sm:h-12 ring-2 ring-[#6366F1] ring-offset-2 scale-110 shadow-sm"
                       : "w-8 h-8 sm:w-9 sm:h-9 opacity-45 hover:opacity-100 hover:scale-105"
                   }`}
                   aria-label={`View review by ${item.name}`}
@@ -315,13 +336,13 @@ export const StudentReviews: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-3 w-full sm:w-auto">
-            <span className="text-[10px] font-mono text-[#5E6675]/80 uppercase">
+            <span className="text-xs font-bold text-[#5E6675]/80 uppercase">
               0{activeReviewIndex + 1} / 0{REVIEWS_DATA.length}
             </span>
             <div className="w-28 sm:w-40 h-1 bg-[#101536]/08 rounded-full overflow-hidden">
               <motion.div
                 style={{ width: `${progress}%` }}
-                className="h-full bg-gradient-to-r from-[#119E9D] to-[#EFAF32] rounded-full"
+                className="h-full bg-gradient-to-r from-[#6366F1] to-[#F97316] rounded-full"
               />
             </div>
           </div>

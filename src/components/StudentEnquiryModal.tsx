@@ -272,14 +272,14 @@ export const StudentEnquiryModal: React.FC = () => {
               <div className="absolute -top-2 left-6 w-12 h-3.5 bg-[#F97316]/50 rotate-3 rounded-xs" />
               <div className="flex items-center gap-2.5">
                 <div className="w-2.5 h-2.5 rounded-full bg-[#6366F1] animate-pulse" />
-                <span className="text-xs font-mono font-bold tracking-[0.18em] text-[#EFAF32] uppercase">
+                <span className="text-xs font-bold tracking-[0.18em] text-[#EFAF32] uppercase">
                   DISCOVER & LEARN ENQUIRY
                 </span>
               </div>
               <button
                 onClick={handleClose}
                 aria-label="Close enquiry popup"
-                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#6366F1]"
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#6366F1] cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -292,7 +292,7 @@ export const StudentEnquiryModal: React.FC = () => {
                   <div className="w-14 h-14 rounded-full bg-[#119E9D]/10 text-[#119E9D] flex items-center justify-center mb-4">
                     <CheckCircle2 className="w-8 h-8" />
                   </div>
-                  <h3 className="text-2xl font-extrabold text-[#101536] mb-2">
+                  <h3 className="text-2xl font-extrabold text-[#101536] mb-2 font-jakarta">
                     THANK YOU.
                   </h3>
                   <p className="text-sm text-[#5E6675] max-w-xs mb-1 font-medium">
@@ -303,7 +303,7 @@ export const StudentEnquiryModal: React.FC = () => {
                   </p>
                   <button
                     onClick={handleClose}
-                    className="min-h-[44px] px-6 py-2.5 rounded-full bg-[#101536] text-white font-bold text-xs uppercase tracking-wider hover:bg-[#119E9D] transition-colors"
+                    className="min-h-[44px] px-6 py-2.5 rounded-full bg-[#101536] text-white font-bold text-xs uppercase tracking-wider hover:bg-[#119E9D] transition-colors cursor-pointer"
                   >
                     RETURN TO WEBSITE
                   </button>
@@ -323,10 +323,10 @@ export const StudentEnquiryModal: React.FC = () => {
 
                   {/* Heading & Subhead */}
                   <div>
-                    <h3 className="text-xl sm:text-2xl font-extrabold tracking-tight text-[#101536]">
+                    <h3 className="text-xl sm:text-2xl font-extrabold tracking-tight text-[#101536] font-jakarta">
                       Explore Your Learning Path<span className="text-[#119E9D]">.</span>
                     </h3>
-                    <p className="text-xs text-[#5E6675] mt-1 font-normal">
+                    <p className="text-xs text-[#5E6675] mt-1 font-medium">
                       Share your goals and an academic mentor will guide you through relevant curriculum details and hands-on cohorts.
                     </p>
                   </div>
@@ -342,11 +342,11 @@ export const StudentEnquiryModal: React.FC = () => {
                   {/* Field: Full Name */}
                   <div>
                     <div className="flex items-center justify-between mb-1">
-                      <label className="text-xs font-bold font-mono text-[#101536] uppercase tracking-wider">
+                      <label className="text-xs font-bold text-[#101536] uppercase tracking-wider">
                         Full Name <span className="text-red-500">*</span>
                       </label>
                       {touched.name && !fieldErrors.name && (
-                        <span className="text-[10px] font-mono text-[#119E9D] flex items-center gap-0.5">
+                        <span className="text-[10px] text-[#119E9D] flex items-center gap-0.5 font-bold">
                           <Check className="w-3 h-3" /> Valid
                         </span>
                       )}
@@ -378,11 +378,11 @@ export const StudentEnquiryModal: React.FC = () => {
                     {/* Phone Number */}
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <label className="text-xs font-bold font-mono text-[#101536] uppercase tracking-wider">
+                        <label className="text-xs font-bold text-[#101536] uppercase tracking-wider">
                           Phone Number <span className="text-red-500">*</span>
                         </label>
                         {touched.phone && !fieldErrors.phone && (
-                          <span className="text-[10px] font-mono text-[#119E9D] flex items-center gap-0.5">
+                          <span className="text-[10px] text-[#119E9D] flex items-center gap-0.5 font-bold">
                             <Check className="w-3 h-3" /> Valid
                           </span>
                         )}
@@ -413,11 +413,11 @@ export const StudentEnquiryModal: React.FC = () => {
                     {/* Email */}
                     <div>
                       <div className="flex items-center justify-between mb-1">
-                        <label className="text-xs font-bold font-mono text-[#101536] uppercase tracking-wider">
+                        <label className="text-xs font-bold text-[#101536] uppercase tracking-wider">
                           Email Address <span className="text-red-500">*</span>
                         </label>
                         {touched.email && !fieldErrors.email && (
-                          <span className="text-[10px] font-mono text-[#119E9D] flex items-center gap-0.5">
+                          <span className="text-[10px] text-[#119E9D] flex items-center gap-0.5 font-bold">
                             <Check className="w-3 h-3" /> Valid
                           </span>
                         )}
@@ -450,7 +450,7 @@ export const StudentEnquiryModal: React.FC = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     {/* Education */}
                     <div>
-                      <label className="text-xs font-bold font-mono text-[#101536] uppercase tracking-wider block mb-1">
+                      <label className="text-xs font-bold text-[#101536] uppercase tracking-wider block mb-1">
                         Education <span className="text-red-500">*</span>
                       </label>
                       <select
@@ -458,7 +458,7 @@ export const StudentEnquiryModal: React.FC = () => {
                         value={formData.education}
                         onChange={handleChange}
                         onBlur={() => handleBlur("education")}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#101536]/15 text-xs text-[#101536] focus:border-[#119E9D] focus:ring-1 focus:ring-[#119E9D] focus:outline-none"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#101536]/15 text-xs text-[#101536] focus:border-[#119E9D] focus:ring-1 focus:ring-[#119E9D] focus:outline-none cursor-pointer"
                       >
                         {VALID_EDUCATION_OPTIONS.map((edu) => (
                           <option key={edu} value={edu}>
@@ -470,7 +470,7 @@ export const StudentEnquiryModal: React.FC = () => {
 
                     {/* Primary Objective */}
                     <div>
-                      <label className="text-xs font-bold font-mono text-[#101536] uppercase tracking-wider block mb-1">
+                      <label className="text-xs font-bold text-[#101536] uppercase tracking-wider block mb-1">
                         Primary Purpose <span className="text-red-500">*</span>
                       </label>
                       <select
@@ -478,7 +478,7 @@ export const StudentEnquiryModal: React.FC = () => {
                         value={formData.purpose}
                         onChange={handleChange}
                         onBlur={() => handleBlur("purpose")}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#101536]/15 text-xs text-[#101536] focus:border-[#119E9D] focus:ring-1 focus:ring-[#119E9D] focus:outline-none"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#101536]/15 text-xs text-[#101536] focus:border-[#119E9D] focus:ring-1 focus:ring-[#119E9D] focus:outline-none cursor-pointer"
                       >
                         {VALID_PURPOSE_OPTIONS.map((purp) => (
                           <option key={purp} value={purp}>
@@ -491,7 +491,7 @@ export const StudentEnquiryModal: React.FC = () => {
 
                   {/* Field: Interested Program */}
                   <div>
-                    <label className="text-xs font-bold font-mono text-[#101536] uppercase tracking-wider block mb-1">
+                    <label className="text-xs font-bold text-[#101536] uppercase tracking-wider block mb-1">
                       Interested Track / Program <span className="text-red-500">*</span>
                     </label>
                     <select
@@ -499,7 +499,7 @@ export const StudentEnquiryModal: React.FC = () => {
                       value={formData.interestedProgram}
                       onChange={handleChange}
                       onBlur={() => handleBlur("interestedProgram")}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#101536]/15 text-xs text-[#101536] focus:border-[#119E9D] focus:ring-1 focus:ring-[#119E9D] focus:outline-none"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#101536]/15 text-xs text-[#101536] focus:border-[#119E9D] focus:ring-1 focus:ring-[#119E9D] focus:outline-none cursor-pointer"
                     >
                       {VALID_PROGRAM_OPTIONS.map((prog) => (
                         <option key={prog} value={prog}>
@@ -512,10 +512,10 @@ export const StudentEnquiryModal: React.FC = () => {
                   {/* Field: Optional Message */}
                   <div>
                     <div className="flex items-center justify-between mb-1">
-                      <label className="text-xs font-bold font-mono text-[#101536] uppercase tracking-wider">
+                      <label className="text-xs font-bold text-[#101536] uppercase tracking-wider">
                         Specific Questions or Goal <span className="text-[#5E6675] font-normal lowercase">(optional)</span>
                       </label>
-                      <span className="text-[10px] font-mono text-[#5E6675]">
+                      <span className="text-[10px] text-[#5E6675] font-medium">
                         {formData.message.length}/500
                       </span>
                     </div>
@@ -560,7 +560,7 @@ export const StudentEnquiryModal: React.FC = () => {
                         </>
                       )}
                     </button>
-                    <p className="text-[10px] font-mono text-center text-[#5E6675]/80 mt-2">
+                    <p className="text-[10px] text-center text-[#5E6675]/80 mt-2 font-medium">
                       Zero spam guarantee • Direct mentor response within 24 hours
                     </p>
                   </div>

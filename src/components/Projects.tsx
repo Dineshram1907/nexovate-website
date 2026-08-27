@@ -212,7 +212,7 @@ export const Projects: React.FC = () => {
         {/* Top Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 pb-3 border-b border-[#101536]/08 gap-2">
           <div>
-            <span className="text-[10px] font-mono font-bold tracking-[0.25em] text-[#6366F1] uppercase block mb-1">
+            <span className="text-xs font-bold tracking-[0.2em] text-[#6366F1] uppercase block mb-1">
               STUDENT CREATIONS
             </span>
             <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-[#101536] leading-tight font-jakarta">
@@ -255,7 +255,7 @@ export const Projects: React.FC = () => {
                   </motion.div>
 
                   {/* Top Header Bar */}
-                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between px-3 py-1.5 rounded-xl bg-black/75 backdrop-blur-md border border-white/15 text-[10px] font-mono text-white/90">
+                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between px-3 py-1.5 rounded-xl bg-black/75 backdrop-blur-md border border-white/15 text-xs text-white/90">
                     <div className="flex items-center gap-2">
                       <div className="flex items-center gap-1">
                         <span className="w-2 h-2 rounded-full bg-red-500/80" />
@@ -274,7 +274,7 @@ export const Projects: React.FC = () => {
                   {/* Bottom Application UI Graphic Overlay */}
                   <div className="absolute bottom-3 left-3 right-3 p-3 rounded-xl bg-black/80 backdrop-blur-md border border-white/15 flex items-center justify-between">
                     <div>
-                      <span className="text-[9px] font-mono text-[#F59E0B] uppercase tracking-wider block font-bold">
+                      <span className="text-[10px] text-[#F59E0B] uppercase tracking-wider block font-bold">
                         PROJECT CAPSTONE OVERVIEW
                       </span>
                       <p className="text-xs text-white font-bold truncate mt-0.5 font-jakarta">
@@ -282,7 +282,7 @@ export const Projects: React.FC = () => {
                       </p>
                     </div>
 
-                    <span className="px-3 py-1 rounded-lg bg-[#6366F1] text-white font-mono text-[10px] font-bold uppercase tracking-wider group-hover:bg-[#4F46E5] transition-colors shrink-0">
+                    <span className="px-3 py-1 rounded-lg bg-[#6366F1] text-white text-[10px] font-bold uppercase tracking-wider group-hover:bg-[#4F46E5] transition-colors shrink-0">
                       CLICK TO INSPECT
                     </span>
                   </div>
@@ -293,11 +293,11 @@ export const Projects: React.FC = () => {
               <div className="lg:col-span-5 flex flex-col items-start text-left">
                 {/* Project Category & Number */}
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-mono font-bold text-[#F97316]">
+                  <span className="text-xs font-bold text-[#F97316]">
                     {currentProject.number} / 0{DEMO_PROJECTS.length}
                   </span>
                   <span className="text-[#101536]/30">•</span>
-                  <span className="px-2.5 py-1 rounded-md bg-[#6366F1]/10 text-[#6366F1] text-[11px] font-mono font-bold tracking-wider uppercase">
+                  <span className="px-2.5 py-1 rounded-md bg-[#6366F1]/10 text-[#6366F1] text-xs font-bold tracking-wider uppercase">
                     {currentProject.category}
                   </span>
                 </div>
@@ -317,7 +317,7 @@ export const Projects: React.FC = () => {
                   {currentProject.technologies.map((tech) => (
                     <span
                       key={tech}
-                      className="px-2.5 py-1 rounded-md bg-white border border-[#101536]/15 text-[#101536] text-[10px] font-mono font-bold shadow-xs"
+                      className="px-2.5 py-1 rounded-md bg-white border border-[#101536]/15 text-[#101536] text-[11px] font-bold shadow-xs"
                     >
                       {tech}
                     </span>
@@ -328,7 +328,7 @@ export const Projects: React.FC = () => {
                 <div className="flex items-center gap-4 pt-4 border-t border-[#101536]/10 w-full">
                   <button
                     onClick={() => setSelectedModalProject(currentProject)}
-                    className="min-h-[44px] inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#6366F1] hover:bg-[#4F46E5] text-white font-mono font-bold text-xs uppercase tracking-wider transition-colors shadow-sm"
+                    className="min-h-[44px] inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#6366F1] hover:bg-[#4F46E5] text-white font-bold text-xs uppercase tracking-wider transition-colors shadow-sm cursor-pointer"
                   >
                     <span>View Details</span>
                     <ArrowRight className="w-4 h-4 text-white" />
@@ -336,7 +336,7 @@ export const Projects: React.FC = () => {
 
                   <button
                     onClick={() => handleExploreTrack(currentProject.programIndex)}
-                    className="text-xs font-mono font-bold text-[#6366F1] hover:text-[#4F46E5] transition-colors"
+                    className="text-xs font-bold text-[#6366F1] hover:text-[#4F46E5] transition-colors cursor-pointer"
                   >
                     Explore Track →
                   </button>
@@ -355,7 +355,7 @@ export const Projects: React.FC = () => {
                 <button
                   key={proj.id}
                   onClick={() => handleSelectProject(idx)}
-                  className={`px-3 py-1.5 rounded-xl text-[10px] font-mono font-bold uppercase transition-all duration-200 focus:outline-none ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold uppercase transition-all duration-200 focus:outline-none cursor-pointer ${
                     isActive
                       ? "bg-[#6366F1] text-white shadow-sm ring-1 ring-[#6366F1]"
                       : "bg-white text-[#5E6675] border border-[#101536]/10 hover:text-[#101536]"
@@ -373,7 +373,7 @@ export const Projects: React.FC = () => {
                 prevProject();
                 handleInteraction();
               }}
-              className="p-2 rounded-xl bg-white border border-[#101536]/10 text-[#101536] hover:bg-[#6366F1] hover:text-white transition-colors"
+              className="p-2 rounded-xl bg-white border border-[#101536]/10 text-[#101536] hover:bg-[#6366F1] hover:text-white transition-colors cursor-pointer"
               aria-label="Previous project"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -383,7 +383,7 @@ export const Projects: React.FC = () => {
                 nextProject();
                 handleInteraction();
               }}
-              className="p-2 rounded-xl bg-white border border-[#101536]/10 text-[#101536] hover:bg-[#6366F1] hover:text-white transition-colors"
+              className="p-2 rounded-xl bg-white border border-[#101536]/10 text-[#101536] hover:bg-[#6366F1] hover:text-white transition-colors cursor-pointer"
               aria-label="Next project"
             >
               <ChevronRight className="w-4 h-4" />
@@ -417,10 +417,10 @@ export const Projects: React.FC = () => {
               </button>
 
               <div className="flex items-center gap-2 mb-2">
-                <span className="px-2.5 py-1 rounded-md bg-[#6366F1]/10 text-[#6366F1] text-[10px] font-mono font-bold uppercase">
+                <span className="px-2.5 py-1 rounded-md bg-[#6366F1]/10 text-[#6366F1] text-xs font-bold uppercase">
                   {selectedModalProject.category}
                 </span>
-                <span className="text-xs font-mono text-[#5E6675]">CASE STUDY</span>
+                <span className="text-xs font-semibold text-[#5E6675]">CASE STUDY</span>
               </div>
 
               <h3 className="text-2xl font-black text-[#101536] mb-3 font-jakarta">
@@ -433,7 +433,7 @@ export const Projects: React.FC = () => {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                 <div className="p-4 rounded-2xl bg-[#FAFBFC] border border-[#101536]/10">
-                  <span className="text-[10px] font-mono font-bold text-[#6366F1] uppercase block mb-1">
+                  <span className="text-xs font-bold text-[#6366F1] uppercase block mb-1">
                     THE PROBLEM
                   </span>
                   <p className="text-xs text-[#101536] leading-relaxed font-medium">
@@ -442,7 +442,7 @@ export const Projects: React.FC = () => {
                 </div>
 
                 <div className="p-4 rounded-2xl bg-[#FAFBFC] border border-[#101536]/10">
-                  <span className="text-[10px] font-mono font-bold text-[#10B981] uppercase block mb-1">
+                  <span className="text-xs font-bold text-[#10B981] uppercase block mb-1">
                     THE SOLUTION
                   </span>
                   <p className="text-xs text-[#101536] leading-relaxed font-medium">
@@ -452,7 +452,7 @@ export const Projects: React.FC = () => {
               </div>
 
               <div className="mb-6">
-                <span className="text-xs font-mono font-bold text-[#101536] uppercase tracking-wider block mb-2">
+                <span className="text-xs font-bold text-[#101536] uppercase tracking-wider block mb-2">
                   KEY FEATURES
                 </span>
                 <div className="space-y-1.5">

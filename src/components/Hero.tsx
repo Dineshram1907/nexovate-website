@@ -8,17 +8,19 @@ export const Hero: React.FC = () => {
   const { goToSection } = usePresentation();
 
   const handleExplorePrograms = () => {
-    goToSection(2); // Programs
+    const el = document.getElementById("programs");
+    if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleSeeHowItWorks = () => {
-    goToSection(3); // How It Works
+    const el = document.getElementById("experience");
+    if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
   const cubicEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
   return (
-    <div className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-12 bg-notebook-grid select-none overflow-x-clip border-b border-[#101536]/06">
+    <div id="hero" className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-12 bg-notebook-grid select-none overflow-x-clip border-b border-[#101536]/06 scroll-mt-20">
       {/* Background Soft Pastel Gradient Blurs */}
       <div className="absolute top-10 left-8 w-80 h-80 bg-[#E0E7FF]/60 rounded-full blur-3xl -z-10" />
       <div className="absolute bottom-10 right-8 w-96 h-96 bg-[#FEF3C7]/60 rounded-full blur-3xl -z-10" />
@@ -34,7 +36,7 @@ export const Hero: React.FC = () => {
               transition={{ duration: 0.6, delay: 0.2, ease: cubicEase }}
               className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FEF3C7] border border-[#F59E0B]/30 mb-4 shadow-xs"
             >
-              <span className="text-xs font-mono font-extrabold text-[#101536] tracking-tight">
+              <span className="text-xs font-bold text-[#101536] tracking-tight">
                 YOUR NEXT IDEA STARTS HERE.
               </span>
               <Star className="w-3.5 h-3.5 text-[#F59E0B] fill-current" />

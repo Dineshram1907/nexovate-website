@@ -57,18 +57,18 @@ export const WhyNexovate: React.FC = () => {
   ];
 
   return (
-    <section id="why-nexovate" className="py-20 md:py-28 bg-[#FAFBFC] select-none">
+    <section id="why-nexovate" className="py-20 md:py-28 bg-[#FAFBFC] select-none scroll-mt-20 font-sans">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mb-14 md:mb-16 text-left">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F6F8F9] border border-[#101536]/10 mb-3">
             <Sparkles className="w-3.5 h-3.5 text-[#119E9D]" />
-            <span className="text-[10px] font-mono font-bold tracking-[0.2em] text-[#119E9D] uppercase">
-              SLIDE 02 // WHY NEXOVATE
+            <span className="text-[10px] font-bold tracking-[0.2em] text-[#119E9D] uppercase">
+              WHY NEXOVATE
             </span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#101536]">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#101536] font-jakarta">
             MORE THAN A COURSE.<br />
             <span className="text-[#119E9D] italic font-serif">A PLACE TO DISCOVER YOUR POTENTIAL.</span>
           </h2>
@@ -96,12 +96,12 @@ export const WhyNexovate: React.FC = () => {
                     <div className={`w-12 h-12 rounded-2xl ${pillar.badgeBg} flex items-center justify-center shrink-0`}>
                       <Icon className={`w-6 h-6 ${pillar.badgeColor}`} />
                     </div>
-                    <span className="text-xs font-mono font-bold text-[#5E6675]/70">
+                    <span className="text-xs font-bold text-[#5E6675]/70 uppercase tracking-wider">
                       PILLAR {pillar.number}
                     </span>
                   </div>
 
-                  <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#101536] mb-2 group-hover:text-[#119E9D] transition-colors">
+                  <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#101536] mb-2 group-hover:text-[#119E9D] transition-colors font-jakarta">
                     {pillar.title}
                   </h3>
 
@@ -115,7 +115,7 @@ export const WhyNexovate: React.FC = () => {
                 </div>
 
                 <div className="mt-8 pt-4 border-t border-[#101536]/06 flex items-center justify-between">
-                  <span className="text-[10px] font-mono font-bold text-[#5E6675]/60 uppercase tracking-widest">
+                  <span className="text-[10px] font-bold text-[#5E6675]/60 uppercase tracking-widest">
                     NEXOVATE EDTECH PILLAR // {pillar.number}
                   </span>
                   <div className="w-2 h-2 rounded-full bg-[#EFAF32]" />

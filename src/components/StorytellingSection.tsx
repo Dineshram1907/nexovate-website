@@ -11,7 +11,7 @@ export const StorytellingSection: React.FC = () => {
           <div className="lg:col-span-7 flex flex-col items-start text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E0E7FF] border border-[#6366F1]/30 mb-4">
               <Sparkles className="w-3.5 h-3.5 text-[#6366F1]" />
-              <span className="text-[10px] font-mono font-bold tracking-[0.2em] text-[#6366F1] uppercase">
+              <span className="text-xs font-bold tracking-[0.2em] text-[#6366F1] uppercase">
                 THE NEXOVATE LEARNING PHILOSOPHY
               </span>
             </div>
@@ -56,14 +56,14 @@ export const StorytellingSection: React.FC = () => {
           <div className="lg:col-span-5 relative flex justify-center">
             <div className="relative w-full max-w-md aspect-[4/3.5] bg-white rounded-3xl border border-[#101536]/10 p-6 shadow-xl text-left select-none">
               {/* Taped Sticky Note */}
-              <div className="note-taped p-4 mb-4 font-mono text-xs text-[#101536]">
+              <div className="note-taped p-4 mb-4 font-sans text-xs text-[#101536]">
                 <p className="font-bold text-sm mb-1 text-[#F97316]">★ Student Manifesto</p>
                 <p className="leading-snug text-[#5E6675]">
                   "I don't just want to memorize theory. I want to build things that matter."
                 </p>
               </div>
 
-              <div className="p-4 bg-[#F8F9FA] rounded-2xl border border-dashed border-[#101536]/15 font-mono text-xs">
+              <div className="p-4 bg-[#F8F9FA] rounded-2xl border border-dashed border-[#101536]/15 font-sans text-xs">
                 <div className="flex items-center justify-between mb-2">
                   <span className="font-bold text-[#6366F1]">LEARNING METHODOLOGY</span>
                   <span className="text-[10px] bg-[#6366F1]/10 text-[#6366F1] px-2 py-0.5 rounded-full font-bold">100% APPLIED</span>

@@ -37,7 +37,7 @@ export const ProjectLearning: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <span className="text-[10px] font-mono font-bold tracking-[0.2em] text-[#6366F1] uppercase block mb-2">
+          <span className="text-xs font-bold tracking-[0.2em] text-[#6366F1] uppercase block mb-2">
             PRACTICAL CREATION
           </span>
           <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-[#101536] uppercase font-jakarta">
@@ -65,7 +65,7 @@ export const ProjectLearning: React.FC = () => {
                   <div className={`w-10 h-10 rounded-2xl ${proj.bg} ${proj.color} flex items-center justify-center mb-3`}>
                     <Icon className="w-5 h-5" />
                   </div>
-                  <span className="text-[10px] font-mono font-bold text-[#6366F1] uppercase block mb-1">
+                  <span className="text-xs font-bold text-[#6366F1] uppercase block mb-1">
                     {proj.category}
                   </span>
                   <h3 className="text-base font-extrabold text-[#101536] tracking-tight mb-1.5">

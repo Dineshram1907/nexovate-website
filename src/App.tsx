@@ -12,7 +12,7 @@ export default function App() {
         <Navbar />
 
         {/* Main Document Flow for One Continuous Vertical Scroll */}
-        <main className="w-full relative pt-16 sm:pt-18">
+        <main className="w-full relative">
           <PresentationViewport />
         </main>
 

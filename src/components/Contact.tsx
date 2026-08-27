@@ -156,7 +156,7 @@ export const Contact: React.FC = () => {
       <div className="max-w-7xl mx-auto w-full z-10">
         {/* Subtle Section Label */}
         <div className="flex items-center gap-3 mb-8 pb-3 border-b border-[#101536]/10">
-          <span className="text-xs font-mono font-bold tracking-[0.25em] text-[#6366F1] uppercase">
+          <span className="text-xs font-bold tracking-[0.2em] text-[#6366F1] uppercase">
             DIRECT CONVERSATION
           </span>
           <span className="h-[1px] w-12 bg-[#6366F1]/40" />
@@ -177,7 +177,7 @@ export const Contact: React.FC = () => {
             </p>
 
             {/* Direct Coordinates */}
-            <div className="space-y-3 pt-6 border-t border-[#101536]/10 w-full font-mono text-xs text-[#101536]">
+            <div className="space-y-3 pt-6 border-t border-[#101536]/10 w-full text-xs text-[#101536]">
               <div className="flex items-center gap-3">
                 <span className="text-[#6366F1] font-bold w-16 uppercase text-[10px]">PHONE</span>
                 <span className="text-[#101536] font-bold">+91 98765 43210</span>
@@ -196,8 +196,8 @@ export const Contact: React.FC = () => {
           {/* RIGHT 50% — High Contrast White Paper Form Card */}
           <div className="lg:col-span-6 bg-white border border-[#101536]/12 p-6 sm:p-8 rounded-3xl shadow-xl">
             {/* Selected Track Callout */}
-            <div className="mb-6 pb-3 border-b border-[#101536]/10 flex items-center justify-between text-xs font-mono">
-              <span className="text-[#5E6675]">SELECTED DISCIPLINE:</span>
+            <div className="mb-6 pb-3 border-b border-[#101536]/10 flex items-center justify-between text-xs">
+              <span className="text-[#5E6675] font-medium">SELECTED DISCIPLINE:</span>
               <span className="text-[#6366F1] font-bold uppercase">{formData.program}</span>
             </div>
 
@@ -217,7 +217,7 @@ export const Contact: React.FC = () => {
                 </p>
                 <button
                   onClick={() => setStatus("idle")}
-                  className="min-h-[44px] px-6 py-2.5 bg-[#101536] hover:bg-[#6366F1] text-white font-mono text-xs uppercase tracking-wider transition-colors rounded-xl font-bold"
+                  className="min-h-[44px] px-6 py-2.5 bg-[#101536] hover:bg-[#6366F1] text-white text-xs uppercase tracking-wider transition-colors rounded-xl font-bold cursor-pointer"
                 >
                   Send Another Message
                 </button>
@@ -245,11 +245,11 @@ export const Contact: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <div className="flex items-center justify-between mb-1.5">
-                      <label className="text-xs font-mono font-bold text-[#101536] uppercase">
+                      <label className="text-xs font-bold text-[#101536] uppercase tracking-wider">
                         Your Name *
                       </label>
                       {touched.name && !fieldErrors.name && (
-                        <span className="text-[10px] font-mono text-[#10B981] flex items-center gap-0.5 font-bold">
+                        <span className="text-[10px] text-[#10B981] flex items-center gap-0.5 font-bold">
                           <Check className="w-3 h-3" /> Valid
                         </span>
                       )}
@@ -271,7 +271,7 @@ export const Contact: React.FC = () => {
                       }`}
                     />
                     {touched.name && fieldErrors.name && (
-                      <p className="text-[10px] text-red-500 mt-1 font-mono">
+                      <p className="text-[10px] text-red-500 mt-1">
                         {fieldErrors.name}
                       </p>
                     )}
@@ -279,11 +279,11 @@ export const Contact: React.FC = () => {
 
                   <div>
                     <div className="flex items-center justify-between mb-1.5">
-                      <label className="text-xs font-mono font-bold text-[#101536] uppercase">
+                      <label className="text-xs font-bold text-[#101536] uppercase tracking-wider">
                         Email Address *
                       </label>
                       {touched.email && !fieldErrors.email && (
-                        <span className="text-[10px] font-mono text-[#10B981] flex items-center gap-0.5 font-bold">
+                        <span className="text-[10px] text-[#10B981] flex items-center gap-0.5 font-bold">
                           <Check className="w-3 h-3" /> Valid
                         </span>
                       )}
@@ -305,7 +305,7 @@ export const Contact: React.FC = () => {
                       }`}
                     />
                     {touched.email && fieldErrors.email && (
-                      <p className="text-[10px] text-red-500 mt-1 font-mono">
+                      <p className="text-[10px] text-red-500 mt-1">
                         {fieldErrors.email}
                       </p>
                     )}
@@ -315,11 +315,11 @@ export const Contact: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <div className="flex items-center justify-between mb-1.5">
-                      <label className="text-xs font-mono font-bold text-[#101536] uppercase">
+                      <label className="text-xs font-bold text-[#101536] uppercase tracking-wider">
                         Phone Number *
                       </label>
                       {touched.phone && !fieldErrors.phone && (
-                        <span className="text-[10px] font-mono text-[#10B981] flex items-center gap-0.5 font-bold">
+                        <span className="text-[10px] text-[#10B981] flex items-center gap-0.5 font-bold">
                           <Check className="w-3 h-3" /> Valid
                         </span>
                       )}
@@ -341,14 +341,14 @@ export const Contact: React.FC = () => {
                       }`}
                     />
                     {touched.phone && fieldErrors.phone && (
-                      <p className="text-[10px] text-red-500 mt-1 font-mono">
+                      <p className="text-[10px] text-red-500 mt-1">
                         {fieldErrors.phone}
                       </p>
                     )}
                   </div>
 
                   <div>
-                    <label className="text-xs font-mono font-bold text-[#101536] uppercase block mb-1.5">
+                    <label className="text-xs font-bold text-[#101536] uppercase block mb-1.5 tracking-wider">
                       Program / Track
                     </label>
                     <select
@@ -381,11 +381,11 @@ export const Contact: React.FC = () => {
 
                 <div>
                   <div className="flex items-center justify-between mb-1.5">
-                    <label className="text-xs font-mono font-bold text-[#101536] uppercase">
+                    <label className="text-xs font-bold text-[#101536] uppercase tracking-wider">
                       Message or Inquiry *
                     </label>
                     {touched.message && !fieldErrors.message && (
-                      <span className="text-[10px] font-mono text-[#10B981] flex items-center gap-0.5 font-bold">
+                      <span className="text-[10px] text-[#10B981] flex items-center gap-0.5 font-bold">
                         <Check className="w-3 h-3" /> Valid
                       </span>
                     )}
@@ -405,7 +405,7 @@ export const Contact: React.FC = () => {
                     }`}
                   />
                   {touched.message && fieldErrors.message && (
-                    <p className="text-[10px] text-red-500 mt-1 font-mono">
+                    <p className="text-[10px] text-red-500 mt-1">
                       {fieldErrors.message}
                     </p>
                   )}
