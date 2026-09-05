@@ -1,16 +1,20 @@
 export interface NavItem {
   label: string;
-  target: string;
-  sectionId: string;
+  href: string;
+  isRoute?: boolean;
 }
 
-export const NAV_ITEMS: NavItem[] = [
-  { label: "Why Nexovate", target: "#why-nexovate", sectionId: "why-nexovate" },
-  { label: "Programs", target: "#programs", sectionId: "programs" },
-  { label: "Experience", target: "#experience", sectionId: "experience" },
-  { label: "Projects", target: "#projects", sectionId: "projects" },
-  { label: "Student Reviews", target: "#student-reviews", sectionId: "student-reviews" },
-  { label: "Institutions", target: "#institutions", sectionId: "institutions" },
-  { label: "About", target: "#about", sectionId: "about" },
-  { label: "Contact", target: "#contact", sectionId: "contact" },
+// Primary navigation as specified: Home, About, Programs, Contact
+export const NAV_ROUTES: NavItem[] = [
+  { label: "Home", href: "/", isRoute: true },
+  { label: "About", href: "/about", isRoute: true },
+  { label: "Programs", href: "/courses", isRoute: true },
+  { label: "Contact", href: "/contact", isRoute: true },
+];
+
+export const MOBILE_NAV_ROUTES: NavItem[] = [
+  { label: "Home", href: "/", isRoute: true },
+  { label: "About", href: "/about", isRoute: true },
+  { label: "Programs", href: "/courses", isRoute: true },
+  { label: "Contact", href: "/contact", isRoute: true },
 ];

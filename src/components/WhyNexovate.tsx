@@ -1,130 +1,108 @@
 import React from "react";
-import { motion } from "framer-motion";
-import { Compass, Hammer, Users, Rocket, Sparkles } from "lucide-react";
-
-interface Pillar {
-  number: string;
-  title: string;
-  subtitle: string;
-  detail: string;
-  icon: React.ElementType;
-  badgeBg: string;
-  badgeColor: string;
-}
+import { motion } from "motion/react";
+import { Sparkles } from "lucide-react";
 
 export const WhyNexovate: React.FC = () => {
-  const pillars: Pillar[] = [
+  const principles = [
     {
       number: "01",
-      title: "EXPLORE & DISCOVER",
-      subtitle: "Find what interests you before committing.",
-      detail:
-        "Whether you're curious about AI, UI/UX design, data science, web engineering, or tech business, Nexovate gives you the freedom to explore multiple disciplines.",
-      icon: Compass,
-      badgeBg: "bg-[#E0F2FE]",
-      badgeColor: "text-[#0284C7]",
+      title: "DISCOVER",
+      headline: "Find What Genuinely Excites You",
+      description:
+        "Explore practical sandboxes across artificial intelligence, modern web engineering, and product design before committing to your specialized track.",
+      accent: "#119E9D",
+      proof: "Interactive Skill Roadmaps & Guided Explorations",
     },
     {
       number: "02",
-      title: "PRACTICAL BUILDING",
-      subtitle: "Learn by doing, not just watching.",
-      detail:
-        "Knowledge becomes capability when you build. Students turn concepts into real-world applications, working software, and creative portfolios.",
-      icon: Hammer,
-      badgeBg: "bg-[#FFEDD5]",
-      badgeColor: "text-[#F97316]",
+      title: "BUILD",
+      headline: "Turn Knowledge Into Something Real",
+      description:
+        "Implement concepts directly in production Git repositories with automated CI/CD pipelines, live authenticated APIs, and senior code reviews.",
+      accent: "#0EA5E9",
+      proof: "Production Codebases & Microservice Architecture",
     },
     {
       number: "03",
-      title: "EXPERT MENTORSHIP",
-      subtitle: "Guidance from experienced practitioners.",
-      detail:
-        "Direct mentorship from engineers, designers, and industry builders who offer practical feedback, career advice, and structured support.",
-      icon: Users,
-      badgeBg: "bg-[#D1FAE5]",
-      badgeColor: "text-[#10B981]",
-    },
-    {
-      number: "04",
-      title: "FUTURE-READY",
-      subtitle: "Prepare for what comes next.",
-      detail:
-        "Develop adaptable problem-solving skills, critical thinking habits, and technological literacy that prepare you for college, internships, and beyond.",
-      icon: Rocket,
-      badgeBg: "bg-[#FEF3C7]",
-      badgeColor: "text-[#D97706]",
+      title: "GROW",
+      headline: "Leave With Demonstrable Proof",
+      description:
+        "Graduate with live deployed systems, published documentation, and demonstrable engineering artifacts that technical teams inspect directly.",
+      accent: "#EFAF32",
+      proof: "Verified Public Portfolios & Direct Referrals",
     },
   ];
 
   return (
-    <section id="why-nexovate" className="py-20 md:py-28 bg-[#FAFBFC] select-none scroll-mt-20 font-sans">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section
+      id="why-nexovate"
+      className="relative w-full py-24 sm:py-32 lg:py-40 px-4 sm:px-6 lg:px-12 bg-[#F7F6F2] border-b border-[#0F1535]/06 select-none font-sans text-[#0F1535] scroll-mt-20"
+    >
+      <div className="max-w-6xl mx-auto w-full">
         {/* Section Header */}
-        <div className="mb-14 md:mb-16 text-left">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F6F8F9] border border-[#101536]/10 mb-3">
+        <div className="max-w-3xl mb-16 sm:mb-20 text-left">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#119E9D]/10 border border-[#119E9D]/20 mb-4">
             <Sparkles className="w-3.5 h-3.5 text-[#119E9D]" />
-            <span className="text-[10px] font-bold tracking-[0.2em] text-[#119E9D] uppercase">
-              WHY NEXOVATE
+            <span className="text-[10px] sm:text-xs font-bold tracking-[0.2em] text-[#119E9D] uppercase">
+              THE LEARNING CONTINUUM
             </span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#101536] font-jakarta">
-            MORE THAN A COURSE.<br />
-            <span className="text-[#119E9D] italic font-serif">A PLACE TO DISCOVER YOUR POTENTIAL.</span>
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#0F1535] font-jakarta leading-[1.08] mb-6">
+            Real Skills. <br />
+            Real Projects. <br />
+            Real <span className="text-[#119E9D]">Impact.</span>
           </h2>
+
+          <p className="text-base sm:text-lg text-[#576071] font-normal leading-relaxed max-w-2xl">
+            Work on industry-grade codebases, learn from active practitioners, and graduate with a portfolio that speaks for you.
+          </p>
         </div>
 
-        {/* 4 Friendly EdTech Principle Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-          {pillars.map((pillar, idx) => {
-            const Icon = pillar.icon;
-            return (
-              <motion.div
-                key={pillar.number}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{
-                  duration: 0.6,
-                  delay: idx * 0.1,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className="bg-white rounded-3xl border border-[#101536]/08 p-7 md:p-9 flex flex-col justify-between hover:border-[#119E9D]/30 hover:shadow-lg transition-all duration-300 group"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <div className={`w-12 h-12 rounded-2xl ${pillar.badgeBg} flex items-center justify-center shrink-0`}>
-                      <Icon className={`w-6 h-6 ${pillar.badgeColor}`} />
-                    </div>
-                    <span className="text-xs font-bold text-[#5E6675]/70 uppercase tracking-wider">
-                      PILLAR {pillar.number}
-                    </span>
-                  </div>
-
-                  <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#101536] mb-2 group-hover:text-[#119E9D] transition-colors font-jakarta">
-                    {pillar.title}
-                  </h3>
-
-                  <p className="text-sm font-semibold text-[#119E9D] mb-3">
-                    {pillar.subtitle}
-                  </p>
-
-                  <p className="text-sm sm:text-base text-[#5E6675] leading-relaxed font-normal">
-                    {pillar.detail}
-                  </p>
-                </div>
-
-                <div className="mt-8 pt-4 border-t border-[#101536]/06 flex items-center justify-between">
-                  <span className="text-[10px] font-bold text-[#5E6675]/60 uppercase tracking-widest">
-                    NEXOVATE EDTECH PILLAR // {pillar.number}
+        {/* 3 Principles Editorial Layout — Unboxed, Hairline Dividers, Extreme Restraint */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-12 pt-10 border-t border-[#0F1535]/10 text-left">
+          {principles.map((principle, idx) => (
+            <motion.div
+              key={principle.title}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-xs font-mono font-bold tracking-widest text-[#0F1535]/40">
+                    PHASE {principle.number}
                   </span>
-                  <div className="w-2 h-2 rounded-full bg-[#EFAF32]" />
+                  <span
+                    className="text-[11px] font-bold tracking-wider uppercase font-jakarta"
+                    style={{ color: principle.accent }}
+                  >
+                    {principle.title}
+                  </span>
                 </div>
-              </motion.div>
-            );
-          })}
+
+                <h3 className="text-xl sm:text-2xl font-bold text-[#0F1535] mb-3 font-jakarta leading-snug">
+                  {principle.headline}
+                </h3>
+
+                <p className="text-xs sm:text-sm text-[#576071] leading-relaxed mb-6 font-normal">
+                  {principle.description}
+                </p>
+              </div>
+
+              <div className="pt-4 border-t border-[#0F1535]/06">
+                <span className="text-[11px] font-semibold text-[#0F1535]/75 block">
+                  {principle.proof}
+                </span>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
   );
 };
+
+export default WhyNexovate;

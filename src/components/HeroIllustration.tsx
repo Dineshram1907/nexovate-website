@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { Sparkles, Lightbulb, Heart, Star, Check } from "lucide-react";
 import { realStudentsGroup } from "@/assets";
 

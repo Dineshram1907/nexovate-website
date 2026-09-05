@@ -1,221 +1,217 @@
-"use client";
-
-import React, { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "motion/react";
 import { NexovateLogo } from "./NexovateLogo";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { usePresentation } from "@/context/PresentationContext";
-import { NAV_ITEMS } from "@/constants/navigation";
+import { NAV_ROUTES } from "@/constants/navigation";
 
 export const Navbar: React.FC = () => {
   const { openEnquiryModal } = usePresentation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>("hero");
-  const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
 
-  // Passive scroll listener for subtle navbar elevation
+  const { scrollY } = useScroll();
+  const smoothScroll = useSpring(scrollY, { stiffness: 280, damping: 30, restDelta: 0.001 });
+
+  // Transform on scroll: starts transparent, fades in backdrop on scroll
+  const navBgOpacity = useTransform(smoothScroll, [0, 80], [0, 0.94]);
+  const navPaddingY = useTransform(smoothScroll, [0, 80], [20, 12]);
+
+  const isHomePage = location.pathname === "/";
+  // On home page, the dark hero transitions to the off-white canvas around 60% progress of the 500vh hero
+  const [isPastHero, setIsPastHero] = useState(!isHomePage);
+
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      if (!isHomePage) {
+        setIsPastHero(true);
+        return;
+      }
+      // When scrolled past both dark hero & cinematic sections into the light discovery content
+      const discoveryEl = document.getElementById("discovery");
+      const threshold = discoveryEl
+        ? discoveryEl.offsetTop - window.innerHeight * 0.3
+        : window.innerHeight * 4.5;
+      setIsPastHero(window.scrollY > threshold);
     };
-    window.addEventListener("scroll", handleScroll, { passive: true });
+
     handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isHomePage]);
 
-  // Passive IntersectionObserver to reflect current section without hijacking scrolling
   useEffect(() => {
-    const observedIds = ["hero", ...NAV_ITEMS.map((item) => item.sectionId)];
-    const elements = observedIds.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
 
-    if (elements.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      {
-        rootMargin: "-20% 0px -60% 0px",
-        threshold: 0.1,
-      }
-    );
-
-    elements.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+  // Keyboard accessibility
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileMenuOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  const handleAnchorClick = useCallback(
-    (e: React.MouseEvent<HTMLAnchorElement>, target: string) => {
-      e.preventDefault();
-      const targetId = target.replace("#", "");
-      const element = document.getElementById(targetId);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-      setMobileMenuOpen(false);
-    },
-    []
-  );
+  const isLightText = isHomePage && !isPastHero;
 
   return (
-    <header
-      className={`sticky top-0 inset-x-0 z-50 transition-all duration-300 select-none font-sans ${
-        isScrolled
-          ? "bg-[#FAFBFC]/95 backdrop-blur-md border-b border-[#101536]/10 shadow-[0_4px_20px_-4px_rgba(16,21,54,0.06)] py-2 sm:py-2.5"
-          : "bg-[#FAFBFC] border-b border-[#101536]/06 py-3 sm:py-3.5"
-      }`}
+    <motion.header
+      style={{
+        paddingTop: navPaddingY,
+        paddingBottom: navPaddingY,
+      }}
+      className="fixed top-0 inset-x-0 z-50 select-none font-sans transition-all duration-300 pointer-events-auto"
     >
-      {/* Top Subtle Notebook Accent Ribbon */}
-      <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#6366F1]/30 via-[#F97316]/30 via-[#119E9D]/30 to-transparent pointer-events-none" />
+      {/* Background surface that fades in when past dark hero or on other pages */}
+      <motion.div
+        style={{
+          opacity: isPastHero ? navBgOpacity : 0,
+        }}
+        className={`absolute inset-0 backdrop-blur-md border-b pointer-events-none -z-10 transition-colors duration-300 ${
+          isPastHero
+            ? "bg-[#F7F6F2]/90 border-[#0F1535]/08 shadow-xs"
+            : "bg-transparent border-transparent"
+        }`}
+      />
 
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-10 flex items-center justify-between">
-        {/* BRAND LOGO */}
-        <a
-          href="#hero"
-          onClick={(e) => handleAnchorClick(e, "#hero")}
-          className="focus:outline-none focus:ring-2 focus:ring-[#6366F1]/30 rounded-xl transition-all duration-200 hover:opacity-95 text-left py-1 shrink-0 cursor-pointer"
+      <div className="max-w-7xl mx-auto px-[var(--page-padding)] flex items-center justify-between relative min-h-[44px]">
+        {/* LEFT: NEXOVATE LOGO / WORDMARK */}
+        <Link
+          to="/"
+          className="focus:outline-none focus-visible:ring-2 focus-visible:ring-[#119E9D] rounded-xl transition-opacity hover:opacity-90 text-left py-1 shrink-0 cursor-pointer block group"
           aria-label="Nexovate Home"
         >
-          <NexovateLogo size={36} showTagline={true} />
-        </a>
+          <NexovateLogo size={32} variant={isLightText ? "dark" : "light"} showTagline={true} />
+        </Link>
 
-        {/* DESKTOP EDITORIAL NAVIGATION (Exact single-source order) */}
+        {/* CENTER: MINIMAL EDITORIAL NAVIGATION (Home, About, Programs, Contact) */}
         <nav
-          aria-label="Main Navigation"
-          className="hidden lg:flex items-center gap-1 xl:gap-1.5 px-3 py-1.5 rounded-full bg-[#101536]/[0.03] border border-[#101536]/[0.06]"
+          aria-label="Primary Navigation"
+          className="hidden md:flex items-center gap-6 lg:gap-10"
         >
-          {NAV_ITEMS.map((item) => {
-            const isActive = activeSection === item.sectionId;
+          {NAV_ROUTES.map((item) => {
+            const isRouteActive = location.pathname === item.href;
             return (
-              <a
+              <Link
                 key={item.label}
-                href={item.target}
-                onClick={(e) => handleAnchorClick(e, item.target)}
-                className={`relative px-3 py-1.5 rounded-full text-xs font-semibold tracking-tight transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#6366F1]/40 cursor-pointer ${
-                  isActive
-                    ? "text-[#101536] font-bold"
-                    : "text-[#5E6675] hover:text-[#101536] hover:bg-black/[0.03]"
+                to={item.href}
+                className={`relative py-1 text-[13px] font-medium tracking-wider uppercase transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#119E9D] rounded-sm cursor-pointer block ${
+                  isLightText
+                    ? isRouteActive
+                      ? "text-white font-semibold"
+                      : "text-white/70 hover:text-white"
+                    : isRouteActive
+                    ? "text-[#0F1535] font-semibold"
+                    : "text-[#576071] hover:text-[#0F1535]"
                 }`}
               >
-                {isActive && (
+                <span className="relative z-10">
+                  {item.label}
+                </span>
+                {isRouteActive && (
                   <motion.div
-                    layoutId="activeNavPill"
-                    className="absolute inset-0 rounded-full bg-white shadow-xs border border-[#101536]/10 -z-10"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    layoutId="editorialNavIndicator"
+                    className="absolute -bottom-1 left-0 right-0 h-[1.5px] bg-[#119E9D] rounded-full"
+                    transition={{ type: "spring", stiffness: 420, damping: 32 }}
                   />
                 )}
-                <span className="relative z-10 flex items-center gap-1.5 whitespace-nowrap">
-                  {item.label}
-                  {isActive && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#F97316] inline-block" />
-                  )}
-                </span>
-              </a>
+              </Link>
             );
           })}
         </nav>
 
-        {/* DESKTOP GET STARTED ACTION */}
-        <div className="hidden lg:flex items-center gap-3 shrink-0">
+        {/* RIGHT: EDITORIAL GET STARTED CTA */}
+        <div className="hidden md:flex items-center gap-4 shrink-0">
           <button
             onClick={() => openEnquiryModal()}
-            className="group relative min-h-[42px] inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#101536] text-white font-bold text-xs uppercase tracking-wider hover:bg-[#6366F1] transition-all duration-200 shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#6366F1] cursor-pointer"
+            className={`group min-h-[42px] inline-flex items-center justify-center gap-2 px-6 py-2 rounded-full font-bold text-xs uppercase tracking-wider transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#119E9D] cursor-pointer shadow-sm active:scale-95 ${
+              isLightText
+                ? "bg-white text-[#0F1535] hover:bg-[#119E9D] hover:text-white"
+                : "bg-[#0F1535] text-white hover:bg-[#119E9D]"
+            }`}
           >
             <span>Get Started</span>
-            <ArrowRight className="w-3.5 h-3.5 text-[#EFAF32] group-hover:translate-x-0.5 transition-transform" />
+            <ArrowUpRight className="w-3.5 h-3.5 text-[#EFAF32] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
           </button>
         </div>
 
-        {/* CUSTOM ANIMATED MOBILE HAMBURGER BUTTON */}
+        {/* MOBILE MENU TOGGLE BUTTON (Minimum 44px hit target) */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="lg:hidden relative w-11 h-11 rounded-2xl bg-white border border-[#101536]/10 shadow-xs flex flex-col items-center justify-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-[#6366F1] transition-all cursor-pointer"
+          className={`md:hidden relative w-11 h-11 rounded-full flex flex-col items-center justify-center gap-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#119E9D] transition-all cursor-pointer active:scale-95 ${
+            isLightText
+              ? "bg-white/10 text-white backdrop-blur-md border border-white/20"
+              : "bg-white text-[#0F1535] shadow-xs border border-[#0F1535]/10"
+          }`}
           aria-expanded={mobileMenuOpen}
-          aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
         >
           <span
-            className={`w-5 h-[2px] bg-[#101536] rounded-full transition-all duration-300 origin-center ${
-              mobileMenuOpen ? "rotate-45 translate-y-[5px]" : ""
-            }`}
+            className={`w-4 h-[1.5px] rounded-full transition-all duration-200 ${
+              isLightText ? "bg-white" : "bg-[#0F1535]"
+            } ${mobileMenuOpen ? "rotate-45 translate-y-[4.5px]" : ""}`}
           />
           <span
-            className={`w-5 h-[2px] bg-[#101536] rounded-full transition-all duration-200 ${
-              mobileMenuOpen ? "opacity-0 scale-x-0" : "opacity-100"
-            }`}
+            className={`w-4 h-[1.5px] rounded-full transition-all duration-150 ${
+              isLightText ? "bg-white" : "bg-[#0F1535]"
+            } ${mobileMenuOpen ? "opacity-0 scale-x-0" : "opacity-100"}`}
           />
           <span
-            className={`w-5 h-[2px] bg-[#101536] rounded-full transition-all duration-300 origin-center ${
-              mobileMenuOpen ? "-rotate-45 -translate-y-[5px]" : ""
-            }`}
+            className={`w-4 h-[1.5px] rounded-full transition-all duration-200 ${
+              isLightText ? "bg-white" : "bg-[#0F1535]"
+            } ${mobileMenuOpen ? "-rotate-45 -translate-y-[4.5px]" : ""}`}
           />
         </button>
       </div>
 
-      {/* EDITORIAL MOBILE MENU DRAWER (Exact single-source order) */}
+      {/* MOBILE FULL-WIDTH EDITORIAL DRAWER */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:hidden overflow-hidden bg-[#FAFBFC] border-b border-[#101536]/12 shadow-2xl"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="md:hidden fixed inset-x-0 top-full bg-[#0F1535] text-white border-b border-white/10 shadow-2xl px-[var(--page-padding)] py-8 flex flex-col gap-6"
           >
-            <div className="max-w-md mx-auto px-6 pt-4 pb-8 flex flex-col gap-2">
-              <div className="flex items-center justify-between pb-3 mb-1 border-b border-[#101536]/08">
-                <span className="text-[11px] font-bold text-[#6366F1] uppercase tracking-widest flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-[#F97316]" />
-                  NAVIGATION
-                </span>
-                <span className="text-[10px] text-[#5E6675] font-semibold">NEXOVATE EDTECH</span>
-              </div>
-
-              {NAV_ITEMS.map((item, idx) => {
-                const isActive = activeSection === item.sectionId;
+            <div className="flex flex-col gap-4">
+              {NAV_ROUTES.map((item) => {
+                const isRouteActive = location.pathname === item.href;
                 return (
-                  <motion.a
+                  <Link
                     key={item.label}
-                    href={item.target}
-                    onClick={(e) => handleAnchorClick(e, item.target)}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.03, duration: 0.2 }}
-                    className={`min-h-[44px] flex items-center justify-between px-4 py-2.5 rounded-2xl text-sm font-bold transition-all text-left cursor-pointer ${
-                      isActive
-                        ? "bg-[#6366F1]/10 text-[#6366F1]"
-                        : "text-[#101536] hover:bg-[#101536]/05"
+                    to={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`min-h-[44px] text-xl font-black tracking-tight text-left py-2 flex items-center justify-between font-jakarta ${
+                      isRouteActive ? "text-[#119E9D]" : "text-white/90 hover:text-white"
                     }`}
                   >
                     <span>{item.label}</span>
-                    {isActive ? (
-                      <span className="w-2 h-2 rounded-full bg-[#F97316]" />
-                    ) : (
-                      <span className="text-[#101536]/25 text-xs">→</span>
-                    )}
-                  </motion.a>
+                  </Link>
                 );
               })}
+            </div>
 
-              <div className="pt-4 mt-2 border-t border-[#101536]/08">
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    openEnquiryModal();
-                  }}
-                  className="w-full min-h-[48px] px-5 py-3.5 rounded-2xl bg-[#101536] hover:bg-[#6366F1] text-white font-bold text-xs uppercase tracking-wider text-center flex items-center justify-center gap-2 shadow-md transition-colors cursor-pointer"
-                >
-                  <span>Get Started</span>
-                  <ArrowRight className="w-4 h-4 text-[#EFAF32]" />
-                </button>
-              </div>
+            <div className="pt-4 border-t border-white/10">
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  openEnquiryModal();
+                }}
+                className="w-full min-h-[48px] rounded-xl bg-white text-[#0F1535] hover:bg-[#119E9D] hover:text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-colors cursor-pointer active:scale-95"
+              >
+                <span>Get Started</span>
+                <ArrowUpRight className="w-4 h-4 text-[#EFAF32]" />
+              </button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   );
 };
+
+export default Navbar;
+

@@ -9,6 +9,8 @@ export { default as heroOpenLoop } from "./hero/hero-open-loop.png";
 export { default as heroPortalHook } from "./hero/hero-portal-hook.png";
 export { default as edtechHeroStudents } from "./hero/edtech-hero-students.jpg";
 export { default as realStudentsGroup } from "./hero/real-students-group.jpg";
+export { default as nexovateHeroCinematic } from "./nexovate-hero-cinematic.jpg";
+export { default as editorialStudyHero } from "./editorial-study-hero.jpg";
 
 // Program & Course Visual Assets
 export { default as aiMlImage } from "./programs/ai-ml.jpg";

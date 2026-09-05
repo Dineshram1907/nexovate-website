@@ -1,0 +1,10 @@
+export * from "./tesseract/TesseractScene";
+export { DimensionalScene } from "./dimensional/DimensionalScene";
+export { DimensionalSculptureCore } from "./dimensional/DimensionalSculptureCore";
+export { DimensionalSpaceCore } from "./dimensional/DimensionalSpaceCore";
+export { GravitationalScene } from "./gravity/GravitationalScene";
+export { GravitationalFieldCore } from "./gravity/GravitationalFieldCore";
+export { SolarSystemScene } from "./solar/SolarSystemScene";
+export { SolarSystemCore } from "./solar/SolarSystemCore";
+export type { SolarConfig } from "./solar/SolarSystemCore";
+export type { GravitationalConfig, QualityTier } from "./gravity/GravitationalFieldCore";

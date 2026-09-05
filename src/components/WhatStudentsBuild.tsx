@@ -1,468 +1,200 @@
-"use client";
-
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Activity, CheckCircle2, ChevronLeft, ChevronRight, X, ExternalLink, Code2, Sparkles } from "lucide-react";
+import React, { useRef, useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { ArrowRight, Sparkles, ChevronLeft, ChevronRight, ExternalLink, Code2 } from "lucide-react";
+import { IMAGE_REGISTRY } from "@/constants/imageRegistry";
 import { usePresentation } from "@/context/PresentationContext";
-import {
-  aiMlImage,
-  fullStackImage,
-  dataScienceImage,
-  cloudDevopsImage,
-} from "@/assets";
-
-export interface ProjectSnapshot {
-  id: string;
-  number: string;
-  title: string;
-  category: string;
-  programIndex: number;
-  description: string;
-  technologies: string[];
-  image: string;
-  liveMetric: { label: string; value: string };
-  studentName: string;
-  studentRole: string;
-  problemStatement: string;
-  solutionOverview: string;
-  keyFeatures: string[];
-}
-
-export const FEATURED_PROJECTS: ProjectSnapshot[] = [
-  {
-    id: "ai-prediction",
-    number: "01",
-    title: "Student Performance Prediction Engine",
-    category: "Artificial Intelligence",
-    programIndex: 3,
-    description:
-      "An adaptive machine learning pipeline that analyzes engagement metrics and study habits to forecast milestone completion and recommend early interventions.",
-    technologies: ["Python", "PyTorch", "FastAPI", "React", "Tailwind CSS"],
-    image: aiMlImage,
-    liveMetric: { label: "MODEL ACCURACY", value: "91.4% F1 Score" },
-    studentName: "Priya Sharma",
-    studentRole: "AI Student Lead",
-    problemStatement:
-      "Educators often identify struggling students too late in the semester, when remedial intervention is difficult.",
-    solutionOverview:
-      "Built an early-warning prediction system trained on historical cohort datasets to flag learning gaps by Week 3.",
-    keyFeatures: [
-      "Real-time risk scoring matrix",
-      "Automated study resource recommendations",
-      "Interactive mentor dashboard with early alerts",
-    ],
-  },
-  {
-    id: "fullstack-saas",
-    number: "02",
-    title: "Collaborative Workspace Platform",
-    category: "Full Stack Web Engineering",
-    programIndex: 0,
-    description:
-      "A real-time workspace application featuring concurrent document editing, kanban project tracking, and live task distribution for student teams.",
-    technologies: ["TypeScript", "Next.js", "Node.js", "PostgreSQL", "WebSockets"],
-    image: fullStackImage,
-    liveMetric: { label: "LATENCY", value: "<45ms WebSocket" },
-    studentName: "Arjun Mehta",
-    studentRole: "Full Stack Developer",
-    problemStatement:
-      "Student project teams lack unified tools that combine real-time canvas collaboration with structured task management.",
-    solutionOverview:
-      "Engineered an all-in-one web hub supporting multi-user live cursors, markdown notes, and progress analytics.",
-    keyFeatures: [
-      "Live concurrent cursor editing",
-      "Kanban board with drag-and-drop",
-      "Exportable project summaries and repo links",
-    ],
-  },
-  {
-    id: "data-analytics",
-    number: "03",
-    title: "Urban Environmental Data Dashboard",
-    category: "Data Science & Analytics",
-    programIndex: 4,
-    description:
-      "A real-time sensor data aggregator visualizing air quality metrics, temperature variances, and traffic congestion patterns across metropolitan hubs.",
-    technologies: ["Python", "Pandas", "Plotly", "Streamlit", "FastAPI"],
-    image: dataScienceImage,
-    liveMetric: { label: "DATA STREAM", value: "10K req/sec" },
-    studentName: "Vishal Kumar",
-    studentRole: "Data Scientist",
-    problemStatement:
-      "City environmental data is fragmented across municipal portals and difficult for citizens and planners to interpret.",
-    solutionOverview:
-      "Aggregated public API streams into a responsive geospatial heatmap dashboard with predictive air quality alerts.",
-    keyFeatures: [
-      "Interactive GIS spatial mapping",
-      "Time-series forecasting models",
-      "Automated daily digests and push alerts",
-    ],
-  },
-  {
-    id: "cloud-devops",
-    number: "04",
-    title: "Automated Multi-Cloud CI/CD Pipeline",
-    category: "Cloud & DevOps Architecture",
-    programIndex: 5,
-    description:
-      "A resilient microservices orchestration pipeline featuring automated canary testing, containerized Docker deployments, and Kubernetes scaling.",
-    technologies: ["Docker", "Kubernetes", "GitHub Actions", "GCP", "Terraform"],
-    image: cloudDevopsImage,
-    liveMetric: { label: "UPTIME", value: "99.98% SLA" },
-    studentName: "Harini R",
-    studentRole: "DevOps Engineer",
-    problemStatement:
-      "Deploying distributed student projects manually causes build discrepancies and downtime during project presentations.",
-    solutionOverview:
-      "Created an automated GitOps deployment pipeline that provisions ephemeral test environments on every pull request.",
-    keyFeatures: [
-      "Automated canary build verification",
-      "Zero-downtime rolling updates",
-      "Infrastructure-as-Code Terraform templates",
-    ],
-  },
-];
+import { MotionButton } from "./motion/MotionButton";
+import { premiumEase } from "@/lib/motion";
 
 export const WhatStudentsBuild: React.FC = () => {
-  const { setActiveProgramIndex } = usePresentation();
-  const [activeProjectIdx, setActiveProjectIdx] = useState(0);
-  const [selectedModalProject, setSelectedModalProject] = useState<ProjectSnapshot | null>(null);
-  const [isPaused, setIsPaused] = useState(false);
-  const resumeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const { openEnquiryModal } = usePresentation();
+  const [activeProjectIdx, setActiveProjectIdx] = useState<number>(0);
 
-  const nextProject = useCallback(() => {
-    setActiveProjectIdx((prev) => (prev + 1) % FEATURED_PROJECTS.length);
-  }, []);
+  const projects = [
+    {
+      id: "project-01",
+      title: "AI Predictive Health Diagnostics",
+      subtitle: "Autonomous Clinical Risk Assessment System",
+      description: "A machine learning pipeline processing patient vitals, clinical diagnostic histories, and ECG wave forms to predict cardiovascular anomalies with 94.2% precision.",
+      tech: ["PyTorch", "FastAPI", "React", "PostgreSQL", "Docker", "AWS"],
+      image: IMAGE_REGISTRY.projects.aiPlatform,
+      domain: "Artificial Intelligence",
+      impact: "Simulated in 3 clinical trial environments with 50ms inference latency.",
+      accent: "#119E9D",
+    },
+    {
+      id: "project-02",
+      title: "Distributed Cloud Collaboration Suite",
+      subtitle: "Real-Time Multi-User Workspace Platform",
+      description: "A collaborative code and document execution workspace built with WebSockets, operational transformation concurrency models, and automated container sandboxes.",
+      tech: ["React 19", "TypeScript", "Node.js", "Redis", "Kubernetes", "WebSockets"],
+      image: IMAGE_REGISTRY.projects.fullStackWorkspace,
+      domain: "Full Stack Engineering",
+      impact: "Tested across 1,000 concurrent state sync connections.",
+      accent: "#0EA5E9",
+    },
+    {
+      id: "project-03",
+      title: "Enterprise Supply Chain Analytics",
+      subtitle: "Predictive Demand & Logistics Forecasting",
+      description: "An automated data intelligence dashboard analyzing multi-echelon retail shipment nodes, supplier delivery latencies, and predictive warehouse inventory replenishment.",
+      tech: ["Python", "Pandas", "BigQuery", "Tableau", "Time Series Models"],
+      image: IMAGE_REGISTRY.projects.dataAnalytics,
+      domain: "Data Science & Analytics",
+      impact: "Simulated 18% inventory hold reduction across 5 retail distribution hubs.",
+      accent: "#EFAF32",
+    },
+  ];
 
-  const prevProject = useCallback(() => {
-    setActiveProjectIdx((prev) => (prev - 1 + FEATURED_PROJECTS.length) % FEATURED_PROJECTS.length);
-  }, []);
-
-  const handleInteraction = useCallback(() => {
-    setIsPaused(true);
-    if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
-    resumeTimeoutRef.current = setTimeout(() => {
-      setIsPaused(false);
-    }, 6000);
-  }, []);
-
-  // 5-second automatic carousel progression (paused on interaction)
-  useEffect(() => {
-    if (isPaused) return;
-    const timer = setInterval(() => {
-      nextProject();
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [isPaused, nextProject]);
-
-  const currentProject = FEATURED_PROJECTS[activeProjectIdx];
-
-  const handleExploreTrack = (index: number) => {
-    setActiveProgramIndex(index);
-    const element = document.getElementById("programs");
-    if (element) element.scrollIntoView({ behavior: "smooth" });
-  };
-
-  // Touch Swipe Handlers for effortless mobile navigation
-  const touchStartXRef = useRef(0);
-  const touchStartYRef = useRef(0);
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartXRef.current = e.touches[0].clientX;
-    touchStartYRef.current = e.touches[0].clientY;
-    handleInteraction();
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    const deltaX = e.changedTouches[0].clientX - touchStartXRef.current;
-    const deltaY = e.changedTouches[0].clientY - touchStartYRef.current;
-
-    // Only swipe if horizontal movement is dominant and > 30px
-    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 30) {
-      if (deltaX < 0) {
-        nextProject();
-      } else {
-        prevProject();
-      }
-    }
-  };
+  const currentProject = projects[activeProjectIdx];
 
   return (
-    <div
+    <section
       id="projects"
-      className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-12 bg-[#FAFBFC] border-b border-[#101536]/06 select-none overflow-x-clip font-sans text-[#101536] scroll-mt-20"
-      onMouseEnter={handleInteraction}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
+      className="relative w-full py-24 sm:py-32 px-4 sm:px-6 lg:px-12 bg-[#F7F6F2]/85 border-b border-[#0F1535]/06 select-none overflow-x-clip font-sans text-[#0F1535] scroll-mt-20"
     >
       <div className="max-w-7xl mx-auto w-full z-10">
         {/* Top Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 pb-4 border-b border-[#101536]/08 gap-3">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 pb-4 border-b border-[#0F1535]/08 gap-4">
           <div className="text-left">
-            <span className="text-xs font-bold tracking-[0.2em] text-[#6366F1] uppercase block mb-1">
-              STUDENT CAPSTONES & REPOSITORIES
-            </span>
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#101536] leading-tight font-jakarta">
-              WHAT STUDENTS BUILD<span className="text-[#F97316]">.</span>
-            </h2>
-          </div>
-          <div className="flex items-center gap-3">
-            <p className="text-xs sm:text-sm text-[#5E6675] font-medium max-w-sm text-left sm:text-right hidden sm:block">
-              Real projects shipped by student builders that demonstrate industry capability.
-            </p>
-            {/* Arrows */}
-            <div className="flex items-center gap-1.5 shrink-0">
-              <button
-                onClick={() => {
-                  prevProject();
-                  handleInteraction();
-                }}
-                aria-label="Previous project"
-                className="w-9 h-9 rounded-xl bg-white border border-[#101536]/10 flex items-center justify-center text-[#101536] hover:bg-[#101536] hover:text-white transition-colors cursor-pointer shadow-xs"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => {
-                  nextProject();
-                  handleInteraction();
-                }}
-                aria-label="Next project"
-                className="w-9 h-9 rounded-xl bg-white border border-[#101536]/10 flex items-center justify-center text-[#101536] hover:bg-[#101536] hover:text-white transition-colors cursor-pointer shadow-xs"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#119E9D]/10 border border-[#119E9D]/20 mb-3">
+              <Sparkles className="w-3.5 h-3.5 text-[#119E9D]" />
+              <span className="text-xs font-bold tracking-[0.2em] text-[#119E9D] uppercase">
+                STUDENT PROJECTS
+              </span>
             </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#0F1535] leading-tight font-jakarta">
+              Ideas. Code. <span className="text-[#119E9D]">Impact.</span>
+            </h2>
+            <p className="text-xs sm:text-sm text-[#576071] mt-1.5 font-normal">
+              A glimpse of what our students are building and shipping.
+            </p>
+          </div>
+
+          {/* Project Carousel Controls */}
+          <div className="flex items-center gap-3 shrink-0">
+            <button
+              onClick={() =>
+                setActiveProjectIdx((prev) => (prev === 0 ? projects.length - 1 : prev - 1))
+              }
+              aria-label="Previous Capstone"
+              className="w-11 h-11 rounded-full border border-[#0F1535]/15 hover:border-[#119E9D] bg-white flex items-center justify-center text-[#0F1535] transition-all cursor-pointer shadow-2xs"
+              data-cursor="pointer"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <div className="text-xs font-bold text-[#576071] tracking-wider px-2">
+              <span className="text-[#0F1535]">0{activeProjectIdx + 1}</span> / 0{projects.length}
+            </div>
+            <button
+              onClick={() =>
+                setActiveProjectIdx((prev) => (prev === projects.length - 1 ? 0 : prev + 1))
+              }
+              aria-label="Next Capstone"
+              className="w-11 h-11 rounded-full border border-[#0F1535]/15 hover:border-[#119E9D] bg-white flex items-center justify-center text-[#0F1535] transition-all cursor-pointer shadow-2xs"
+              data-cursor="pointer"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
           </div>
         </div>
 
-        {/* Project Selector Pills (01 to 04) */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-6 scrollbar-none">
-          {FEATURED_PROJECTS.map((proj, idx) => {
-            const isActive = activeProjectIdx === idx;
-            return (
-              <button
-                key={proj.id}
-                onClick={() => {
-                  setActiveProjectIdx(idx);
-                  handleInteraction();
-                }}
-                className={`min-h-[42px] px-4 py-2 rounded-xl text-xs font-bold uppercase transition-all duration-200 shrink-0 cursor-pointer ${
-                  isActive
-                    ? "bg-[#101536] text-white shadow-md ring-2 ring-[#6366F1]"
-                    : "bg-white text-[#5E6675] border border-[#101536]/10 hover:text-[#101536] hover:bg-[#F6F8F9]"
-                }`}
-              >
-                <span className="text-[#F97316] mr-1.5">{proj.number}</span>
-                <span>{proj.category}</span>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* ACTIVE FEATURED PROJECT SHOWCASE (Full-width dedicated layout) */}
-        <div className="bg-white border border-[#101536]/10 rounded-3xl p-6 sm:p-10 shadow-lg">
+        {/* Featured Project Showcase */}
+        <div className="bg-white border border-[#0F1535]/10 rounded-3xl p-6 sm:p-10 lg:p-12 shadow-xl text-left overflow-hidden relative">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentProject.id}
-              initial={{ opacity: 0, y: 8 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.4, ease: premiumEase }}
               className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
             >
-              {/* LEFT 55% — Project Image Snapshot */}
-              <div
-                onClick={() => setSelectedModalProject(currentProject)}
-                className="lg:col-span-6 relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-[#0B1028] border border-[#101536]/10 shadow-md cursor-pointer group"
-              >
-                <img
-                  src={currentProject.image}
-                  alt={currentProject.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0B1028]/80 via-transparent to-transparent" />
+              {/* Left Column — Project Visual & Architecture */}
+              <div className="lg:col-span-7 relative">
+                <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden shadow-lg bg-[#0F1535] border border-[#0F1535]/15 group">
+                  <img
+                    src={currentProject.image}
+                    alt={currentProject.title}
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0F1535]/90 via-[#0F1535]/20 to-transparent" />
 
-                {/* Top Badge: Student Build + Live Metric */}
-                <div className="absolute top-3 left-3 right-3 flex items-center justify-between px-3 py-1.5 rounded-xl bg-black/70 backdrop-blur-md text-white text-[11px] font-bold">
-                  <span className="text-[#10B981] flex items-center gap-1">
-                    <Code2 className="w-3.5 h-3.5" /> STUDENT BUILD
-                  </span>
-                  <span className="text-[#F59E0B] flex items-center gap-1">
-                    <Activity className="w-3.5 h-3.5" /> {currentProject.liveMetric.value}
-                  </span>
-                </div>
+                  {/* Domain Tag */}
+                  <div className="absolute top-4 left-4">
+                    <span
+                      style={{ backgroundColor: currentProject.accent }}
+                      className="px-3.5 py-1.5 rounded-full text-white text-[10px] font-bold uppercase tracking-wider shadow-xs"
+                    >
+                      {currentProject.domain}
+                    </span>
+                  </div>
 
-                {/* Bottom Overlay CTA */}
-                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
-                  <span className="px-3 py-1.5 rounded-lg bg-[#6366F1] text-white text-xs font-bold uppercase shadow-sm">
-                    Inspect Project Specs ↗
-                  </span>
-                  <span className="text-[11px] text-white/80 font-medium">
-                    By {currentProject.studentName}
-                  </span>
+                  {/* Live Impact Proof */}
+                  <div className="absolute bottom-4 left-4 right-4 text-white text-xs font-semibold flex items-center justify-between">
+                    <span className="max-w-md text-white/90">
+                      {currentProject.impact}
+                    </span>
+                    <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-bold text-[#EFAF32] uppercase tracking-wider">
+                      <Code2 className="w-3.5 h-3.5" />
+                      <span>Verified Capstone</span>
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              {/* RIGHT 45% — Project Description, Tech Stack & Action */}
-              <div className="lg:col-span-6 flex flex-col items-start text-left">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-bold text-[#F97316]">
-                    PROJECT {currentProject.number} / 0{FEATURED_PROJECTS.length}
+              {/* Right Column — Project Details & Tech Stack */}
+              <div className="lg:col-span-5 flex flex-col items-start justify-between">
+                <div>
+                  <span
+                    style={{ color: currentProject.accent }}
+                    className="text-xs font-bold uppercase tracking-widest block mb-2"
+                  >
+                    {currentProject.subtitle}
                   </span>
-                  <span className="text-[#101536]/30">•</span>
-                  <span className="px-2.5 py-0.5 rounded-md bg-[#6366F1]/10 text-[#6366F1] text-xs font-bold uppercase tracking-wider">
-                    {currentProject.category}
-                  </span>
-                </div>
+                  <h3 className="text-2xl sm:text-3xl font-black text-[#0F1535] mb-4 font-jakarta leading-tight">
+                    {currentProject.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-[#576071] leading-relaxed mb-6 font-normal">
+                    {currentProject.description}
+                  </p>
 
-                <h3 className="text-2xl sm:text-3xl font-black text-[#101536] mb-3 leading-snug font-jakarta">
-                  {currentProject.title}
-                </h3>
-
-                <p className="text-xs sm:text-sm text-[#5E6675] leading-relaxed mb-6 font-medium">
-                  {currentProject.description}
-                </p>
-
-                {/* Tech Stack */}
-                <div className="mb-6 w-full">
-                  <span className="text-[11px] font-bold text-[#101536] uppercase tracking-wider block mb-2">
-                    TECHNOLOGY STACK
-                  </span>
-                  <div className="flex flex-wrap gap-1.5">
-                    {currentProject.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2.5 py-1 rounded-lg bg-[#FAFBFC] border border-[#101536]/10 text-[11px] font-semibold text-[#101536] shadow-xs"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+                  {/* Technologies Used */}
+                  <div className="mb-8">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#0F1535] block mb-2.5">
+                      PRODUCTION TOOLCHAIN
+                    </span>
+                    <div className="flex flex-wrap gap-2">
+                      {currentProject.tech.map((t) => (
+                        <span
+                          key={t}
+                          className="px-3 py-1 rounded-lg bg-[#F7F6F2] border border-[#0F1535]/10 text-xs font-semibold text-[#0F1535] shadow-2xs"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
-                {/* Student Lead & Actions */}
-                <div className="pt-4 border-t border-[#101536]/10 w-full flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                  <div className="text-xs">
-                    <span className="text-[#5E6675] block text-[10px] font-semibold uppercase">BUILDER LEAD</span>
-                    <span className="font-bold text-[#101536]">{currentProject.studentName}</span>{" "}
-                    <span className="text-[#5E6675]">({currentProject.studentRole})</span>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <button
-                      onClick={() => setSelectedModalProject(currentProject)}
-                      className="px-4 py-2.5 rounded-xl bg-[#6366F1] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#4F46E5] transition-all shadow-sm cursor-pointer"
-                    >
-                      View Case Study
-                    </button>
-                    <button
-                      onClick={() => handleExploreTrack(currentProject.programIndex)}
-                      className="text-xs font-bold text-[#5E6675] hover:text-[#101536] transition-colors cursor-pointer"
-                    >
-                      Explore Track →
-                    </button>
-                  </div>
-                </div>
+                {/* Action Button */}
+                <MotionButton
+                  onClick={() => openEnquiryModal(`Capstone Project Inquiry: ${currentProject.title}`)}
+                  className="min-h-[46px] w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-[#0F1535] text-white font-bold text-xs uppercase tracking-wider hover:bg-[#119E9D] transition-colors shadow-sm cursor-pointer"
+                  data-cursor="pointer"
+                >
+                  <span>Inquire About This Capstone</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#EFAF32]" />
+                </MotionButton>
               </div>
             </motion.div>
           </AnimatePresence>
         </div>
+
+
       </div>
-
-      {/* CASE STUDY MODAL */}
-      <AnimatePresence>
-        {selectedModalProject && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm"
-            onClick={() => setSelectedModalProject(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0, y: 10 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.95, opacity: 0, y: 10 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-2xl bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#101536]/10 overflow-hidden text-left max-h-[90vh] overflow-y-auto"
-            >
-              <button
-                onClick={() => setSelectedModalProject(null)}
-                className="absolute top-4 right-4 p-2 rounded-full bg-[#FAFBFC] hover:bg-[#101536]/10 text-[#101536] transition-colors cursor-pointer"
-              >
-                <X className="w-5 h-5" />
-              </button>
-
-              <div className="flex items-center gap-2 mb-2">
-                <span className="px-2.5 py-0.5 rounded-md bg-[#6366F1]/10 text-[#6366F1] text-xs font-bold uppercase">
-                  {selectedModalProject.category}
-                </span>
-                <span className="text-xs font-semibold text-[#5E6675]">STUDENT CASE STUDY</span>
-              </div>
-
-              <h3 className="text-2xl font-black text-[#101536] mb-3 font-jakarta">
-                {selectedModalProject.title}
-              </h3>
-
-              <p className="text-sm text-[#5E6675] leading-relaxed mb-6">
-                {selectedModalProject.description}
-              </p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                <div className="p-4 rounded-2xl bg-[#FAFBFC] border border-[#101536]/10">
-                  <span className="text-xs font-bold text-[#6366F1] uppercase block mb-1">
-                    THE PROBLEM
-                  </span>
-                  <p className="text-xs text-[#101536] leading-relaxed font-medium">
-                    {selectedModalProject.problemStatement}
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-[#FAFBFC] border border-[#101536]/10">
-                  <span className="text-xs font-bold text-[#10B981] uppercase block mb-1">
-                    THE SOLUTION
-                  </span>
-                  <p className="text-xs text-[#101536] leading-relaxed font-medium">
-                    {selectedModalProject.solutionOverview}
-                  </p>
-                </div>
-              </div>
-
-              <div className="mb-6">
-                <span className="text-xs font-bold text-[#101536] uppercase tracking-wider block mb-2">
-                  KEY DELIVERABLES & FEATURES
-                </span>
-                <div className="space-y-1.5">
-                  {selectedModalProject.keyFeatures.map((feat) => (
-                    <div key={feat} className="flex items-center gap-2 text-xs text-[#5E6675]">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-[#6366F1] shrink-0" />
-                      <span>{feat}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="pt-4 border-t border-[#101536]/10 flex items-center justify-between">
-                <span className="text-xs font-bold text-[#101536]">
-                  Lead: {selectedModalProject.studentName} ({selectedModalProject.studentRole})
-                </span>
-
-                <button
-                  onClick={() => {
-                    setSelectedModalProject(null);
-                    handleExploreTrack(selectedModalProject.programIndex);
-                  }}
-                  className="px-4 py-2 rounded-xl bg-[#6366F1] text-white font-bold text-xs uppercase tracking-wider hover:bg-[#4F46E5] cursor-pointer"
-                >
-                  Explore Track
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+    </section>
   );
 };
+
+export default WhatStudentsBuild;
