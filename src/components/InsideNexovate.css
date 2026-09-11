@@ -1,0 +1,470 @@
+/* ════════════════════════════════════════════════════════════════════════════
+   INSIDE NEXOVATE — EDITORIAL CONTENT SECTION
+   Behind-the-Lens Editorial Structure adapted for Nexovate Insights
+   Scoped under .inx-
+════════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --inx-navy:       #071426;
+  --inx-dark:       #0B1728;
+  --inx-teal:       #12B8C9;
+  --inx-gold:       #E5A923;
+  --inx-ivory:      #F5F1E8;
+  --inx-neutral:    #F1F1EC;
+  --inx-card-bg:    #FCFCFA;
+  --inx-text:       #071426;
+  --inx-text-sub:   rgba(7, 20, 38, 0.64);
+  --inx-border:     rgba(7, 20, 38, 0.08);
+}
+
+/* ── 1. SECTION ROOT ────────────────────────────────────────────────────── */
+
+.inx-section {
+  width: 100%;
+  background-color: #F7F6F2;
+  padding-block: clamp(60px, 7vw, 100px);
+  position: relative;
+  border-bottom: 1px solid rgba(7, 20, 38, 0.06);
+}
+
+.inx-container {
+  width: min(100%, 1200px);
+  margin-inline: auto;
+  padding-inline: clamp(20px, 3.5vw, 40px);
+}
+
+/* ── 2. HEADER ──────────────────────────────────────────────────────────── */
+
+.inx-header {
+  margin-bottom: clamp(36px, 5vw, 64px);
+}
+
+.inx-badge-wrap {
+  margin-bottom: 14px;
+}
+
+.inx-eyebrow-badge {
+  display: inline-block;
+  background-color: var(--inx-neutral);
+  color: var(--inx-navy);
+  border-radius: 8px;
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+}
+
+.inx-heading {
+  font-family: 'Cormorant Garamond', 'Instrument Serif', Georgia, serif;
+  font-size: clamp(40px, 6vw, 64px);
+  font-weight: 600;
+  line-height: 0.96;
+  letter-spacing: -0.03em;
+  color: var(--inx-navy);
+  margin: 0 0 clamp(16px, 2.5vw, 24px) 0;
+}
+
+.inx-header-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.inx-subtitle {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: clamp(15px, 1.2vw, 18px);
+  font-weight: 500;
+  line-height: 1.55;
+  color: var(--inx-text-sub);
+  max-width: 480px;
+  margin: 0;
+}
+
+.inx-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--inx-navy);
+  color: var(--inx-ivory);
+  border-radius: 40px;
+  padding: 12px 24px;
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  white-space: nowrap;
+  transition: transform 0.22s cubic-bezier(0.33, 1, 0.68, 1),
+              background-color 0.22s ease,
+              box-shadow 0.22s ease;
+  box-shadow: 0 4px 16px -2px rgba(7, 20, 38, 0.20);
+}
+
+.inx-cta-btn:hover {
+  transform: scale(1.02);
+  background-color: var(--inx-dark);
+  box-shadow: 0 6px 20px -2px rgba(7, 20, 38, 0.28);
+}
+
+.inx-cta-btn:hover .inx-cta-icon {
+  transform: translate(3.5px, -3.5px);
+}
+
+.inx-cta-icon {
+  width: 15px;
+  height: 15px;
+  transition: transform 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* ── 3. FEATURED STORY CARD (2-Column Grid) ─────────────────────────────── */
+
+.inx-featured-card {
+  width: 100%;
+  min-height: 520px;
+  border-radius: 20px;
+  border: 1px solid var(--inx-border);
+  background-color: var(--inx-card-bg);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: clamp(32px, 4vw, 48px);
+  box-shadow: 0 12px 36px -12px rgba(7, 20, 38, 0.06);
+  cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.inx-featured-card:hover {
+  border-color: rgba(7, 20, 38, 0.16);
+  box-shadow: 0 20px 48px -14px rgba(7, 20, 38, 0.10);
+}
+
+/* Featured Left Side (Visual Container) */
+.inx-featured-visual {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+  overflow: hidden;
+  background-color: var(--inx-dark);
+}
+
+/* Featured Right Side (Content Container) */
+.inx-featured-content {
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+}
+
+.inx-featured-badge {
+  align-self: flex-start;
+  background-color: var(--inx-navy);
+  color: var(--inx-ivory);
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+.inx-featured-title {
+  font-family: 'Cormorant Garamond', 'Instrument Serif', Georgia, serif;
+  font-size: clamp(32px, 3.8vw, 48px);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  color: var(--inx-navy);
+  margin: 0 0 18px 0;
+  transition: color 0.2s ease;
+}
+
+.inx-featured-card:hover .inx-featured-title {
+  color: var(--inx-teal);
+}
+
+.inx-featured-desc {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: 16.5px;
+  line-height: 1.58;
+  color: var(--inx-text-sub);
+  margin: 0;
+  max-width: 48ch;
+}
+
+.inx-featured-footer {
+  margin-top: auto;
+  padding-top: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.inx-author {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(7, 20, 38, 0.50);
+  letter-spacing: 0.02em;
+}
+
+/* ── 4. STANDARD INSIGHT GRID (3-Column) ────────────────────────────────── */
+
+.inx-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 25px;
+}
+
+.inx-card {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  outline: none;
+}
+
+.inx-card-visual {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: var(--inx-dark);
+  margin-bottom: 16px;
+  box-shadow: 0 8px 24px -8px rgba(7, 20, 38, 0.08);
+}
+
+.inx-card-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.inx-card-title {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.32;
+  color: var(--inx-navy);
+  margin: 0;
+  flex: 1;
+  transition: color 0.2s ease;
+}
+
+.inx-card:hover .inx-card-title {
+  color: var(--inx-teal);
+}
+
+/* ── 5. CATEGORY BADGES ─────────────────────────────────────────────────── */
+
+.inx-category-badge {
+  display: inline-block;
+  color: #FFFFFF;
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 4px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── 6. VIDEO TREATMENT & INTERACTION HOVER ─────────────────────────────── */
+
+.inx-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.33, 1, 0.68, 1);
+  will-change: transform;
+}
+
+.inx-featured-card:hover .inx-video,
+.inx-card:hover .inx-video {
+  transform: scale(1.08);
+}
+
+/* Dark hover overlay */
+.inx-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 2;
+}
+
+.inx-featured-card:hover .inx-overlay,
+.inx-card:hover .inx-overlay {
+  opacity: 1;
+}
+
+/* Centered interaction plus circle (70px) */
+.inx-plus-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.20);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  font-size: 32px;
+  font-weight: 300;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 3;
+  transform: translate(-50%, -50%) scale(0.7);
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.33, 1, 0.68, 1),
+              opacity 0.25s ease;
+}
+
+.inx-featured-card:hover .inx-plus-circle,
+.inx-card:hover .inx-plus-circle {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+/* ── 7. L-SHAPED CORNER BRACKETS ────────────────────────────────────────── */
+
+.inx-bracket {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: rgba(255, 255, 255, 0.72);
+  border-style: solid;
+  pointer-events: none;
+  z-index: 4;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.inx-bracket-tl {
+  top: 15px;
+  left: 15px;
+  border-width: 1.5px 0 0 1.5px;
+}
+
+.inx-bracket-tr {
+  top: 15px;
+  right: 15px;
+  border-width: 1.5px 1.5px 0 0;
+}
+
+.inx-bracket-bl {
+  bottom: 15px;
+  left: 15px;
+  border-width: 0 0 1.5px 1.5px;
+}
+
+.inx-bracket-br {
+  bottom: 15px;
+  right: 15px;
+  border-width: 0 1.5px 1.5px 0;
+}
+
+.inx-featured-card:hover .inx-bracket,
+.inx-card:hover .inx-bracket {
+  border-color: rgba(255, 255, 255, 1);
+}
+
+/* ── 8. RESPONSIVE BREAKPOINTS ──────────────────────────────────────────── */
+
+/* 1024px: Tablet Landscape / Medium Screens */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .inx-featured-card {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .inx-featured-visual {
+    height: 380px;
+  }
+
+  .inx-featured-content {
+    padding: 40px;
+  }
+
+  .inx-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+/* 768px: Tablet Portrait */
+@media (max-width: 767px) {
+  .inx-section {
+    padding-block: clamp(48px, 8vw, 72px);
+  }
+
+  .inx-header-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .inx-cta-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .inx-featured-card {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    border-radius: 18px;
+  }
+
+  .inx-featured-visual {
+    height: 280px;
+    aspect-ratio: 4 / 3;
+  }
+
+  .inx-featured-content {
+    padding: 28px 24px;
+  }
+
+  .inx-featured-title {
+    font-size: clamp(28px, 6vw, 36px);
+  }
+
+  .inx-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+/* ── 9. PREFERS REDUCED MOTION ──────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .inx-video {
+    transition: none !important;
+  }
+  .inx-featured-card:hover .inx-video,
+  .inx-card:hover .inx-video {
+    transform: none !important;
+  }
+  .inx-plus-circle {
+    transition: opacity 0.2s ease !important;
+    transform: translate(-50%, -50%) scale(1) !important;
+  }
+  .inx-cta-btn {
+    transition: none !important;
+  }
+}

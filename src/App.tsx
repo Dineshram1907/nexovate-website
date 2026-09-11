@@ -9,14 +9,18 @@ import { Home } from "@/pages/Home";
 import { About } from "@/pages/About";
 import { Courses } from "@/pages/Courses";
 import { Contact } from "@/pages/Contact";
+import { Showcase } from "@/pages/Showcase";
 
 import { initSmoothScroll } from "@/animations";
 
-// Scroll to top helper on every route change
+// Scroll to top helper on every route change and disable browser auto-scroll restore
 function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }, [pathname]);
 
@@ -34,6 +38,8 @@ function AnimatedRoutes() {
         <Route path="/about" element={<About />} />
         <Route path="/courses" element={<Courses />} />
         <Route path="/programs" element={<Courses />} />
+        <Route path="/showcase" element={<Showcase />} />
+        <Route path="/app" element={<Showcase />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<Home />} />
       </Routes>
@@ -43,6 +49,11 @@ function AnimatedRoutes() {
 
 export default function App() {
   useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+    window.scrollTo(0, 0);
+
     const cleanup = initSmoothScroll();
     return cleanup;
   }, []);
@@ -51,8 +62,8 @@ export default function App() {
     <BrowserRouter>
       <PresentationProvider>
         <ScrollToTop />
-        <div className="relative w-full min-h-screen bg-[#F7F6F2] text-[#0F1535] selection:bg-[#119E9D]/20 selection:text-[#0F1535]">
-          {/* Sticky Editorial Navigation */}
+        <div className="relative w-full min-h-screen bg-[#F6F5F0] text-[#071A2B] selection:bg-[#11AFC0]/20 selection:text-[#071A2B]">
+          {/* Persistent Global Navigation */}
           <Navbar />
 
           {/* Main Route Viewport with Native Vertical Scrolling */}

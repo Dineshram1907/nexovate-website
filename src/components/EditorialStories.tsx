@@ -51,12 +51,35 @@ export const EditorialStories: React.FC = () => {
     },
   ];
 
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null) return;
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) {
+        // swipe left -> next
+        setActiveIdx((prev) => (prev < stories.length - 1 ? prev + 1 : 0));
+      } else {
+        // swipe right -> prev
+        setActiveIdx((prev) => (prev > 0 ? prev - 1 : stories.length - 1));
+      }
+    }
+    setTouchStartX(null);
+  };
+
   const current = stories[activeIdx];
 
   return (
     <section
       id="stories"
-      className="relative w-full py-[var(--section-space)] px-[var(--page-padding)] bg-[#F7F6F2] text-[#0F1535] select-none font-sans overflow-hidden border-b border-[#0F1535]/08 scroll-mt-16"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      className="relative w-full py-12 sm:py-16 md:py-[var(--section-space)] px-4 sm:px-6 md:px-[var(--page-padding)] bg-[#F7F6F2] text-[#0F1535] select-none font-sans overflow-hidden border-b border-[#0F1535]/08 scroll-mt-16"
     >
       <div className="max-w-6xl mx-auto w-full text-left">
         {/* Header with Minimal Navigation Controls */}

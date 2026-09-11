@@ -1,144 +1,327 @@
-import React, { useRef } from "react";
-import { motion, useInView, useScroll, useTransform } from "motion/react";
-import { brandCreatorImage } from "@/assets";
-import { premiumEase } from "@/lib/motion";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  memo,
+} from "react";
+import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
+import { ArrowUpRight } from "lucide-react";
+import "./EditorialDiscovery.css";
+
+/* ─── CONSTANTS ─────────────────────────────────────────────────────────── */
+
+const AUTOPLAY_INTERVAL = 4500; // ms per method
+
+/* ─── DATA ──────────────────────────────────────────────────────────────── */
+
+interface MethodStage {
+  id: string;
+  num: string;
+  title: string;
+  subtitle: string;
+  body: string;
+  image: string;
+  alt: string;
+  tag: string;
+  caption: string;
+  meta: string;
+}
+
+const METHOD_STAGES: MethodStage[] = [
+  {
+    id: "stage-discover",
+    num: "01",
+    title: "DISCOVER",
+    subtitle: "Discover without pressure",
+    body: "Explore hands-on sandboxes across artificial intelligence, modern web engineering, and product design before specializing.",
+    image: "/assets/discovery/discovery-stage-1.png",
+    alt: "Student exploring hands-on sandboxes across AI and engineering",
+    tag: "APPLIED LABORATORY",
+    caption: "Active studio environment · Real engineering toolchains",
+    meta: "STAGE 01 / EXPLORATION",
+  },
+  {
+    id: "stage-build",
+    num: "02",
+    title: "BUILD",
+    subtitle: "Build with senior practitioners",
+    body: "Submit weekly Git pull requests evaluated by active engineers who examine architecture, performance benchmarks, and edge cases.",
+    image: "/assets/discovery/discovery-stage-2.png",
+    alt: "Two engineers collaborating on code review and architecture auditing",
+    tag: "PRACTITIONER REVIEW",
+    caption: "Weekly Git PR evaluation · Benchmark auditing",
+    meta: "STAGE 02 / CODE REVIEW",
+  },
+  {
+    id: "stage-ship",
+    num: "03",
+    title: "SHIP",
+    subtitle: "Ship verifiable systems",
+    body: "Deploy live microservices, authenticated APIs, and real-time databases into production cloud environments.",
+    image: "/assets/discovery/discovery-stage-3.jpg",
+    alt: "Engineering team deploying live microservices into production clouds",
+    tag: "PRODUCTION SYSTEMS",
+    caption: "Live microservices · Authenticated cloud infrastructure",
+    meta: "STAGE 03 / SHIPMENT",
+  },
+];
+
+/* ─── PROGRESS BAR COMPONENT ────────────────────────────────────────────── */
+
+interface ProgressLineProps {
+  active: boolean;
+  paused: boolean;
+  reduced: boolean;
+}
+
+const ProgressLine = memo(({ active, paused, reduced }: ProgressLineProps) => {
+  if (!active) return null;
+
+  if (reduced || paused) {
+    return <div className="ned-progress-fill" style={{ transform: "scaleX(1)" }} />;
+  }
+
+  return (
+    <motion.div
+      className="ned-progress-fill"
+      initial={{ scaleX: 0 }}
+      animate={{ scaleX: 1 }}
+      transition={{ duration: AUTOPLAY_INTERVAL / 1000, ease: "linear" }}
+      style={{ originX: 0 }}
+    />
+  );
+});
+
+ProgressLine.displayName = "ProgressLine";
+
+/* ─── MAIN COMPONENT ────────────────────────────────────────────────────── */
 
 export const EditorialDiscovery: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const imageFrameRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+  const reducedMotion = useReducedMotion() ?? false;
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const isInView = useInView(containerRef, { once: true, margin: "-10%" });
+  const currentStage = METHOD_STAGES[activeIndex];
 
-  // Scroll parallax for studio photo
-  const { scrollYProgress } = useScroll({
-    target: imageFrameRef,
-    offset: ["start end", "end start"],
-  });
+  /* 1. Preload all stage images on mount */
+  useEffect(() => {
+    METHOD_STAGES.forEach((stage) => {
+      const img = new Image();
+      img.src = stage.image;
+    });
+  }, []);
 
-  const imageY = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1.05, 1.01]);
+  /* 2. Autoplay rotation engine (4.5s) */
+  const restartTimer = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    if (reducedMotion || isPaused) return;
 
-  const pillars = [
-    {
-      num: "01",
-      title: "Discover Without Pressure",
-      desc: "Explore hands-on sandboxes across artificial intelligence, modern web engineering, and product design before specializing.",
-    },
-    {
-      num: "02",
-      title: "Build With Senior Practitioners",
-      desc: "Submit weekly Git pull requests evaluated by active engineers who examine architecture, performance benchmarks, and edge cases.",
-    },
-    {
-      num: "03",
-      title: "Ship Verifiable Systems",
-      desc: "Deploy live microservices, authenticated APIs, and real-time databases into production cloud environments.",
-    },
-  ];
+    timerRef.current = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % METHOD_STAGES.length);
+    }, AUTOPLAY_INTERVAL);
+  }, [reducedMotion, isPaused]);
 
-  const headlineLines = ["Discover what", "you're capable of."];
+  useEffect(() => {
+    restartTimer();
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [restartTimer, activeIndex]);
+
+  /* 3. Pause when browser tab is inactive */
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      setIsPaused(document.hidden);
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, []);
+
+  /* 4. Manual selection handler */
+  const handleSelect = useCallback((index: number) => {
+    setActiveIndex(index);
+    if (timerRef.current) clearInterval(timerRef.current);
+  }, []);
+
+  const handlePause = useCallback(() => setIsPaused(true), []);
+  const handleResume = useCallback(() => setIsPaused(false), []);
 
   return (
     <section
-      ref={containerRef}
       id="discovery"
-      className="relative w-full py-[var(--section-space)] px-[var(--page-padding)] bg-[#F7F6F2] text-[#0F1535] select-none font-sans overflow-hidden border-b border-[#0F1535]/08 scroll-mt-16"
+      className="ned-section"
+      style={{ scrollMarginTop: "var(--navbar-height, 80px)" }}
     >
-      <div className="max-w-7xl mx-auto w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center text-left">
-          {/* LEFT: Editorial Narrative & Principles */}
-          <div className="lg:col-span-6 flex flex-col items-start">
-            <h2 className="text-[clamp(28px,6vw,56px)] font-black tracking-[-0.035em] leading-[1.05] text-[#0F1535] font-jakarta mb-5 sm:mb-7">
-              {headlineLines.map((line, idx) => (
-                <span key={line} className="block overflow-hidden py-0.5">
-                  <motion.span
-                    className="block"
-                    initial={{ y: "115%", opacity: 0 }}
-                    animate={isInView ? { y: "0%", opacity: 1 } : { y: "115%", opacity: 0 }}
-                    transition={{
-                      duration: 0.8,
-                      delay: 0.1 + idx * 0.12,
-                      ease: premiumEase,
-                    }}
-                  >
-                    {idx === 1 ? (
-                      <>
-                        <span className="text-[#119E9D]">you're capable of</span>
-                        <span className="text-[#EFAF32]">.</span>
-                      </>
-                    ) : (
-                      line
-                    )}
-                  </motion.span>
-                </span>
-              ))}
-            </h2>
-
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-              transition={{ duration: 0.7, delay: 0.32, ease: premiumEase }}
-              className="text-sm sm:text-base md:text-lg text-[#576071] font-normal leading-relaxed mb-8 sm:mb-10 max-w-[52ch]"
-            >
-              Nexovate is built around the premise that computing mastery cannot be memorized from slides. It is forged by writing code, breaking environments, and designing systems that actually work in the real world.
-            </motion.p>
-
-            <div className="flex flex-col gap-6 w-full pt-6 border-t border-[#0F1535]/10">
-              {pillars.map((p, idx) => (
-                <motion.div
-                  key={p.num}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-                  transition={{ duration: 0.6, delay: 0.42 + idx * 0.1, ease: premiumEase }}
-                  className="flex items-start gap-4"
-                >
-                  <span className="text-xs font-mono font-bold text-[#119E9D] pt-0.5 shrink-0">
-                    {p.num}
-                  </span>
-                  <div>
-                    <h3 className="text-sm sm:text-base font-bold text-[#0F1535] font-jakarta mb-1">
-                      {p.title}
-                    </h3>
-                    <p className="text-xs sm:text-sm text-[#576071] leading-relaxed max-w-[48ch]">
-                      {p.desc}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+      <div className="ned-container">
+        
+        {/* ══ 1. HEADER ZONE (Eyebrow + Main Heading) ════════════════════ */}
+        <header className="ned-header">
+          <div className="ned-eyebrow-wrap">
+            <span className="ned-eyebrow">01 — THE NEXOVATE METHOD</span>
           </div>
 
-          {/* RIGHT: Authentic Studio Documentary Image with Scroll Parallax */}
-          <div ref={imageFrameRef} className="lg:col-span-6 w-full">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.96 }}
-              transition={{ duration: 0.8, delay: 0.25, ease: premiumEase }}
-              className="relative aspect-[4/3] w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl bg-[#0F1535] border border-[#0F1535]/10 group max-h-[520px]"
-            >
-              <motion.img
-                style={{ y: imageY, scale: imageScale }}
-                src={brandCreatorImage}
-                alt="Student developing a software engineering system in studio"
-                className="w-full h-full object-cover will-change-transform"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0F1535]/85 via-transparent to-transparent pointer-events-none" />
+          <h2 className="ned-heading">
+            <span className="ned-heading-plain">Discover what you’re</span>
+            <br className="ned-heading-break" />
+            <span className="ned-heading-teal">capable of</span>
+            <span className="ned-heading-gold">.</span>
+          </h2>
+        </header>
 
-              <div className="absolute bottom-5 sm:bottom-6 left-5 sm:left-6 right-5 sm:right-6 text-white text-left">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#EFAF32] block mb-1">
-                  APPLIED LABORATORY
-                </span>
-                <p className="text-xs font-semibold text-white/90">
-                  Active studio environment • Real engineering toolchains
-                </p>
-              </div>
-            </motion.div>
+        {/* ══ 2. EDITORIAL STATEMENT ═════════════════════════════════════ */}
+        <div className="ned-statement">
+          <div className="ned-statement-quote">
+            <p className="ned-statement-text">
+              Nexovate is built around the premise that computing mastery cannot be memorized from slides. It is forged by writing code, breaking environments, and designing systems that actually work in the real world.
+            </p>
           </div>
         </div>
+
+        {/* ══ 3. METHOD INDEX (Interactive Editorial Navigation) ═════════ */}
+        <div
+          className="ned-methods"
+          onMouseEnter={handlePause}
+          onMouseLeave={handleResume}
+          onFocus={handlePause}
+          onBlur={handleResume}
+        >
+          <div className="ned-methods-header" aria-hidden="true">
+            <span className="ned-methods-label">METHODOLOGY</span>
+            <span className="ned-methods-count">03 STAGES</span>
+          </div>
+
+          <nav className="ned-methods-list" aria-label="Nexovate Method Stages">
+            {METHOD_STAGES.map((stage, idx) => {
+              const isActive = activeIndex === idx;
+
+              return (
+                <button
+                  key={stage.id}
+                  type="button"
+                  role="tab"
+                  id={`method-tab-${stage.num}`}
+                  aria-selected={isActive}
+                  aria-current={isActive ? "true" : undefined}
+                  aria-controls={`method-panel-${stage.num}`}
+                  aria-label={`Method stage ${stage.num}: ${stage.title} — ${stage.subtitle}`}
+                  onClick={() => handleSelect(idx)}
+                  className={`ned-method-btn${isActive ? " ned-method-btn--active" : ""}`}
+                >
+                  {/* Top line: Number, Title, Subtitle */}
+                  <div className="ned-method-meta">
+                    <span className={`ned-method-num${isActive ? " ned-method-num--active" : ""}`}>
+                      {stage.num}
+                    </span>
+                    <div className="ned-method-titles">
+                      <span className={`ned-method-name${isActive ? " ned-method-name--active" : ""}`}>
+                        {stage.title}
+                      </span>
+                      <span className={`ned-method-sub${isActive ? " ned-method-sub--active" : ""}`}>
+                        {stage.subtitle}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Animated Progress Indicator Rail */}
+                  <div className="ned-progress-rail" aria-hidden="true">
+                    <ProgressLine active={isActive} paused={isPaused} reduced={reducedMotion} />
+                  </div>
+
+                  {/* Expandable Method Description */}
+                  <p
+                    id={`method-panel-${stage.num}`}
+                    className={`ned-method-desc${isActive ? " ned-method-desc--active" : ""}`}
+                  >
+                    {stage.body}
+                  </p>
+                </button>
+              );
+            })}
+          </nav>
+
+          {/* Program CTA Link */}
+          <div className="ned-action-wrap">
+            <button
+              type="button"
+              className="ned-action-btn"
+              onClick={() => navigate("/programs")}
+            >
+              <span>Explore full curriculum</span>
+              <ArrowUpRight className="ned-action-icon" aria-hidden="true" />
+            </button>
+          </div>
+        </div>
+
+        {/* ══ 4. LARGE VISUAL STAGE (Dominant Visual Anchor) ════════════ */}
+        <div
+          className="ned-stage"
+          onMouseEnter={handlePause}
+          onMouseLeave={handleResume}
+        >
+          {/* Ambient Glow Bloom Layer (soft teal & deep navy) */}
+          <div className="ned-stage-glow" aria-hidden="true">
+            <div className="ned-glow-core" />
+            <div className="ned-glow-ambient" />
+            <div className="ned-glow-depth" />
+          </div>
+
+          {/* Cinematic Frame */}
+          <figure className="ned-frame">
+            {/* Crossfading Image Stack */}
+            <AnimatePresence mode="sync">
+              <motion.img
+                key={currentStage.id}
+                src={currentStage.image}
+                alt={currentStage.alt}
+                className="ned-img"
+                initial={{
+                  opacity: 0,
+                  scale: reducedMotion ? 1 : 1.025,
+                }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                }}
+                exit={{
+                  opacity: 0,
+                  scale: reducedMotion ? 1 : 0.98,
+                }}
+                transition={{
+                  duration: reducedMotion ? 0.2 : 0.85,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              />
+            </AnimatePresence>
+
+            {/* Gradient Scrim for Contrast */}
+            <div className="ned-scrim" aria-hidden="true" />
+
+            {/* Live Environment Badge (Top-Left) */}
+            <div className="ned-badge" aria-live="polite">
+              <span className="ned-badge-dot" aria-hidden="true" />
+              <span className="ned-badge-text">{currentStage.tag}</span>
+            </div>
+
+            {/* Integrated Stage Caption (Bottom) */}
+            <figcaption className="ned-caption">
+              <div className="ned-caption-left">
+                <span className="ned-caption-meta">{currentStage.meta}</span>
+                <span className="ned-caption-text">{currentStage.caption}</span>
+              </div>
+              <span className="ned-caption-counter" aria-hidden="true">
+                {currentStage.num} / 03
+              </span>
+            </figcaption>
+          </figure>
+        </div>
+
       </div>
     </section>
   );
 };
 
 export default EditorialDiscovery;
-

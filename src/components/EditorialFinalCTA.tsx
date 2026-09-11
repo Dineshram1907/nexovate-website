@@ -12,7 +12,7 @@ export const EditorialFinalCTA: React.FC = () => {
   return (
     <section
       id="final-cta"
-      className="relative w-full py-[var(--section-space)] px-[var(--page-padding)] bg-[#090D24] text-white select-none font-sans overflow-hidden text-center scroll-mt-16"
+      className="relative w-full py-12 sm:py-16 md:py-[var(--section-space)] px-4 sm:px-6 md:px-[var(--page-padding)] bg-[#090D24] text-white select-none font-sans overflow-hidden text-center scroll-mt-16"
     >
       <div className="max-w-5xl mx-auto w-full flex flex-col items-center relative z-10">
 

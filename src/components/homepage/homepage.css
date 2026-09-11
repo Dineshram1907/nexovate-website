@@ -1,0 +1,170 @@
+/* ============================================================
+   NEXOVATE EDITORIAL HOMEPAGE DESIGN SYSTEM
+   Based on refined editorial typography, asymmetric 12-col grid,
+   and restrained color hierarchy.
+   ============================================================ */
+
+:root {
+  --nx-ivory: #F6F5F0;
+  --nx-paper: #FBFAF7;
+  --nx-navy: #071A2B;
+  --nx-navy-soft: #102B40;
+  --nx-teal: #11AFC0;
+  --nx-teal-soft: #72D5DC;
+  --nx-gold: #C7A66A;
+  --nx-muted: #68747D;
+  --nx-muted-dark: #9AA8B4;
+  --nx-line: rgba(7, 26, 43, 0.10);
+  --nx-line-dark: rgba(255, 255, 255, 0.12);
+  --nx-white: #FFFFFF;
+
+  --nx-font-sans: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --nx-font-serif: 'Source Serif 4', 'Instrument Serif', 'Cormorant Garamond', Georgia, serif;
+}
+
+/* Base Editorial Typography Rules */
+.nx-editorial-label {
+  font-family: var(--nx-font-sans);
+  font-size: clamp(10px, 0.75vw, 12px);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.20em;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nx-serif-accent {
+  font-family: var(--nx-font-serif);
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* Section Containers & 12-Col Editorial Grid */
+.nx-section-container {
+  width: 100%;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(24px, 4vw, 64px);
+  padding-right: clamp(24px, 4vw, 64px);
+}
+
+.nx-editorial-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(16px, 2.5vw, 32px);
+  width: 100%;
+}
+
+/* Premium Button Styles */
+.nx-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 56px;
+  padding: 0 32px;
+  border-radius: 9999px;
+  background-color: var(--nx-navy);
+  color: var(--nx-white);
+  font-family: var(--nx-font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  box-shadow: 0 1px 2px 0 rgba(5,26,36,0.1), 0 4px 4px 0 rgba(5,26,36,0.09), inset 0 2px 8px 0 rgba(255,255,255,0.2);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.nx-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(7, 26, 43, 0.16), inset 0 2px 8px 0 rgba(255,255,255,0.25);
+}
+
+.nx-btn-primary:focus-visible {
+  outline: 2px solid var(--nx-teal);
+  outline-offset: 3px;
+}
+
+.nx-btn-primary-light {
+  background-color: var(--nx-white);
+  color: var(--nx-navy);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.nx-btn-primary-light:hover {
+  background-color: var(--nx-paper);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+.nx-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 24px;
+  border-radius: 9999px;
+  background-color: transparent;
+  color: var(--nx-navy);
+  font-family: var(--nx-font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  border: 1px solid var(--nx-line);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nx-btn-secondary:hover {
+  background-color: rgba(7, 26, 43, 0.04);
+  border-color: rgba(7, 26, 43, 0.25);
+  transform: translateY(-1px);
+}
+
+/* Arrow transition */
+.nx-btn-arrow {
+  display: inline-block;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nx-btn-primary:hover .nx-btn-arrow,
+.nx-btn-secondary:hover .nx-btn-arrow {
+  transform: translateX(4px);
+}
+
+/* Program Editorial Rows */
+.nx-program-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px 0;
+  border-bottom: 1px solid var(--nx-line);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              padding-left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  color: inherit;
+}
+
+.nx-program-row:hover {
+  padding-left: 8px;
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

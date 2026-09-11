@@ -78,28 +78,24 @@ async function generateFavicons() {
     }
   }
 
-  // Next.js App Router icons
-  // 1. src/app/icon.png (32x32 standard app icon)
-  const appIconBuf = await sharp(trimmedBuffer)
-    .resize(32, 32, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
-    .png()
-    .toBuffer();
-  fs.writeFileSync(path.join(OUTPUT_DIR_APP, 'icon.png'), appIconBuf);
-  console.log('Generated: src/app/icon.png');
+  // If src/app directory exists, write icons there as well
+  if (fs.existsSync(OUTPUT_DIR_APP)) {
+    const appIconBuf = await sharp(trimmedBuffer)
+      .resize(32, 32, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+      .png()
+      .toBuffer();
+    fs.writeFileSync(path.join(OUTPUT_DIR_APP, 'icon.png'), appIconBuf);
+    console.log('Generated: src/app/icon.png');
 
-  // 2. src/app/apple-icon.png (180x180 apple touch icon)
-  const appleIconBuf = await sharp(trimmedBuffer)
-    .resize(180, 180, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
-    .png()
-    .toBuffer();
-  fs.writeFileSync(path.join(OUTPUT_DIR_APP, 'apple-icon.png'), appleIconBuf);
-  console.log('Generated: src/app/apple-icon.png');
+    const appleIconBuf = await sharp(trimmedBuffer)
+      .resize(180, 180, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+      .png()
+      .toBuffer();
+    fs.writeFileSync(path.join(OUTPUT_DIR_APP, 'apple-icon.png'), appleIconBuf);
+    console.log('Generated: src/app/apple-icon.png');
 
-  // Multi-resolution favicon.ico
-  const icoBuffer = createIco(icoPngBuffers);
-  fs.writeFileSync(path.join(OUTPUT_DIR_PUBLIC, 'favicon.ico'), icoBuffer);
-  fs.writeFileSync(path.join(OUTPUT_DIR_APP, 'favicon.ico'), icoBuffer);
-  console.log('Generated: public/favicon.ico & src/app/favicon.ico');
+    fs.writeFileSync(path.join(OUTPUT_DIR_APP, 'favicon.ico'), icoBuffer);
+  }
 
   // Generate web manifest
   const manifest = {

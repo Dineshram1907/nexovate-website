@@ -18,12 +18,29 @@ export { default as dataScienceImage } from "./programs/data-science.jpg";
 export { default as fullStackImage } from "./programs/fullstack.jpg";
 export { default as cloudDevopsImage } from "./programs/cloud-devops.jpg";
 
-// Student Review Avatars
+// Student Review Avatars & Portraits
 export { default as arjunAvatar } from "./reviews/arjun.jpg";
 export { default as hariniAvatar } from "./reviews/harini.jpg";
-export { default as priyaAvatar } from "./reviews/priya.jpg";
-export { default as rahulAvatar } from "./reviews/rahul.jpg";
-export { default as vishalAvatar } from "./reviews/vishal.jpg";
+export { default as bindhuReview } from "./reviews/Bindhu.jpg";
+export { default as keinReview } from "./reviews/Kein.jpg";
+export { default as pragReview } from "./reviews/Prag.jpg";
+export { default as samReview } from "./reviews/Sam.jpg";
+export { default as yallReview } from "./reviews/Yall.jpg";
+export { default as priyaAvatar } from "./reviews/Bindhu.jpg";
+export { default as rahulAvatar } from "./reviews/Prag.jpg";
+export { default as vishalAvatar } from "./reviews/Kein.jpg";
 
 // General & Studio Visual Assets
 export { default as brandCreatorImage } from "./general/brand-creator.jpg";
+
+// New Sky & Grassland Parallax Hero Assets
+export { default as grasslandHuman } from "./hero/grassland-human.png";
+export { default as realisticClouds } from "./hero/realistic-clouds.png";
+export { default as cleanSky } from "./hero/clean-sky.jpg";
+export { default as cleanEmptySky } from "./hero/clean-empty-sky.jpg";
+export { default as transparentRealisticClouds } from "./hero/transparent-realistic-clouds.png";
+export { default as studentsGrasslandCutout } from "./hero/students-grassland-cutout.png";
+export { default as fluffyCloudsOverlay } from "./hero/fluffy-clouds-overlay.jpg";
+export { default as landingHeroVideo } from "./hero/landing-hero-video.mp4";
+export { default as heroVideoMp4 } from "./hero/mp4.mp4";
+export { default as gratitudeHeroVideo } from "./hero/gratitude-hero.mp4";

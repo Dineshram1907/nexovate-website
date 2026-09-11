@@ -1,0 +1,880 @@
+/* ════════════════════════════════════════════════════════════════════════════
+   EDITORIAL DISCOVERY SECTION — NEXOVATE METHOD
+   High-End Digital Editorial Experience & Obys Grids Structural System
+   Scoped under .ned-
+════════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --ned-navy:       #0F1535;
+  --ned-navy-deep:  #090D24;
+  --ned-teal:       #119E9D;
+  --ned-cyan:       #0AB8B6;
+  --ned-gold:       #EFAF32;
+  --ned-ivory:      #F7F6F2;
+  --ned-muted:      #576071;
+  --ned-rule:       rgba(15, 21, 53, 0.09);
+  --ned-rule-dark:  rgba(15, 21, 53, 0.16);
+}
+
+/* ── 1. SECTION ROOT ────────────────────────────────────────────────────── */
+
+.ned-section {
+  position: relative;
+  width: 100%;
+  background-color: var(--ned-ivory);
+  padding-block: clamp(90px, 11vw, 180px);
+  border-bottom: 1px solid var(--ned-rule);
+  isolation: isolate;
+}
+
+.ned-container {
+  width: min(100%, 1400px);
+  margin-inline: auto;
+  padding-inline: clamp(32px, 5vw, 80px);
+  position: relative;
+}
+
+/* ── 2. HEADER BLOCK (Eyebrow + Heading) ────────────────────────────────── */
+
+.ned-header {
+  display: flex;
+  flex-direction: column;
+}
+
+.ned-eyebrow-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: clamp(14px, 2vw, 24px);
+}
+
+.ned-eyebrow {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: clamp(10px, 1vw, 12px);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ned-teal);
+}
+
+.ned-heading {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: clamp(52px, 6.5vw, 96px);
+  font-weight: 800;
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+  color: var(--ned-navy);
+  margin: 0;
+  max-width: 14ch;
+}
+
+.ned-heading-plain {
+  color: var(--ned-navy);
+}
+
+.ned-heading-teal {
+  color: var(--ned-teal);
+  font-style: normal;
+}
+
+.ned-heading-gold {
+  color: var(--ned-gold);
+  font-style: normal;
+}
+
+.ned-heading-break {
+  display: block;
+}
+
+/* ── 3. INDENTED EDITORIAL STATEMENT ────────────────────────────────────── */
+
+.ned-statement {
+  display: flex;
+  flex-direction: column;
+}
+
+.ned-statement-quote {
+  padding-left: clamp(20px, 2.5vw, 36px);
+  border-left: 2px solid rgba(17, 158, 157, 0.32);
+}
+
+.ned-statement-text {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: clamp(15px, 1.25vw, 18px);
+  font-weight: 400;
+  line-height: 1.70;
+  color: var(--ned-muted);
+  margin: 0;
+  max-width: 44ch;
+}
+
+/* ── 4. METHOD INDEX (Editorial Navigation Rail) ────────────────────────── */
+
+.ned-methods {
+  display: flex;
+  flex-direction: column;
+}
+
+.ned-methods-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--ned-rule-dark);
+  margin-bottom: 6px;
+}
+
+.ned-methods-label {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--ned-muted);
+  opacity: 0.70;
+}
+
+.ned-methods-count {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ned-muted);
+  opacity: 0.50;
+}
+
+.ned-methods-list {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Method Item Button */
+.ned-method-btn {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-top: 1px solid var(--ned-rule);
+  padding-block: clamp(16px, 1.8vw, 22px);
+  cursor: pointer;
+  outline: none;
+  min-height: 48px;
+  position: relative;
+  padding-left: 10px;
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.2s ease;
+}
+
+.ned-method-btn:last-child {
+  border-bottom: 1px solid var(--ned-rule);
+}
+
+.ned-method-btn:focus-visible {
+  outline: 2px solid var(--ned-teal);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Active horizontal displacement and indicator line */
+.ned-method-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2.5px;
+  height: 100%;
+  background: var(--ned-teal);
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ned-method-btn--active::before {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+.ned-method-btn--active {
+  transform: translateX(6px);
+}
+
+/* Method Meta: Number, Title, Subtitle */
+.ned-method-meta {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(12px, 1.5vw, 18px);
+  margin-bottom: 8px;
+}
+
+.ned-method-num {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: clamp(11px, 1vw, 13px);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: rgba(87, 96, 113, 0.40);
+  flex-shrink: 0;
+  transition: color 0.22s ease;
+}
+
+.ned-method-num--active {
+  color: var(--ned-teal);
+}
+
+.ned-method-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.ned-method-name {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: clamp(14px, 1.25vw, 17px);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(15, 21, 53, 0.45);
+  transition: color 0.22s ease;
+}
+
+.ned-method-name--active {
+  color: var(--ned-navy);
+}
+
+.ned-method-sub {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: clamp(12.5px, 1vw, 14.5px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: rgba(87, 96, 113, 0.55);
+  transition: color 0.22s ease;
+}
+
+.ned-method-sub--active {
+  color: var(--ned-muted);
+}
+
+/* Progress rail */
+.ned-progress-rail {
+  width: 100%;
+  height: 2px;
+  background: rgba(15, 21, 53, 0.08);
+  margin-block: 8px 10px;
+  overflow: hidden;
+  border-radius: 999px;
+}
+
+.ned-progress-fill {
+  height: 100%;
+  width: 100%;
+  background: var(--ned-teal);
+  border-radius: 999px;
+  transform-origin: left;
+}
+
+/* Expandable Method Description */
+.ned-method-desc {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: clamp(13.5px, 1.05vw, 15px);
+  font-weight: 400;
+  line-height: 1.68;
+  color: rgba(87, 96, 113, 0.45);
+  margin: 0;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.40s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.30s ease,
+              color 0.22s ease;
+}
+
+.ned-method-desc--active {
+  max-height: 140px;
+  opacity: 1;
+  color: var(--ned-muted);
+}
+
+/* CTA action button */
+.ned-action-wrap {
+  display: flex;
+  margin-top: clamp(24px, 3vw, 36px);
+}
+
+.ned-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1.5px solid var(--ned-navy);
+  border-radius: 4px;
+  padding: 10px 18px;
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: clamp(12px, 0.95vw, 13.5px);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--ned-navy);
+  cursor: pointer;
+  transition: all 0.22s ease;
+  outline: none;
+}
+
+.ned-action-btn:hover {
+  background: var(--ned-navy);
+  color: var(--ned-ivory);
+}
+
+.ned-action-btn:focus-visible {
+  outline: 2px solid var(--ned-teal);
+  outline-offset: 3px;
+}
+
+.ned-action-icon {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.22s ease;
+}
+
+.ned-action-btn:hover .ned-action-icon {
+  transform: translate(2px, -2px);
+}
+
+/* ── 5. LARGE VISUAL STAGE ──────────────────────────────────────────────── */
+
+.ned-stage {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+}
+
+/* Ambient Glow Bloom Layer (soft teal & deep navy bloom) */
+.ned-stage-glow {
+  position: absolute;
+  inset: -8% -6%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.ned-glow-core {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 75% 65% at 50% 50%,
+    rgba(17, 158, 157, 0.38) 0%,
+    rgba(10, 184, 182, 0.18) 40%,
+    rgba(15, 21, 53, 0.05) 65%,
+    transparent 80%
+  );
+  filter: blur(52px);
+  transform: translateZ(0);
+}
+
+.ned-glow-ambient {
+  position: absolute;
+  inset: 12% 8%;
+  background: radial-gradient(
+    ellipse 60% 50% at 52% 48%,
+    rgba(17, 158, 157, 0.26) 0%,
+    rgba(17, 158, 157, 0.06) 55%,
+    transparent 75%
+  );
+  filter: blur(36px);
+  transform: translateZ(0);
+}
+
+.ned-glow-depth {
+  position: absolute;
+  inset: 5% -2%;
+  background: radial-gradient(
+    ellipse 85% 70% at 50% 55%,
+    rgba(9, 13, 36, 0.32) 0%,
+    rgba(9, 13, 36, 0.12) 50%,
+    transparent 70%
+  );
+  filter: blur(48px);
+  transform: translateZ(0);
+}
+
+/* Cinematic Frame */
+.ned-frame {
+  position: relative;
+  margin: 0;
+  width: 100%;
+  aspect-ratio: 5 / 4;
+  border-radius: clamp(12px, 1.8vw, 20px);
+  overflow: hidden;
+  background-color: var(--ned-navy-deep);
+  border: 1px solid rgba(17, 158, 157, 0.24);
+  box-shadow:
+    0 32px 80px -16px rgba(15, 21, 53, 0.34),
+    0 0 60px -8px rgba(17, 158, 157, 0.22),
+    0 0 0 1px rgba(17, 158, 157, 0.10);
+  transition: transform 0.6s cubic-bezier(0.33, 1, 0.68, 1),
+              box-shadow 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.ned-frame:hover {
+  transform: scale(1.02);
+  box-shadow:
+    0 36px 90px -16px rgba(15, 21, 53, 0.40),
+    0 0 75px -6px rgba(17, 158, 157, 0.30),
+    0 0 0 1px rgba(17, 158, 157, 0.18);
+}
+
+/* Full bleed crossfading images */
+.ned-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Bottom gradient scrim */
+.ned-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(9, 13, 36, 0.92) 0%,
+    rgba(9, 13, 36, 0.32) 28%,
+    transparent 54%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Live badge */
+.ned-badge {
+  position: absolute;
+  top: clamp(14px, 1.8vw, 20px);
+  left: clamp(14px, 1.8vw, 20px);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 11px;
+  background: rgba(15, 21, 53, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(17, 158, 157, 0.38);
+  border-radius: 3px;
+}
+
+.ned-badge-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ned-teal);
+  flex-shrink: 0;
+  animation: ned-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes ned-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.30; }
+}
+
+.ned-badge-text {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: clamp(9px, 0.82vw, 10.5px);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.94);
+}
+
+/* Integrated Caption Bar */
+.ned-caption {
+  position: absolute;
+  bottom: clamp(14px, 1.8vw, 22px);
+  left: clamp(16px, 2vw, 24px);
+  right: clamp(16px, 2vw, 24px);
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ned-caption-left {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ned-caption-meta {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: clamp(9px, 0.75vw, 10.5px);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.ned-caption-text {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: clamp(10px, 0.88vw, 12px);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ned-gold);
+}
+
+.ned-caption-counter {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: clamp(10px, 0.85vw, 12px);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.40);
+  flex-shrink: 0;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   RESPONSIVE RECOMPOSITION TIERS
+════════════════════════════════════════════════════════════════════════════ */
+
+/* ── TIER 1: DESKTOP (≥ 1200px) ───────────────────────────────────────────
+   12-Column Asymmetric Grid
+   Left Column (Cols 1–5, ~40% weight):
+     Row 1: Header (Eyebrow + Heading)
+     Row 2: Indented Statement
+     Row 3: Method Index
+   Right Column (Cols 6–12, ~60% weight):
+     Spans Rows 1–3: Large Dominant Visual Stage
+   Sticky stage alignment on desktop creates high-end editorial synergy
+──────────────────────────────────────────────────────────────────────────── */
+@media (min-width: 1200px) {
+  .ned-container {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(32px, 4vw, 64px);
+    row-gap: 0;
+    align-items: start;
+  }
+
+  .ned-header {
+    grid-column: 1 / 6;
+    grid-row: 1;
+  }
+
+  .ned-statement {
+    grid-column: 1 / 6;
+    grid-row: 2;
+    margin-top: clamp(28px, 3.5vw, 44px);
+    margin-bottom: clamp(32px, 4vw, 52px);
+  }
+
+  .ned-methods {
+    grid-column: 1 / 6;
+    grid-row: 3;
+  }
+
+  .ned-stage {
+    grid-column: 6 / 13;
+    grid-row: 1 / span 3;
+    position: sticky;
+    top: calc(var(--navbar-height, 80px) + 24px);
+  }
+
+  .ned-frame {
+    aspect-ratio: 5 / 4;
+  }
+}
+
+/* ── TIER 2: DESKTOP-NARROW / HIGH-TABLET (1024px – 1199px) ───────────────
+   8-Column Editorial Grid
+   Row 1: Heading spans wide top block (Cols 1–8)
+   Row 2: Left rail (Cols 1–3) holds Methods & Statement
+          Right rail (Cols 4–8, 5 cols) holds Dominant Image Stage
+──────────────────────────────────────────────────────────────────────────── */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .ned-container {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    column-gap: clamp(24px, 3vw, 36px);
+    row-gap: 0;
+    align-items: start;
+  }
+
+  .ned-header {
+    grid-column: 1 / 9;
+    grid-row: 1;
+    margin-bottom: clamp(28px, 3.5vw, 44px);
+  }
+
+  .ned-heading {
+    font-size: clamp(52px, 6.5vw, 76px);
+    max-width: 18ch;
+  }
+
+  .ned-heading-break {
+    display: inline;
+  }
+
+  .ned-methods {
+    grid-column: 1 / 4;
+    grid-row: 2;
+  }
+
+  .ned-statement {
+    grid-column: 1 / 4;
+    grid-row: 3;
+    margin-top: 28px;
+  }
+
+  .ned-stage {
+    grid-column: 4 / 9;
+    grid-row: 2 / span 2;
+    position: sticky;
+    top: calc(var(--navbar-height, 80px) + 20px);
+  }
+
+  .ned-frame {
+    aspect-ratio: 5 / 4;
+  }
+}
+
+/* ── TIER 3: TABLET (768px – 1023px) ──────────────────────────────────────
+   Dedicated Tablet Hierarchy:
+   1. Eyebrow & Heading
+   2. Dominant Image Stage (16 / 11 cinematic ratio)
+   3. Method Index
+   4. Supporting Statement
+──────────────────────────────────────────────────────────────────────────── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .ned-container {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(28px, 4vw, 40px);
+  }
+
+  .ned-header {
+    order: 1;
+  }
+
+  .ned-heading {
+    font-size: clamp(48px, 6.5vw, 68px);
+    max-width: 18ch;
+  }
+
+  .ned-heading-break {
+    display: inline;
+  }
+
+  .ned-stage {
+    order: 2;
+  }
+
+  .ned-frame {
+    aspect-ratio: 16 / 11;
+  }
+
+  .ned-methods {
+    order: 3;
+  }
+
+  .ned-statement {
+    order: 4;
+  }
+
+  .ned-statement-quote {
+    padding-left: 24px;
+  }
+
+  .ned-statement-text {
+    max-width: 100%;
+  }
+}
+
+/* ── TIER 4: MOBILE (480px – 767px) ───────────────────────────────────────
+   Full-width mobile editorial flow:
+   1. Header
+   2. Visual Stage (4 / 5 portrait)
+   3. Supporting Copy
+   4. Method Index
+──────────────────────────────────────────────────────────────────────────── */
+@media (min-width: 480px) and (max-width: 767px) {
+  .ned-section {
+    padding-block: clamp(72px, 12vw, 110px);
+  }
+
+  .ned-container {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding-inline: 24px;
+  }
+
+  .ned-header {
+    order: 1;
+  }
+
+  .ned-heading {
+    font-size: clamp(44px, 9vw, 56px);
+    max-width: 16ch;
+    line-height: 0.98;
+  }
+
+  .ned-heading-break {
+    display: inline;
+  }
+
+  .ned-stage {
+    order: 2;
+  }
+
+  .ned-frame {
+    aspect-ratio: 4 / 5;
+  }
+
+  .ned-statement {
+    order: 3;
+  }
+
+  .ned-statement-text {
+    max-width: 100%;
+  }
+
+  .ned-methods {
+    order: 4;
+  }
+}
+
+/* ── TIER 5: COMPACT MOBILE (320px – 479px) ───────────────────────────────
+   Compact single-column editorial composition matching exact spec:
+   1. 01 — THE NEXOVATE METHOD
+      Discover what you’re capable of.
+   2. Supporting copy
+   3. IMAGE
+   4. CAPTION
+   5. 01 DISCOVER, 02 BUILD, 03 SHIP
+   Padding: 18px–22px, zero horizontal overflow.
+──────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 479px) {
+  .ned-section {
+    padding-block: clamp(60px, 14vw, 90px);
+  }
+
+  .ned-container {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding-inline: clamp(18px, 5vw, 22px);
+  }
+
+  .ned-header {
+    order: 1;
+  }
+
+  .ned-eyebrow-wrap {
+    margin-bottom: 12px;
+  }
+
+  .ned-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+  }
+
+  .ned-heading {
+    font-size: clamp(42px, 11.5vw, 58px);
+    line-height: 0.96;
+    letter-spacing: -0.04em;
+    max-width: 100%;
+  }
+
+  .ned-heading-break {
+    display: inline;
+  }
+
+  .ned-statement {
+    order: 2;
+  }
+
+  .ned-statement-quote {
+    padding-left: 16px;
+    border-left-width: 2px;
+  }
+
+  .ned-statement-text {
+    font-size: 15px;
+    line-height: 1.62;
+    max-width: 100%;
+  }
+
+  .ned-stage {
+    order: 3;
+  }
+
+  .ned-frame {
+    aspect-ratio: 4 / 5;
+    border-radius: 12px;
+  }
+
+  .ned-caption {
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+  }
+
+  .ned-caption-text {
+    font-size: 10px;
+  }
+
+  .ned-methods {
+    order: 4;
+  }
+
+  .ned-method-btn {
+    padding-left: 6px;
+    padding-block: 14px;
+  }
+
+  .ned-method-btn--active {
+    transform: translateX(4px);
+  }
+
+  .ned-action-wrap {
+    margin-top: 20px;
+  }
+
+  .ned-action-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ── PREFERS REDUCED MOTION ─────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .ned-badge-dot {
+    animation: none;
+  }
+
+  .ned-method-btn {
+    transition: none;
+  }
+
+  .ned-method-btn--active {
+    transform: none;
+  }
+
+  .ned-method-desc {
+    transition: none;
+  }
+
+  .ned-frame {
+    transition: none;
+  }
+
+  .ned-frame:hover {
+    transform: none;
+  }
+}
