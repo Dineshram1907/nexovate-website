@@ -545,7 +545,7 @@ export const EditorialCollageSection: React.FC = () => {
               <div className="w-full aspect-[4/3] rounded overflow-hidden bg-[#071A2B]">
                 <img
                   src={studentCodingImg}
-                  alt="Student coding"
+                  alt="Nexovate student coding at modern workspace"
                   className="w-full h-full object-cover"
                   loading="lazy"
                 />
@@ -559,7 +559,7 @@ export const EditorialCollageSection: React.FC = () => {
               <div className="w-full aspect-[4/3] rounded overflow-hidden bg-[#071A2B]">
                 <img
                   src={deskWireframeImg}
-                  alt="Wireframe sketches and mug"
+                  alt="Design wireframe sketches and Nexovate coffee mug"
                   className="w-full h-full object-cover"
                   loading="lazy"
                 />

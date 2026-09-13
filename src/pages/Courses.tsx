@@ -46,8 +46,9 @@ export const Courses: React.FC = () => {
       className="relative w-full min-h-screen bg-[#FAFBFC] text-[#101536] select-none font-sans overflow-x-clip"
     >
       <SEO
-        title="Nexovate Courses — Practical Skills & Career Programs"
+        title="Nexovate Programs — Practical Skills & Career Tracks"
         description="Explore 22 practitioner-led tracks across AI & Machine Learning, Full Stack Engineering, AutoCAD, Embedded Systems, Data Science, and UI/UX Design."
+        canonical="https://nexovate.org.in/programs"
       />
 
       {/* 1. EDITORIAL HERO HEADER */}

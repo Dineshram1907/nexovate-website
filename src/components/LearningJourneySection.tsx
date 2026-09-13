@@ -20,7 +20,7 @@ const LearnItVisual: React.FC = () => {
       {/* Top Header */}
       <div className="h-12 sm:h-14 px-4 sm:px-6 bg-white/90 border-b border-[#071A2B]/8 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-2.5">
-          <img src={nexovateLogo} alt="Nexovate" className="h-4 sm:h-5 w-auto object-contain" />
+          <img src={nexovateLogo} alt="Nexovate Learning Platform Logo" className="h-4 sm:h-5 w-auto object-contain" />
         </div>
         <div className="flex items-center gap-3">
           <div className="hidden sm:flex items-center gap-2 bg-[#F2F1EC] px-3 py-1.5 rounded-full text-xs text-[#071A2B]/60 w-44">
@@ -28,7 +28,7 @@ const LearnItVisual: React.FC = () => {
             <span>Search lessons...</span>
           </div>
           <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full overflow-hidden border border-[#071A2B]/10">
-            <img src={arjunAvatar} alt="Student" className="w-full h-full object-cover" />
+            <img src={arjunAvatar} alt="Nexovate Student Learner Profile" className="w-full h-full object-cover" />
           </div>
         </div>
       </div>
@@ -288,7 +288,7 @@ const MakeItRealVisual: React.FC = () => {
       {/* Top Header */}
       <div className="h-12 px-4 sm:px-6 bg-white border-b border-[#071A2B]/8 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-6">
-          <img src={nexovateLogo} alt="Nexovate" className="h-4 sm:h-5 w-auto object-contain" />
+          <img src={nexovateLogo} alt="Nexovate Platform Logo" className="h-4 sm:h-5 w-auto object-contain" />
           <div className="hidden sm:flex items-center gap-4 text-xs font-medium text-[#071A2B]/70">
             <span className="text-[#071A2B] font-semibold">Home</span>
             <span>Features</span>

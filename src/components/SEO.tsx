@@ -4,34 +4,78 @@ interface SEOProps {
   title: string;
   description?: string;
   canonical?: string;
+  image?: string;
+  type?: string;
+  structuredData?: object;
 }
 
 export const SEO: React.FC<SEOProps> = ({
   title,
-  description = "Nexovate is an applied education platform helping students explore interests, build practical skills, and create real capstone projects.",
-  canonical,
+  description = "Nexovate is a practitioner-led applied learning platform helping students discover practical skills, build real production software systems, and shape what's next.",
+  canonical = "https://nexovate.org.in/",
+  image = "https://nexovate.org.in/brand-creator.jpg",
+  type = "website",
+  structuredData,
 }) => {
   useEffect(() => {
+    // 1. Title
     document.title = title;
 
-    let metaDesc = document.querySelector('meta[name="description"]');
-    if (!metaDesc) {
-      metaDesc = document.createElement("meta");
-      metaDesc.setAttribute("name", "description");
-      document.head.appendChild(metaDesc);
-    }
-    metaDesc.setAttribute("content", description);
+    // 2. Helper for Meta Tags
+    const setMetaTag = (attrName: "name" | "property", attrValue: string, content: string) => {
+      let element = document.querySelector(`meta[${attrName}="${attrValue}"]`);
+      if (!element) {
+        element = document.createElement("meta");
+        element.setAttribute(attrName, attrValue);
+        document.head.appendChild(element);
+      }
+      element.setAttribute("content", content);
+    };
 
-    let ogTitle = document.querySelector('meta[property="og:title"]');
-    if (ogTitle) {
-      ogTitle.setAttribute("content", title);
-    }
+    // Standard Meta
+    setMetaTag("name", "description", description);
+    setMetaTag("name", "robots", "index, follow, max-image-preview:large");
 
-    let ogDesc = document.querySelector('meta[property="og:description"]');
-    if (ogDesc) {
-      ogDesc.setAttribute("content", description);
+    // Canonical Link
+    let canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (!canonicalLink) {
+      canonicalLink = document.createElement("link");
+      canonicalLink.setAttribute("rel", "canonical");
+      document.head.appendChild(canonicalLink);
     }
-  }, [title, description, canonical]);
+    canonicalLink.setAttribute("href", canonical);
+
+    // OpenGraph Meta
+    setMetaTag("property", "og:title", title);
+    setMetaTag("property", "og:description", description);
+    setMetaTag("property", "og:url", canonical);
+    setMetaTag("property", "og:type", type);
+    setMetaTag("property", "og:image", image);
+    setMetaTag("property", "og:site_name", "Nexovate");
+
+    // Twitter Card Meta
+    setMetaTag("name", "twitter:card", "summary_large_image");
+    setMetaTag("name", "twitter:title", title);
+    setMetaTag("name", "twitter:description", description);
+    setMetaTag("name", "twitter:image", image);
+
+    // Page-level Structured Data Injection (if provided)
+    const scriptId = "page-structured-data";
+    let scriptTag = document.getElementById(scriptId) as HTMLScriptElement | null;
+    if (structuredData) {
+      if (!scriptTag) {
+        scriptTag = document.createElement("script");
+        scriptTag.id = scriptId;
+        scriptTag.type = "application/ld+json";
+        document.head.appendChild(scriptTag);
+      }
+      scriptTag.textContent = JSON.stringify(structuredData);
+    } else if (scriptTag) {
+      scriptTag.remove();
+    }
+  }, [title, description, canonical, image, type, structuredData]);
 
   return null;
 };
+
+export default SEO;

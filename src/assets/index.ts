@@ -42,5 +42,5 @@ export { default as transparentRealisticClouds } from "./hero/transparent-realis
 export { default as studentsGrasslandCutout } from "./hero/students-grassland-cutout.png";
 export { default as fluffyCloudsOverlay } from "./hero/fluffy-clouds-overlay.jpg";
 export { default as landingHeroVideo } from "./hero/landing-hero-video.mp4";
-export { default as heroVideoMp4 } from "./hero/mp4.mp4";
+export { default as heroVideoMp4 } from "./hero/landing-hero-video.mp4";
 export { default as gratitudeHeroVideo } from "./hero/gratitude-hero.mp4";

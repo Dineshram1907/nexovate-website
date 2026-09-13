@@ -5,6 +5,7 @@ import { BrandMarqueeSection } from "@/components/BrandMarqueeSection";
 import { StudentReviews } from "@/components/StudentReviews";
 import { LearningJourneySection } from "@/components/LearningJourneySection";
 import { EditorialCollageSection } from "@/components/EditorialCollageSection";
+import { NexovateFaqSection } from "@/components/NexovateFaqSection";
 
 export const Home: React.FC = () => {
   return (
@@ -12,6 +13,7 @@ export const Home: React.FC = () => {
       <SEO
         title="Nexovate — Learn. Build. Shape Tomorrow."
         description="Nexovate is a practitioner-led applied learning platform helping students discover practical skills, build real production software systems, and shape what's next."
+        canonical="https://nexovate.org.in/"
       />
 
       {/* ── HOMEPAGE HERO & CREDIBILITY ECOSYSTEM ── */}
@@ -30,6 +32,9 @@ export const Home: React.FC = () => {
 
         {/* 05 // SCRAPBOOK COLLAGE: WHATEVER YOU'RE CURIOUS ABOUT, BUILD IT */}
         <EditorialCollageSection />
+
+        {/* 06 // CTA & FREQUENTLY ASKED QUESTIONS */}
+        <NexovateFaqSection />
       </div>
     </div>
   );

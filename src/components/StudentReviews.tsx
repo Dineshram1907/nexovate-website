@@ -394,7 +394,7 @@ export const StudentReviews: React.FC = () => {
                   <div className="relative w-full aspect-[4/3.1] rounded-[20px] overflow-hidden bg-[#071A2B]/5 mb-5">
                     <img
                       src={review.image}
-                      alt={review.name}
+                      alt={`${review.name} — ${review.program}`}
                       className="w-full h-full object-cover"
                       style={{ objectPosition: review.objectPosition || "center 20%" }}
                       loading="lazy"
@@ -488,7 +488,7 @@ export const StudentReviews: React.FC = () => {
                     >
                       <img
                         src={review.image}
-                        alt={review.name}
+                        alt={`${review.name} — ${review.program}`}
                         className="w-full h-full object-cover select-none pointer-events-none"
                         style={{
                           objectPosition: review.objectPosition || "center 20%",
