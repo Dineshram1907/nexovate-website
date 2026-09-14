@@ -86,9 +86,26 @@ export const About: React.FC = () => {
       className="relative w-full min-h-screen bg-[#FAFBFC] text-[#101536] select-none font-sans overflow-x-clip"
     >
       <SEO
-        title="About Nexovate — Learning Through Practice"
-        description="We believe learning should create momentum. Learn about Nexovate's philosophy, method, and commitment to applied education."
+        title="About Nexovate — Applied Learning & Technology"
+        description="Discover Nexovate's mission, applied learning methodology, and practitioner mentorship helping students build real-world software and engineering projects."
         canonical="https://nexovate.org.in/about"
+        image="https://nexovate.org.in/brand-creator.jpg"
+        imageAlt="Nexovate Studio Workshop"
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "AboutPage",
+          "@id": "https://nexovate.org.in/about#webpage",
+          "url": "https://nexovate.org.in/about",
+          "name": "About Nexovate — Applied Learning & Technology",
+          "description": "Discover Nexovate's mission, applied learning methodology, and practitioner mentorship helping students build real-world software and engineering projects.",
+          "isPartOf": {
+            "@id": "https://nexovate.org.in/#website"
+          },
+          "about": {
+            "@id": "https://nexovate.org.in/#organization"
+          },
+          "inLanguage": "en"
+        }}
       />
 
       {/* 1. EDITORIAL HERO */}
@@ -124,7 +141,7 @@ export const About: React.FC = () => {
                   <ArrowRight className="w-4 h-4 text-[#EFAF32]" />
                 </MotionButton>
                 <Link
-                  to="/courses"
+                  to="/programs"
                   className="min-h-[48px] inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white border border-[#101536]/15 text-[#101536] font-bold text-xs uppercase tracking-wider hover:bg-[#F6F8F9] hover:border-[#6366F1] transition-all shadow-xs"
                 >
                   <span>Browse Programs</span>
@@ -143,7 +160,7 @@ export const About: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#101536]/80 via-transparent to-transparent pointer-events-none" />
                 <div className="absolute bottom-5 left-5 right-5 text-white text-xs z-10">
                   <span className="text-[#EFAF32] font-bold block uppercase tracking-wider text-[10px]">
-                    NEXOVATE HUB // CHENNAI
+                    NEXOVATE HUB // BENGALURU
                   </span>
                   <p className="text-white/90 font-medium">
                     Where curious learners evolve into independent builders.

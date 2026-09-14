@@ -11,7 +11,7 @@ export const Home: React.FC = () => {
   return (
     <div className="relative w-full bg-[#F6F5F0] font-sans selection:bg-[#11AFC0]/20 selection:text-[#071A2B]">
       <SEO
-        title="Nexovate — Learn. Build. Shape Tomorrow."
+        title="Nexovate — Learn. Build. Make It Real."
         description="Nexovate is a practitioner-led applied learning platform helping students discover practical skills, build real production software systems, and shape what's next."
         canonical="https://nexovate.org.in/"
       />

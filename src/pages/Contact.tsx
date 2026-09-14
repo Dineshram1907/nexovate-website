@@ -172,9 +172,45 @@ export const Contact: React.FC = () => {
       className="relative w-full min-h-screen bg-[#FAFBFC] text-[#101536] select-none font-sans overflow-x-clip"
     >
       <SEO
-        title="Contact Nexovate — Start Your Learning Journey"
-        description="Connect directly with Nexovate's admissions counseling team for cohort schedules, scholarship inquiries, and track roadmaps."
+        title="Contact Nexovate — Get Started"
+        description="Connect directly with Nexovate's admissions team and mentors for curriculum roadmaps, cohort schedules, and tech program advisory in Bengaluru."
         canonical="https://nexovate.org.in/contact"
+        image="https://nexovate.org.in/brand-creator.jpg"
+        imageAlt="Nexovate Admissions and Mentorship Desk"
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "ContactPage",
+          "@id": "https://nexovate.org.in/contact#webpage",
+          "url": "https://nexovate.org.in/contact",
+          "name": "Contact Nexovate — Get Started",
+          "description": "Connect directly with Nexovate's admissions team and mentors for curriculum roadmaps, cohort schedules, and tech program advisory in Bengaluru.",
+          "isPartOf": {
+            "@id": "https://nexovate.org.in/#website"
+          },
+          "about": {
+            "@id": "https://nexovate.org.in/#organization"
+          },
+          "mainEntity": {
+            "@type": "Organization",
+            "@id": "https://nexovate.org.in/#organization",
+            "name": "Nexovate Edu-Tech",
+            "url": "https://nexovate.org.in/",
+            "telephone": "+919042853317",
+            "location": {
+              "@type": "Place",
+              "name": "BEHIVE Workspace — Ground Floor"
+            },
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "L-194, Venkatapura, Santhosapuram, Sector 6, HSR Layout",
+              "addressLocality": "Bengaluru",
+              "addressRegion": "Karnataka",
+              "postalCode": "560102",
+              "addressCountry": "IN"
+            }
+          },
+          "inLanguage": "en"
+        }}
       />
 
       {/* 1. EDITORIAL HERO HEADER */}
@@ -226,27 +262,10 @@ export const Contact: React.FC = () => {
                       PHONE SUPPORT
                     </span>
                     <span className="text-sm font-bold text-[#101536] block">
-                      +91 98765 43210
+                      +91 90428 53317
                     </span>
                     <span className="text-xs text-[#5E6675] font-medium">
                       Mon–Sat from 9:30 AM to 6:30 PM IST
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-5 rounded-2xl bg-[#FAFBFC] border border-[#101536]/08 flex items-start gap-4 shadow-xs">
-                  <div className="w-11 h-11 rounded-xl bg-[#119E9D]/10 text-[#119E9D] flex items-center justify-center shrink-0">
-                    <Mail className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <span className="text-[10px] font-bold text-[#5E6675] uppercase block">
-                      EMAIL INQUIRIES
-                    </span>
-                    <span className="text-sm font-bold text-[#101536] block">
-                      hello@nexovate.in
-                    </span>
-                    <span className="text-xs text-[#5E6675] font-medium">
-                      General & cohort admissions: support@nexovate.in
                     </span>
                   </div>
                 </div>
@@ -257,13 +276,30 @@ export const Contact: React.FC = () => {
                   </div>
                   <div>
                     <span className="text-[10px] font-bold text-[#5E6675] uppercase block">
-                      CAMPUS & LAB HUB
+                      OFFICE & WORKSPACE
                     </span>
                     <span className="text-sm font-bold text-[#101536] block">
-                      Anna Nagar, Chennai
+                      BEHIVE Workspace — Ground Floor
                     </span>
                     <span className="text-xs text-[#5E6675] font-medium">
-                      208/9 Anna Salai, 4th Floor, Tamil Nadu 600040
+                      L-194, Venkatapura, Santhosapuram, Sector 6, HSR Layout, Bengaluru, Karnataka 560102
+                    </span>
+                  </div>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-[#FAFBFC] border border-[#101536]/08 flex items-start gap-4 shadow-xs">
+                  <div className="w-11 h-11 rounded-xl bg-[#119E9D]/10 text-[#119E9D] flex items-center justify-center shrink-0">
+                    <Sparkles className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-bold text-[#5E6675] uppercase block">
+                      DIRECT ADMISSIONS DESK
+                    </span>
+                    <span className="text-sm font-bold text-[#101536] block">
+                      Academic & Cohort Advisory
+                    </span>
+                    <span className="text-xs text-[#5E6675] font-medium">
+                      Submit your details via the form for 1-on-1 advisor consultation
                     </span>
                   </div>
                 </div>

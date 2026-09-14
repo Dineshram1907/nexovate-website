@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   X,
@@ -36,6 +36,9 @@ import {
   ValidationErrors,
 } from "@/lib/validation";
 
+const AUTO_OPEN_DELAY_MS = 10000;
+const SESSION_STORAGE_KEY = "nexovate_enquiry_auto_opened";
+
 export const StudentEnquiryModal: React.FC = () => {
   const {
     selectedProgram,
@@ -63,6 +66,8 @@ export const StudentEnquiryModal: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [lastSubmitTime, setLastSubmitTime] = useState<number>(0);
 
+  const timerRef = useRef<number | null>(null);
+
   // Sync selectedProgram if updated externally
   useEffect(() => {
     if (selectedProgram) {
@@ -70,7 +75,64 @@ export const StudentEnquiryModal: React.FC = () => {
     }
   }, [selectedProgram]);
 
+  // 10-Second Auto-Open Trigger (Runs at most once per browser session)
+  useEffect(() => {
+    try {
+      if (typeof window !== "undefined" && window.sessionStorage.getItem(SESSION_STORAGE_KEY)) {
+        return;
+      }
+    } catch {
+      // Fallback if sessionStorage is unavailable
+    }
+
+    if (isOpen) {
+      try {
+        window.sessionStorage.setItem(SESSION_STORAGE_KEY, "true");
+      } catch {}
+      return;
+    }
+
+    timerRef.current = window.setTimeout(() => {
+      try {
+        const hasOpened = window.sessionStorage.getItem(SESSION_STORAGE_KEY);
+        if (!hasOpened) {
+          window.sessionStorage.setItem(SESSION_STORAGE_KEY, "true");
+          openEnquiryModal();
+        }
+      } catch {
+        openEnquiryModal();
+      }
+    }, AUTO_OPEN_DELAY_MS);
+
+    return () => {
+      if (timerRef.current !== null) {
+        window.clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, [openEnquiryModal]);
+
+  // If user manually triggers or opens modal before 10s, clear timer & guard session
+  useEffect(() => {
+    if (isOpen) {
+      if (timerRef.current !== null) {
+        window.clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+      try {
+        if (typeof window !== "undefined") {
+          window.sessionStorage.setItem(SESSION_STORAGE_KEY, "true");
+        }
+      } catch {}
+    }
+  }, [isOpen]);
+
   const handleClose = useCallback(() => {
+    try {
+      if (typeof window !== "undefined") {
+        window.sessionStorage.setItem(SESSION_STORAGE_KEY, "true");
+      }
+    } catch {}
     setInternalIsOpen(false);
     closeEnquiryModal();
   }, [closeEnquiryModal]);
@@ -254,6 +316,11 @@ export const StudentEnquiryModal: React.FC = () => {
       });
 
       if (data.success) {
+        try {
+          if (typeof window !== "undefined") {
+            window.sessionStorage.setItem(SESSION_STORAGE_KEY, "true");
+          }
+        } catch {}
         setStatus("success");
         setLastSubmitTime(now);
       } else {

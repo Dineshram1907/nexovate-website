@@ -77,21 +77,16 @@ export async function submitLead(
   }
 
   // Client-side validated fallback response
-  const normalizedPhone = cleanPhoneNumber(rawValues.phone);
   const timestamp = new Date().toISOString();
 
-  console.log("[NEXOVATE_LEAD_RECORDED_CLIENT_FALLBACK]", {
-    name: rawValues.name.trim(),
-    phone: normalizedPhone,
-    email: rawValues.email.trim().toLowerCase(),
-    education: rawValues.education.trim(),
-    interestedProgram: rawValues.interestedProgram.trim(),
-    purpose: rawValues.purpose.trim(),
-    message: rawValues.message?.trim() || "",
-    source: payload.source || "contact-form",
-    timestamp,
-    page: payload.page || "/",
-  });
+  if (import.meta.env.DEV) {
+    console.log("[NEXOVATE_LEAD_RECORDED_CLIENT_FALLBACK]", {
+      program: rawValues.interestedProgram.trim(),
+      source: payload.source || "contact-form",
+      timestamp,
+      page: payload.page || "/",
+    });
+  }
 
   return {
     success: true,

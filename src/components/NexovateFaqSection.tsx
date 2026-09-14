@@ -160,31 +160,17 @@ export const FAQ_ITEMS: FAQItemData[] = [
     id: "where-to-contact",
     question: "Where can I contact Nexovate?",
     answer:
-      "You can contact our admissions and support team by phone at +91 98765 43210 (Monday through Saturday, 9:30 AM to 6:30 PM IST), by email at hello@nexovate.in and support@nexovate.in, or through our Contact page.",
+      "You can contact our admissions and support team by phone at +91 90428 53317 (Monday through Saturday, 9:30 AM to 6:30 PM IST), or through our Contact page at https://nexovate.org.in/contact.",
     richAnswer: (
       <span>
         You can contact our admissions and support team by phone at{" "}
         <a
-          href="tel:+919876543210"
+          href="tel:+919042853317"
           className="text-[#11AFC0] font-semibold underline underline-offset-2 hover:text-[#0B1F33] transition-colors"
         >
-          +91 98765 43210
+          +91 90428 53317
         </a>{" "}
-        (Monday through Saturday, 9:30 AM to 6:30 PM IST), by email at{" "}
-        <a
-          href="mailto:hello@nexovate.in"
-          className="text-[#11AFC0] font-semibold underline underline-offset-2 hover:text-[#0B1F33] transition-colors"
-        >
-          hello@nexovate.in
-        </a>{" "}
-        and{" "}
-        <a
-          href="mailto:support@nexovate.in"
-          className="text-[#11AFC0] font-semibold underline underline-offset-2 hover:text-[#0B1F33] transition-colors"
-        >
-          support@nexovate.in
-        </a>
-        , or through our{" "}
+        (Monday through Saturday, 9:30 AM to 6:30 PM IST), or submit an enquiry directly through our{" "}
         <Link
           to="/contact"
           className="text-[#11AFC0] font-semibold underline underline-offset-2 hover:text-[#0B1F33] transition-colors"

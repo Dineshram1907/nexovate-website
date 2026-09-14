@@ -34,9 +34,9 @@ export const FinalCTA: React.FC = () => {
               </p>
 
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto">
-                <Link to="/courses" className="w-full sm:w-auto">
+                <Link to="/programs" className="w-full sm:w-auto">
                   <button className="min-h-[50px] w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-white text-[#0F1535] font-bold text-xs uppercase tracking-wider hover:bg-[#119E9D] hover:text-white transition-all shadow-md cursor-pointer group">
-                    <span>Explore Courses</span>
+                    <span>Explore Programs</span>
                     <ArrowRight className="w-4 h-4 text-[#0F1535] group-hover:text-white group-hover:translate-x-1 transition-transform" />
                   </button>
                 </Link>

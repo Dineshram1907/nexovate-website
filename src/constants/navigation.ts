@@ -8,13 +8,14 @@ export interface NavItem {
 export const NAV_ROUTES: NavItem[] = [
   { label: "Home", href: "/", isRoute: true },
   { label: "About", href: "/about", isRoute: true },
-  { label: "Programs", href: "/courses", isRoute: true },
+  { label: "Programs", href: "/programs", isRoute: true },
   { label: "Contact", href: "/contact", isRoute: true },
 ];
 
 export const MOBILE_NAV_ROUTES: NavItem[] = [
   { label: "Home", href: "/", isRoute: true },
   { label: "About", href: "/about", isRoute: true },
-  { label: "Programs", href: "/courses", isRoute: true },
+  { label: "Programs", href: "/programs", isRoute: true },
   { label: "Contact", href: "/contact", isRoute: true },
 ];
+

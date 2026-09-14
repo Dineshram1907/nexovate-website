@@ -118,18 +118,18 @@ export const Footer: React.FC = () => {
                   </span>
                   <ul className="space-y-2.5 text-sm text-white/60">
                     <li>
+                      <Link to="/" className="hover:text-white transition-colors duration-200 block">
+                        Home
+                      </Link>
+                    </li>
+                    <li>
                       <Link to="/about" className="hover:text-white transition-colors duration-200 block">
                         About
                       </Link>
                     </li>
                     <li>
-                      <Link to="/courses" className="hover:text-white transition-colors duration-200 block">
+                      <Link to="/programs" className="hover:text-white transition-colors duration-200 block">
                         Programs
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/showcase" className="hover:text-white transition-colors duration-200 block">
-                        Student Work
                       </Link>
                     </li>
                     <li>
@@ -147,18 +147,23 @@ export const Footer: React.FC = () => {
                   </span>
                   <ul className="space-y-2.5 text-sm text-white/60">
                     <li>
-                      <Link to="/courses" className="hover:text-white transition-colors duration-200 block">
+                      <Link to="/programs" className="hover:text-white transition-colors duration-200 block">
                         Programs
                       </Link>
                     </li>
                     <li>
-                      <Link to="/courses" className="hover:text-white transition-colors duration-200 block">
-                        Workshops
+                      <Link to="/about" className="hover:text-white transition-colors duration-200 block">
+                        About
                       </Link>
                     </li>
                     <li>
                       <Link to="/showcase" className="hover:text-white transition-colors duration-200 block">
-                        Projects
+                        Student Work
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/contact" className="hover:text-white transition-colors duration-200 block">
+                        Contact
                       </Link>
                     </li>
                   </ul>
@@ -183,7 +188,7 @@ export const Footer: React.FC = () => {
                     </li>
                     <li>
                       <a
-                        href="https://www.instagram.com/nexovateedutech?stkn=MWV2NGJvZDhva29lcg=="
+                        href="https://www.instagram.com/nexovateedutech?stkn=MWV2NGVJbzhva29lcg=="
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 hover:text-white transition-all duration-200 group"
@@ -204,6 +209,17 @@ export const Footer: React.FC = () => {
                       </a>
                     </li>
                   </ul>
+
+                  {/* Official Google Preferred Source Button Container */}
+                  <div className="mt-4 pt-3 border-t border-white/10 flex flex-col items-start">
+                    <span className="text-[10px] uppercase tracking-[0.16em] font-medium text-white/50 block mb-2">
+                      GOOGLE NEWS / PREFERRED SOURCE
+                    </span>
+                    <div
+                      {...({ "google-add-preferred-source-btn": "" } as Record<string, string>)}
+                      className="min-h-[32px] text-xs text-white/80"
+                    />
+                  </div>
                 </div>
 
               </div>
@@ -212,7 +228,7 @@ export const Footer: React.FC = () => {
             {/* Bottom Bar */}
             <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[10px] uppercase tracking-widest text-white/50">
               <div>
-                © 2026 NEXOVATE
+                © 2026 NEXOVATE EDU-TECH
               </div>
               <div className="flex items-center gap-4">
                 <Link to="/about" className="hover:text-white transition-colors duration-200">
@@ -233,7 +249,7 @@ export const Footer: React.FC = () => {
                 </a>
                 <span className="opacity-30">·</span>
                 <a
-                  href="https://www.instagram.com/nexovateedutech?stkn=MWV2NGJvZDhva29lcg=="
+                  href="https://www.instagram.com/nexovateedutech?stkn=MWV2NGVJbzhva29lcg=="
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-white transition-colors duration-200"

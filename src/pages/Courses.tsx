@@ -46,9 +46,47 @@ export const Courses: React.FC = () => {
       className="relative w-full min-h-screen bg-[#FAFBFC] text-[#101536] select-none font-sans overflow-x-clip"
     >
       <SEO
-        title="Nexovate Programs — Practical Skills & Career Tracks"
-        description="Explore 22 practitioner-led tracks across AI & Machine Learning, Full Stack Engineering, AutoCAD, Embedded Systems, Data Science, and UI/UX Design."
+        title="Nexovate Programs — Learn, Build & Create"
+        description="Explore 22 practitioner-led technology and engineering tracks at Nexovate, including AI & ML, Full Stack Web Development, Data Science, and Cloud Architecture."
         canonical="https://nexovate.org.in/programs"
+        image="https://nexovate.org.in/brand-creator.jpg"
+        imageAlt="Nexovate Practitioner-Led Programs"
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "@id": "https://nexovate.org.in/programs#webpage",
+          "url": "https://nexovate.org.in/programs",
+          "name": "Nexovate Programs — Learn, Build & Create",
+          "description": "Explore 22 practitioner-led technology and engineering tracks at Nexovate, including AI & ML, Full Stack Web Development, Data Science, and Cloud Architecture.",
+          "isPartOf": {
+            "@id": "https://nexovate.org.in/#website"
+          },
+          "about": {
+            "@id": "https://nexovate.org.in/#organization"
+          },
+          "mainEntity": {
+            "@type": "ItemList",
+            "name": "Nexovate Applied Learning Tracks",
+            "itemListElement": COURSES_DATA.map((course, idx) => ({
+              "@type": "ListItem",
+              "position": idx + 1,
+              "item": {
+                "@type": "Course",
+                "name": course.title,
+                "description": course.description,
+                "provider": {
+                  "@type": "Organization",
+                  "@id": "https://nexovate.org.in/#organization",
+                  "name": "Nexovate Edu-Tech",
+                  "sameAs": "https://nexovate.org.in/"
+                },
+                "timeRequired": course.duration,
+                "courseMode": course.mode
+              }
+            }))
+          },
+          "inLanguage": "en"
+        }}
       />
 
       {/* 1. EDITORIAL HERO HEADER */}

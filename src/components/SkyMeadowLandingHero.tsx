@@ -53,12 +53,12 @@ export const SkyMeadowLandingHero: React.FC = () => {
     <section
       id="landing-hero"
       aria-label="Nexovate Hero"
-      className="relative w-full min-h-[100svh] bg-[#F6F5F0] p-3 sm:p-4 md:p-5 lg:p-6 flex flex-col justify-between select-none font-sans overflow-hidden"
+      className="relative w-full min-h-[100svh] bg-[#F6F5F0] p-1.5 sm:p-2 md:p-2.5 lg:p-3 flex flex-col justify-between select-none font-sans overflow-hidden"
     >
       {/* ============================================================ */}
-      {/* CINEMATIC INSET ROUNDED CONTAINER (NOT FULL-SCREEN)          */}
+      {/* CINEMATIC INSET ROUNDED CONTAINER (EXPANSIVE VIEWPORT COVERAGE) */}
       {/* ============================================================ */}
-      <div className="relative w-full h-[calc(100svh-24px)] sm:h-[calc(100svh-32px)] md:h-[calc(100svh-40px)] lg:h-[calc(100svh-48px)] min-h-[580px] max-w-[1400px] mx-auto rounded-[24px] sm:rounded-[28px] md:rounded-[32px] overflow-hidden bg-[#071923] border border-[#071A2B]/10 shadow-[0_20px_50px_rgba(7,26,43,0.18)] flex flex-col justify-between">
+      <div className="relative w-full h-[calc(100svh-12px)] sm:h-[calc(100svh-16px)] md:h-[calc(100svh-20px)] lg:h-[calc(100svh-24px)] min-h-[580px] max-w-[1720px] mx-auto rounded-[20px] sm:rounded-[24px] md:rounded-[28px] lg:rounded-[32px] overflow-hidden bg-[#071923] border border-[#071A2B]/10 shadow-[0_20px_50px_rgba(7,26,43,0.18)] flex flex-col justify-between">
         
         {/* ============================================================ */}
         {/* LAYER 0: CONTROLLED CINEMATIC BACKGROUND VIDEO               */}
@@ -73,7 +73,7 @@ export const SkyMeadowLandingHero: React.FC = () => {
             muted
             playsInline
             onTimeUpdate={handleTimeUpdate}
-            className="w-full h-full object-cover object-[center_35%] scale-[1.08] origin-center pointer-events-none select-none will-change-transform opacity-95 transition-opacity duration-1000"
+            className="w-full h-full object-cover object-[center_35%] scale-[1.06] origin-center pointer-events-none select-none will-change-transform opacity-95 transition-opacity duration-1000"
           />
 
           {/* Directional Subtle Gradient */}
@@ -92,7 +92,7 @@ export const SkyMeadowLandingHero: React.FC = () => {
         {/* ============================================================ */}
         {/* LAYER 1: EDITORIAL ASYMMETRICAL COMPOSITION                  */}
         {/* ============================================================ */}
-        <div className="relative z-20 w-full h-full max-w-[1400px] mx-auto px-6 sm:px-10 md:px-14 lg:px-16 py-8 sm:py-12 flex-1 flex flex-col justify-end">
+        <div className="relative z-20 w-full h-full max-w-[1720px] mx-auto px-5 sm:px-8 md:px-12 lg:px-14 py-6 sm:py-9 lg:py-10 flex-1 flex flex-col justify-end">
           
           {/* CENTER-LOWER: Asymmetrical Headline & Narrative Architecture */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end pb-4 sm:pb-6">

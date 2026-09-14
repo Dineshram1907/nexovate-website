@@ -312,7 +312,7 @@ export const EditorialCollageSection: React.FC = () => {
           {/* Primary CTA Button & Handwritten 'Start Building' Annotation */}
           <div className="relative mt-7 flex items-center justify-center">
             <motion.a
-              href="/courses"
+              href="/programs"
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
@@ -517,7 +517,7 @@ export const EditorialCollageSection: React.FC = () => {
           {/* CTA Button */}
           <div className="mt-5 flex flex-col items-center gap-2">
             <a
-              href="/courses"
+              href="/programs"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#071A2B] text-white font-bold text-sm shadow-[0_8px_20px_rgba(7,26,43,0.18)] active:scale-[0.98] transition-all"
             >
               <span>Explore Programs</span>
