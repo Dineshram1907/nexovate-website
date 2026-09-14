@@ -88,6 +88,7 @@ export const About: React.FC = () => {
       <SEO
         title="About Nexovate — Learning Through Practice"
         description="We believe learning should create momentum. Learn about Nexovate's philosophy, method, and commitment to applied education."
+        canonical="https://nexovate.org.in/about"
       />
 
       {/* 1. EDITORIAL HERO */}

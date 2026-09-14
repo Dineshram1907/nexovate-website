@@ -174,6 +174,7 @@ export const Contact: React.FC = () => {
       <SEO
         title="Contact Nexovate — Start Your Learning Journey"
         description="Connect directly with Nexovate's admissions counseling team for cohort schedules, scholarship inquiries, and track roadmaps."
+        canonical="https://nexovate.org.in/contact"
       />
 
       {/* 1. EDITORIAL HERO HEADER */}
