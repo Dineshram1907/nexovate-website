@@ -234,7 +234,7 @@ export function CertificateEmailAdmin() {
                     <p className="mt-3 text-sm text-slate-700">{delivery.event_name}</p>
                     <p className="mt-1 text-xs text-slate-400">{new Date(delivery.created_at).toLocaleString()} · Attempts: {delivery.attempt_count}</p>
                     {delivery.status === "failed" && delivery.last_error && <p className="mt-2 break-words text-xs text-rose-700">{delivery.last_error}</p>}
-                    {delivery.status === "failed" && <button onClick={() => void retry(delivery)} className="mt-3 rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold hover:bg-slate-50">Retry guidance</button>}
+                    {delivery.status === "failed" && <button onClick={() => void retry(delivery)} className="mt-3 rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold hover:bg-slate-50">Retry failed delivery</button>}
                   </article>
                 ))}
               </div>
