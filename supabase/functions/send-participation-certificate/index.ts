@@ -73,6 +73,16 @@ Deno.serve(async (req) => {
     return json({ error: "Invalid JSON request." }, 400);
   }
 
+  if (body.action === "list") {
+    const { data, error } = await admin
+      .from("certificate_email_deliveries")
+      .select("id, student_name, student_email, event_name, event_date, status, attempt_count, last_error, sent_at, created_at, provider_message_id")
+      .order("created_at", { ascending: false })
+      .limit(50);
+    if (error) return json({ error: "Could not load delivery history." }, 500);
+    return json({ deliveries: data ?? [] });
+  }
+
   const deliveryId = typeof body.deliveryId === "string" ? body.deliveryId : null;
   const studentName = typeof body.studentName === "string" ? body.studentName.trim() : "";
   const studentEmail = typeof body.studentEmail === "string" ? body.studentEmail.trim().toLowerCase() : "";
