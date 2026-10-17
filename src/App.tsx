@@ -11,6 +11,7 @@ import { Courses } from "@/pages/Courses";
 import { Contact } from "@/pages/Contact";
 import { Showcase } from "@/pages/Showcase";
 import { NotFound } from "@/pages/NotFound";
+import { CertificateEmailAdmin } from "@/pages/CertificateEmailAdmin";
 
 import { initSmoothScroll } from "@/animations";
 
@@ -42,6 +43,7 @@ function AnimatedRoutes() {
         <Route path="/showcase" element={<Showcase />} />
         <Route path="/app" element={<Showcase />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/admin/certificates" element={<CertificateEmailAdmin />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>
