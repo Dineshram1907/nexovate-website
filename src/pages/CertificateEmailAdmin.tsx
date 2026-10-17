@@ -34,6 +34,7 @@ export function CertificateEmailAdmin() {
   const [eventName, setEventName] = useState("");
   const [eventDate, setEventDate] = useState("");
   const [file, setFile] = useState<File | null>(null);
+  const [retryId, setRetryId] = useState<string | null>(null);
   const [deliveries, setDeliveries] = useState<Delivery[]>([]);
   const [loading, setLoading] = useState(false);
   const [sending, setSending] = useState(false);
@@ -114,14 +115,9 @@ export function CertificateEmailAdmin() {
     setSending(true);
     try {
       const fileBase64 = await fileToBase64(file);
-      const result = await invoke({
-        studentName: studentName.trim(),
-        studentEmail: studentEmail.trim(),
-        eventName: eventName.trim(),
-        eventDate: eventDate || null,
-        fileName: file.name,
-        fileBase64,
-      });
+      const result = retryId
+        ? await invoke({ deliveryId: retryId, fileName: file.name, fileBase64 })
+        : await invoke({ studentName: studentName.trim(), studentEmail: studentEmail.trim(), eventName: eventName.trim(), eventDate: eventDate || null, fileName: file.name, fileBase64 });
       setMessage({
         type: result.warning ? "info" : "success",
         text: result.warning ?? `Certificate email accepted by the provider for ${studentEmail.trim()}.`,
@@ -131,6 +127,7 @@ export function CertificateEmailAdmin() {
       setEventName("");
       setEventDate("");
       setFile(null);
+      setRetryId(null);
       const input = document.getElementById("certificate-pdf") as HTMLInputElement | null;
       if (input) input.value = "";
       await refreshHistory();
@@ -143,7 +140,14 @@ export function CertificateEmailAdmin() {
   }
 
   async function retry(delivery: Delivery) {
-    setMessage({ type: "info", text: `To retry ${delivery.student_email}, re-enter the details and select the correct PDF. A retry action will be added after the file is selected.` });
+    setStudentName(delivery.student_name);
+    setStudentEmail(delivery.student_email);
+    setEventName(delivery.event_name);
+    setEventDate(delivery.event_date ?? "");
+    setFile(null);
+    setRetryId(delivery.id);
+    setMessage({ type: "info", text: "Retry selected. Choose the correct PDF and submit to retry this failed delivery." });
+    document.getElementById("certificate-pdf")?.scrollIntoView({ behavior: "smooth", block: "center" });
   }
 
   const statusClass = (status: Delivery["status"]) =>
@@ -199,16 +203,16 @@ export function CertificateEmailAdmin() {
             <div className="mb-6 flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#101D3A] text-white"><Mail size={19} /></div><div><h2 className="text-lg font-semibold">Send a certificate</h2><p className="text-sm text-slate-500">The PDF will be attached to the email.</p></div></div>
             <div className="space-y-4">
               <label className="block text-sm font-medium">Student full name
-                <input required minLength={2} maxLength={160} value={studentName} onChange={e => setStudentName(e.target.value)} placeholder="e.g. Anushree R R" className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#101D3A]" />
+                <input required disabled={Boolean(retryId)} minLength={2} maxLength={160} value={studentName} onChange={e => setStudentName(e.target.value)} placeholder="e.g. Anushree R R" className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#101D3A]" />
               </label>
               <label className="block text-sm font-medium">Student email address
-                <input required type="email" maxLength={254} value={studentEmail} onChange={e => setStudentEmail(e.target.value)} placeholder="student@example.com" className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#101D3A]" />
+                <input required disabled={Boolean(retryId)} type="email" maxLength={254} value={studentEmail} onChange={e => setStudentEmail(e.target.value)} placeholder="student@example.com" className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#101D3A]" />
               </label>
               <label className="block text-sm font-medium">Workshop or event name
-                <input required minLength={2} maxLength={200} value={eventName} onChange={e => setEventName(e.target.value)} placeholder="e.g. Introduction to Artificial Intelligence" className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#101D3A]" />
+                <input required disabled={Boolean(retryId)} minLength={2} maxLength={200} value={eventName} onChange={e => setEventName(e.target.value)} placeholder="e.g. Introduction to Artificial Intelligence" className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#101D3A]" />
               </label>
               <label className="block text-sm font-medium">Event date <span className="font-normal text-slate-400">(optional)</span>
-                <input type="date" value={eventDate} onChange={e => setEventDate(e.target.value)} className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#101D3A]" />
+                <input disabled={Boolean(retryId)} type="date" value={eventDate} onChange={e => setEventDate(e.target.value)} className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-[#101D3A]" />
               </label>
               <label htmlFor="certificate-pdf" className="block cursor-pointer rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-5 transition hover:border-[#647EAE] hover:bg-slate-50/70">
                 <span className="flex items-center gap-3"><UploadCloud size={22} className="text-[#647EAE]" /><span><span className="block text-sm font-semibold">Certificate PDF</span><span className="mt-1 block text-xs text-slate-500">PDF only · maximum 8 MB</span></span></span>
@@ -216,7 +220,7 @@ export function CertificateEmailAdmin() {
                 {file && <span className="mt-3 flex items-center gap-2 text-sm text-slate-700"><FileText size={16} /> {file.name} · {(file.size / 1024 / 1024).toFixed(2)} MB</span>}
               </label>
             </div>
-            <button disabled={sending} className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-[#101D3A] px-5 py-3.5 font-semibold text-white transition hover:bg-[#1d315b] disabled:cursor-wait disabled:opacity-60">{sending ? "Sending certificate…" : "Send certificate email"} <Send size={17} /></button>
+            <button disabled={sending} className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-[#101D3A] px-5 py-3.5 font-semibold text-white transition hover:bg-[#1d315b] disabled:cursor-wait disabled:opacity-60">{sending ? "Sending certificate…" : retryId ? "Retry failed delivery" : "Send certificate email"} <Send size={17} /></button>
             <p className="mt-3 text-xs leading-5 text-slate-500">Double-check the student's email and certificate before sending. Previously sent records cannot be sent again through this form.</p>
           </form>
 
